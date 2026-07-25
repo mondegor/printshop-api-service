@@ -12,7 +12,6 @@ import (
 	"github.com/mondegor/go-webcore/mrview"
 	"github.com/mondegor/go-webcore/mrview/mrplayvalidator"
 
-	"print-shop-back/config"
 	"print-shop-back/internal/adapter/log"
 	"print-shop-back/internal/app"
 	mrcalcvalidate "print-shop-back/pkg/mrcalc/validate"
@@ -21,13 +20,14 @@ import (
 
 const (
 	langURLParam = "lang"
+	tzURLParam   = "tz"
 )
 
 // InitRequestParsers - создаются и возвращаются парсеры запросов клиента.
 func InitRequestParsers(opts app.Options) (app.RequestParsers, error) {
 	log.Info(opts.Logger, "Create and init base request parsers")
 
-	validator, err := initUserValidator(opts.Logger, opts.Cfg)
+	validator, err := initUserValidator(opts)
 	if err != nil {
 		return app.RequestParsers{}, err
 	}
@@ -73,8 +73,9 @@ func InitRequestParsers(opts app.Options) (app.RequestParsers, error) {
 		UUID:       parser.NewUUID(pathFunc, opts.Logger),
 		Validator:  parser.NewValidator(mrjson.NewDecoder(), validator),
 		ClientIP:   parser.NewClientIP(opts.Logger),
-		User:       parser.NewUser(opts.TimeZoneList, opts.Logger),
+		User:       parser.NewUser(opts.Logger),
 		Locale:     parser.NewLocale(opts.LocalePool, opts.Logger, langURLParam),
+		TimeZone:   parser.NewTimeZone(opts.LocationList, opts.Logger, tzURLParam),
 		FileJson: parser.NewFile(
 			opts.Logger,
 			parser.WithFileMinSize(int64(opts.Cfg.ValidationFilesJson.MinSize)),
@@ -120,22 +121,33 @@ func InitRequestParsers(opts app.Options) (app.RequestParsers, error) {
 	return parsers, nil
 }
 
-func initUserValidator(logger log.Logger, cfg config.Config) (*mrplayvalidator.ValidatorAdapter, error) {
-	log.Info(logger, "Create and init data validator")
+// initUserValidator - создаёт валидатор структур запроса с зарегистрированными
+// пользовательскими тегами.
+//
+// Списки языков и часовых поясов берутся у самих пула и списка поясов, а не у конфигурации,
+// из которой те созданы: пул приводит коды языков к каноничному виду ("en_US" -> "en-US"),
+// а список поясов всегда регистрирует UTC, даже если его не указывали. Взяв конфигурацию,
+// теги отвергали бы значения, которые приложение само же и отдаёт.
+func initUserValidator(opts app.Options) (*mrplayvalidator.ValidatorAdapter, error) {
+	log.Info(opts.Logger, "Create and init data validator")
 
 	customTags := []mrview.Tag{
 		mrview.TagArticle(),
 		mrauthconf.TagEmail(),
 		mrauthconf.TagPhone(),
 		mrauthconf.TagEmailPhone(),
-		mrauthconf.TagLang(),
-		mrauthconf.TagTimeZone(),
+		mrauthconf.TagLang(
+			opts.LocalePool.Languages(),
+		),
+		mrauthconf.TagTimeZone(
+			opts.LocationList.TimeZones(),
+		),
 		mrview.TagVariable(),
 		mrview.TagName(),
 		mrview.TagRewriteName(),
 		mrview.TagPassword(),
 		mrauthconf.TagRealm(
-			mapping.OptionUserRealmsToStringRealms(cfg.AccessControl.Realms),
+			mapping.OptionUserRealmsToStringRealms(opts.Cfg.AccessControl.Realms),
 		),
 		{
 			Name:         "tag_2d_size",
@@ -147,7 +159,7 @@ func initUserValidator(logger log.Logger, cfg config.Config) (*mrplayvalidator.V
 		},
 	}
 
-	validator := mrplayvalidator.New(logger)
+	validator := mrplayvalidator.New(opts.Logger)
 
 	for _, tag := range customTags {
 		if err := validator.Register(tag.Name, tag.ValidateFunc); err != nil {

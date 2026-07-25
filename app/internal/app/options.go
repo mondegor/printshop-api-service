@@ -62,7 +62,7 @@ type (
 		FileProviderPool            *mrstorage.FileProviderPool
 		Locker                      mrlock.Locker
 		LocalePool                  *mrlocale.Pool
-		TimeZoneList                *timezone.LocationList
+		LocationList                *timezone.LocationList
 		RequestParsers              RequestParsers
 		ResponseSenders             ResponseSenders
 		PermsProvider               *filestorage.PermsProvider
@@ -103,6 +103,7 @@ type (
 		UUID       *parser.UUID
 		Validator  *parser.Validator
 		Locale     *parser.Locale
+		TimeZone   *parser.TimeZone
 		ClientIP   *parser.ClientIP
 		User       *parser.User
 		FileJson   *parser.File

@@ -17,7 +17,6 @@ import (
 	accesscfg "github.com/mondegor/go-core/mraccess/config"
 	"github.com/mondegor/go-core/mrapp"
 	extfilecfg "github.com/mondegor/go-core/util/mime/config"
-	timezonecfg "github.com/mondegor/go-core/util/timezone/config"
 )
 
 const (
@@ -32,7 +31,7 @@ var regexpEnvironment = regexp.MustCompile(`^[a-z][a-z0-9]+$`)
 // Create - создаёт, инициализирует и возвращает конфигурацию приложения.
 // Сначала собирает сырую конфигурацию из всех слоёв (createConfig), затем
 // корректирует значения (CorrectValuesRealm) и проверяет их валидаторами
-// (ValidateRealms, ValidateLanguages, ValidateTimeZones и т.д.).
+// (ValidateRealms, ValidateStorableLanguages, ValidateStorableTimeZones и т.д.).
 func Create(args CmdArgs, stdout io.Writer) (cfg Config, err error) {
 	if stdout == nil {
 		return Config{}, errors.New("stdout is required")
@@ -77,11 +76,11 @@ func Create(args CmdArgs, stdout io.Writer) (cfg Config, err error) {
 		cfg.AppLanguages = append(cfg.AppLanguages, "ru-RU")
 	}
 
-	if err = authcfg.ValidateLanguages(cfg.AppLanguages); err != nil {
+	if err = authcfg.ValidateStorableLanguages(cfg.AppLanguages); err != nil {
 		return Config{}, err
 	}
 
-	if err = timezonecfg.ValidateTimeZones(cfg.AppTimeZones); err != nil {
+	if err = authcfg.ValidateStorableTimeZones(cfg.AppTimeZones); err != nil {
 		return Config{}, err
 	}
 

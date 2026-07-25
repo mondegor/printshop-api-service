@@ -189,7 +189,7 @@ func createAppEnvironment(opts app.Options) (enrichedOpts app.Options, err error
 		return app.Options{}, err
 	}
 
-	opts.TimeZoneList = InitTimeZones(opts.Logger, opts.Cfg)
+	opts.LocationList = InitTimeZones(opts.Logger, opts.Cfg)
 
 	if opts.RequestParsers, err = InitRequestParsers(opts); err != nil {
 		return app.Options{}, err
