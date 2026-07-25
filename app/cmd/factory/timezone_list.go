@@ -13,7 +13,7 @@ import (
 // уже не происходит. UTC и Local регистрируются всегда и в конфиге не нужны.
 //
 // Ошибку не возвращает: NewLocationList негодные имена молча пропускает,
-// а отвергаются они раньше, при загрузке конфигурации (config.ValidateTimeZones).
+// а отвергаются они раньше, при загрузке конфигурации (config.ValidateStorableTimeZones).
 func InitTimeZones(logger log.Logger, cfg config.Config) *timezone.LocationList {
 	log.Info(logger, "Create and init timezone list")
 
