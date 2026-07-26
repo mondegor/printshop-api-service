@@ -31,7 +31,7 @@ var regexpEnvironment = regexp.MustCompile(`^[a-z][a-z0-9]+$`)
 // Create - создаёт, инициализирует и возвращает конфигурацию приложения.
 // Сначала собирает сырую конфигурацию из всех слоёв (createConfig), затем
 // корректирует значения (CorrectValuesRealm) и проверяет их валидаторами
-// (ValidateRealms, ValidateStorableLanguages, ValidateStorableTimeZones и т.д.).
+// (ValidateRealms, ValidateLanguages, ValidateTimeZones и т.д.).
 func Create(args CmdArgs, stdout io.Writer) (cfg Config, err error) {
 	if stdout == nil {
 		return Config{}, errors.New("stdout is required")
@@ -72,15 +72,11 @@ func Create(args CmdArgs, stdout io.Writer) (cfg Config, err error) {
 		}
 	}
 
-	if len(cfg.AppLanguages) == 0 {
-		cfg.AppLanguages = append(cfg.AppLanguages, "ru-RU")
-	}
-
-	if err = authcfg.ValidateStorableLanguages(cfg.AppLanguages); err != nil {
+	if err = authcfg.ValidateLanguages(cfg.AppLanguages); err != nil {
 		return Config{}, err
 	}
 
-	if err = authcfg.ValidateStorableTimeZones(cfg.AppTimeZones); err != nil {
+	if err = authcfg.ValidateTimeZones(cfg.AppTimeZones); err != nil {
 		return Config{}, err
 	}
 
