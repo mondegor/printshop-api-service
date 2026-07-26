@@ -6,7 +6,8 @@ app_languages: # env:APPX_LANGS; keep in sync with -lang in localization/dict/*/
   - "en-US"
 
 app_time_zones: # IANA names
-  - "Etc/GMT+12"          # -12:00
+  - "Europe/Moscow"       # +03:00, the first timezone is default
+  # - "Etc/GMT+12"          # -12:00
   - "Pacific/Pago_Pago"   # -11:00
   - "Pacific/Tahiti"      # -10:00
   - "Pacific/Marquesas"   # -09:30
@@ -25,12 +26,12 @@ app_time_zones: # IANA names
   - "America/Nuuk"        # -02:00, DST
   - "Atlantic/Cape_Verde" # -01:00
   - "Europe/London"       # +00:00, DST
-  - "Africa/Abidjan"      # +00:00
+  - "Africa/Abidjan"      # +00:00 (alias UTC)
   - "Africa/Lagos"        # +01:00
   - "Europe/Paris"        # +01:00, DST
   - "Africa/Cairo"        # +02:00, DST
   - "Africa/Khartoum"     # +02:00
-  - "Europe/Moscow"       # +03:00
+  # - "Europe/Moscow"       # +03:00
   - "Asia/Tehran"         # +03:30
   - "Asia/Baku"           # +04:00
   - "Asia/Kabul"          # +04:30
@@ -148,8 +149,10 @@ cors_allowed_methods:
   - PATCH
   - DELETE
 cors_allowed_headers:
-  - Content-Type
+  - Accept-Language
   - Authorization
+  - Content-Type
+  - X-Accept-Time-Zone
   - X-Correlation-Id
   - X-Idempotency-Key
   - X-Use-Cookie

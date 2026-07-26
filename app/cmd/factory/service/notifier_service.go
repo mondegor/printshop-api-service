@@ -65,7 +65,7 @@ func InitNotifierProcessorService(opts app.Options) *consume.MessageProcessor[en
 		},
 		serviceNotifierTemplatesTableName,
 		serviceNotifierTemplateVarsTableName,
-		processor.WithDefaultLang(opts.Cfg.AppLanguages[0]),
+		processor.WithDefaultLang(opts.LocalePool.Localizer().Language()),
 		processor.WithNoticeProcessorOpts(
 			consume.WithCaptionPrefix[entity.Note]("Notifier/"),
 			consume.WithReadyTimeout[entity.Note](opts.Cfg.TaskScheduleNotifier.NoticeProcessor.ReadyTimeout),

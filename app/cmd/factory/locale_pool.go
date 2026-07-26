@@ -66,6 +66,8 @@ func InitLocalePool(logger log.Logger, cfg config.Config) (*mrlocale.Pool, error
 		return nil, err
 	}
 
+	localePool := mrlocale.NewPool(bundle)
+
 	log.DebugFunc(
 		logger,
 		func() string {
@@ -73,7 +75,7 @@ func InitLocalePool(logger log.Logger, cfg config.Config) (*mrlocale.Pool, error
 
 			buf = append(buf, "Locales:\n"...)
 
-			for _, lang := range cfg.AppLanguages {
+			for _, lang := range localePool.Languages() {
 				buf = append(buf, fmt.Sprintf("- Language=%s\n", lang)...)
 			}
 
@@ -87,5 +89,5 @@ func InitLocalePool(logger log.Logger, cfg config.Config) (*mrlocale.Pool, error
 		},
 	)
 
-	return mrlocale.NewPool(bundle), nil
+	return localePool, nil
 }

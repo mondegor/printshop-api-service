@@ -294,10 +294,10 @@ paths:
       summary: Auth/R7. Метод изменения языка и часового пояса пользователя
       description: |-
         Метод предназначен для изменения языка (локали) и часового пояса текущего пользователя.
-        Сохраняются всегда обе настройки, но оба поля тела необязательны, и незаполненное поле
+        Сохраняются всегда обе настройки, но оба поля тела необязательны, и отсутствующее поле
         означает **режим «авто»**: настройка определяется по самому запросу — так же, как при
         регистрации (`POST /v1/signup`). Поэтому присылать нужно только те настройки,
-        которые пользователь задал явно.
+        которые пользователь задал явно; пустая строка является невалидным значением.
         Приоритет источников в режиме «авто»: query-параметр (`lang`/`tz`), затем заголовок клиента
         (`Accept-Language`/`X-Accept-Time-Zone`), затем значение приложения по умолчанию.
         Уже сохранённые настройки пользователя в подборе **не участвуют**: в режиме «авто» клиент
@@ -913,7 +913,10 @@ components:
       bearerFormat: JWT
   parameters:
     Api.Request.Header.AcceptLanguage:
-      description: Предпочтительный язык пользователя (https://developer.mozilla.org/ru/docs/Web/HTTP/Headers/Accept-Language)
+      description: |-
+        Предпочтительный язык пользователя
+        (https://developer.mozilla.org/ru/docs/Web/HTTP/Headers/Accept-Language)
+        Невалидный параметр игнорируется, поведение не меняет.
       name: Accept-Language
       in: header
       required: false
@@ -929,6 +932,7 @@ components:
         необязательна: параметры служат запасным путём на случай, когда имя приложению неизвестно,
         и позволяют подобрать по смещению ближайший из его поясов.
         Формат строгий: пробелы в значении не допускаются нигде — ни вокруг сегментов, ни вокруг "=".
+        Невалидный параметр игнорируется, поведение не меняет.
       name: X-Accept-Time-Zone
       in: header
       required: false
@@ -948,6 +952,7 @@ components:
         при поддержке fr совпадением не считается). По заголовку Accept-Language, наоборот,
         подбирается ближайший поддерживаемый язык.
         Невалидный/неподдерживаемый источник пропускается — применяется следующий по приоритету.
+        Невалидный параметр игнорируется, поведение не меняет.
       name: lang
       in: query
       required: false
@@ -969,6 +974,7 @@ components:
         По заголовку X-Accept-Time-Zone, наоборот, при неизвестном имени подбирается ближайший
         по смещению пояс.
         Невалидный/неподдерживаемый источник пропускается — применяется следующий по приоритету.
+        Невалидный параметр игнорируется, поведение не меняет.
       name: tz
       in: query
       required: false
@@ -987,10 +993,10 @@ components:
     Auth.Request.Cookie.Web.RefreshToken:
       name: RTID
       in: cookie
+      required: false
       schema:
         description: Используется платформой WEB
         type: string
-        minLength: 64
         maxLength: 128
       example: 02fb5463db25b91568a1801dc0974b1d50cb1f3bc817f2be3a4b357929cee704
     Auth.Security.Request.Path.Token:
@@ -1022,6 +1028,7 @@ components:
         realm:
           description: Область, пространство, где должен быть зарегистрирован пользователь
           type: string
+          minLength: 4
           maxLength: 32
           example: domain_name/user_group
         user_email:
@@ -1056,7 +1063,6 @@ components:
         token:
           description: Токен операции, с помощью которой проводится процедура подтверждения подлинности пользователя
           type: string
-          minLength: 64
           maxLength: 128
           example: b1d50cb1f3bc817f2be3a4b357929cee70402fb5463db25b91568a1801dc0974
         confirm_method:
@@ -1064,18 +1070,29 @@ components:
         remaining_attempts:
           description: Оставшееся количество попыток ввода кода подтверждения
           type: integer
+          minimum: 0
           example: 2
         remaining_resends:
-          description: Оставшееся количество повторных отправок кода подтверждения
+          description: |-
+            Оставшееся количество повторных отправок кода подтверждения; 0 означает,
+            что отправки исчерпаны. Отсутствует вместе с resends_in, если повторные отправки
+            не применимы (пароль и TOTP)
           type: integer
+          minimum: 0
           example: 1
         resends_in:
-          description: Количество оставшихся секунд по истечении которых можно сделать повторную отправку кода подтверждения
+          description: |-
+            Количество оставшихся секунд по истечении которых можно сделать повторную отправку
+            кода подтверждения; 0 означает, что её можно сделать прямо сейчас.
+            Отсутствует вместе с remaining_resends, если повторные отправки не применимы
+            (пароль и TOTP)
           type: integer
+          minimum: 0
           example: 1
         expires_in:
           description: Количество оставшихся секунд до истечения срока действия подтверждения операции
           type: integer
+          minimum: 0
           example: 1
         message:
           type: string
@@ -1173,6 +1190,7 @@ components:
         realm:
           description: Область, пространство, где должен быть авторизован пользователь
           type: string
+          minLength: 4
           maxLength: 32
           example: domain_name/user_group
         user_login:
@@ -1193,7 +1211,10 @@ components:
           maxLength: 128
           example: b1d50cb1f3bc817f2be3a4b357929cee70402fb5463db25b91568a1801dc0974
         secret:
-          description: Пароль, одноразовый пароль или код подтверждения, высланный на емаил/телефон
+          description: |-
+            Пароль, одноразовый пароль или код подтверждения, высланный на емаил/телефон.
+            Необязателен: если он не требуется, то поле в теле не указывается,
+            пустая строка является невалидным значением.
           type: string
           minLength: 4
           maxLength: 32
@@ -1202,6 +1223,7 @@ components:
       type: object
       required:
         - access_token
+        - expires_in
       properties:
         access_token:
           description: |-
@@ -1235,18 +1257,29 @@ components:
         remaining_attempts:
           description: Оставшееся количество попыток ввода кода подтверждения
           type: integer
+          minimum: 0
           example: 2
         remaining_resends:
-          description: Оставшееся количество повторных отправок кода подтверждения
+          description: |-
+            Оставшееся количество повторных отправок кода подтверждения; 0 означает,
+            что отправки исчерпаны. Отсутствует вместе с resends_in, если повторные отправки
+            не применимы (пароль и TOTP)
           type: integer
+          minimum: 0
           example: 1
         resends_in:
-          description: Количество оставшихся секунд по истечении которых можно сделать повторную отправку кода подтверждения
+          description: |-
+            Количество оставшихся секунд по истечении которых можно сделать повторную отправку
+            кода подтверждения; 0 означает, что её можно сделать прямо сейчас.
+            Отсутствует вместе с remaining_resends, если повторные отправки не применимы
+            (пароль и TOTP)
           type: integer
+          minimum: 0
           example: 1
         expires_in:
           description: Количество оставшихся секунд до истечения срока действия подтверждения операции
           type: integer
+          minimum: 0
           example: 1
     Auth.Request.Model.ContinueSession:
       type: object
@@ -1335,6 +1368,7 @@ components:
         - auth_2fa_type
         - realms
         - status
+        - settings_pending
       properties:
         email:
           type: string
@@ -1365,9 +1399,8 @@ components:
         status:
           $ref: '#/components/schemas/Auth.Enum.UserStatus'
         settings_pending:
-          description: 'Признак того, что настройки, сохранённые в профиле, ещё не попали в предъявленный access-токен: язык или часовой пояс профиля отличается от зафиксированного в этом токене. Пока признак истинен, поля lang и tz отдают новые значения, а даты и тексты в ответах формируются по прежним; применить новые к конкретному ответу можно query-параметрами lang и tz - на сам признак они не влияют, он описывает токен, а не ответ. Гаснет сам после ближайшего продления сессии (PATCH /v1/session); отсутствие поля равнозначно false'
+          description: 'Признак того, что настройки, сохранённые в профиле, ещё не попали в предъявленный access-токен: язык или часовой пояс профиля отличается от зафиксированного в этом токене. Пока признак истинен, поля lang и tz отдают новые значения, а даты и тексты в ответах формируются по прежним; применить новые к конкретному ответу можно query-параметрами lang и tz - на сам признак они не влияют, он описывает токен, а не ответ. Гаснет сам после ближайшего продления сессии (PATCH /v1/session)'
           type: boolean
-          default: false
           example: false
     Auth.Request.Model.ChangeUserSettings:
       type: object
@@ -1375,19 +1408,23 @@ components:
         lang:
           description: |-
             Язык (локаль) пользователя - код языка и необязательный код региона.
-            Необязателен: если поле не указано (или пустое), то включается режим «авто» - язык
+            Необязателен: если поле в теле отсутствует, то включается режим «авто» - язык
             определяется по самому запросу (см. описание метода), а не остаётся прежним.
-            Указанный явно язык должен точно совпадать с одним из поддерживаемых приложением.
+            Указанный явно язык должен точно совпадать с одним из поддерживаемых приложением;
+            пустая строка является невалидным значением.
           type: string
+          minLength: 2
           maxLength: 5
           example: ru-RU
         tz:
           description: |-
             Часовой пояс пользователя (IANA-имя).
-            Необязателен: если поле не указано (или пустое), то включается режим «авто» - пояс
+            Необязателен: если поле в теле отсутствует, то включается режим «авто» - пояс
             определяется по самому запросу (см. описание метода), а не остаётся прежним.
-            Указанное явно имя должно точно совпадать с одним из часовых поясов поддерживаемых приложением.
+            Указанное явно имя должно точно совпадать с одним из часовых поясов поддерживаемых
+            приложением; пустая строка является невалидным значением.
           type: string
+          minLength: 3
           maxLength: 64
           example: Europe/Moscow
     Auth.Response.Model.UserSettings:
@@ -1399,19 +1436,17 @@ components:
         lang:
           description: |-
             Язык (локаль) пользователя, который был сохранён.
-            Если поле lang в запросе не заполнялось (режим «авто»), здесь возвращается
+            Если поле lang в запросе отсутствовало (режим «авто»), здесь возвращается
             подобранный язык; клиент применяет у себя именно это значение
           type: string
-          minLength: 2
           maxLength: 5
           example: ru-RU
         tz:
           description: |-
             Часовой пояс пользователя (IANA-имя), который был сохранён.
-            Если поле tz в запросе не заполнялось (режим «авто»), здесь возвращается
+            Если поле tz в запросе отсутствовало (режим «авто»), здесь возвращается
             подобранный пояс; клиент применяет у себя именно это значение
           type: string
-          minLength: 3
           maxLength: 64
           example: Europe/Moscow
     Auth.Check.Request.Model.CheckLogin:
@@ -1423,6 +1458,7 @@ components:
         realm:
           description: Область, пространство, где планируется регистрация
           type: string
+          minLength: 4
           maxLength: 32
           example: domain_name/user_group
         user_login:
@@ -1473,7 +1509,6 @@ components:
         password:
           description: Сгенерированный пароль для пользователя
           type: string
-          minLength: 8
           maxLength: 32
           example: L$QI.qA6eu7zG%7w
     Auth.Check.Enum.KeyType:
@@ -1490,6 +1525,7 @@ components:
       type: object
       required:
         - kty
+        - use
       properties:
         kty:
           $ref: '#/components/schemas/Auth.Check.Enum.KeyType'
@@ -1644,9 +1680,7 @@ components:
           maxLength: 128
           example: b1d50cb1f3bc817f2be3a4b357929cee70402fb5463db25b91568a1801dc0974
         totp_code:
-          description: |-
-            6-значный цифровой код, сгенерированный TOTP-приложением пользователя
-            - pattern: "^[0-9]{6}$"
+          description: 6-значный цифровой код, сгенерированный TOTP-приложением пользователя
           type: string
           minLength: 6
           maxLength: 6
@@ -1716,6 +1750,8 @@ components:
       properties:
         session_ids:
           type: array
+          minItems: 1
+          maxItems: 64
           items:
             $ref: '#/components/schemas/Auth.Sessions.Request.Model.SessionID'
   responses:
