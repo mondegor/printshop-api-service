@@ -21,6 +21,8 @@
       "Bash(make generate)",
       "Bash(make check-and-fix)",
       "Bash(make deps)",
+      "Bash(git diff:*)",
+      "Bash(git status:*)",
       "Skill(code-review)"
     ],
     "deny": [

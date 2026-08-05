@@ -1,9 +1,7 @@
 package rest
 
 import (
-	"net/http"
-
-	"github.com/mondegor/go-components/mrauth"
+	"github.com/mondegor/go-components/wire/mrauth/mapping"
 	"github.com/mondegor/go-core/errors/runtime/hint"
 	"github.com/mondegor/go-webcore/mrserver"
 	"github.com/mondegor/go-webcore/mrserver/mrjson"
@@ -31,8 +29,7 @@ func NewErrorResponseSender(opts app.Options) (*mrresp.ErrorSender, error) {
 
 	statusMapper, err := mrserver.NewHttpErrorStatusMapper(
 		int(opts.Cfg.UnexpectedErrorHttpStatus),
-		mrauth.ErrTokenInvalid.Code(), http.StatusForbidden,
-		mrauth.ErrTokenNotFoundOrExpired.Code(), http.StatusUnauthorized,
+		mapping.OptionErrorCodeToHttpStatus()...,
 	)
 	if err != nil {
 		return nil, err

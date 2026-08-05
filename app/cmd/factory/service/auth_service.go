@@ -117,5 +117,18 @@ func InitAuthSchedulerService(opts app.Options) *schedule.TaskScheduler {
 			),
 			task.WithTimeout(opts.Cfg.TaskScheduleAuth.CleanRecords.Timeout),
 		),
+		// период задачи уходит клиенту как Retry-After ответа 429 по hard-порогу лимита сессий,
+		// поэтому после старта пода она должна отработать раньше обещанного срока (первый тик ~period/4)
+		scheduler.WithTaskTrimSessionsOpts(
+			task.WithCaptionPrefix("Auth/"),
+			task.WithStartup(false),
+			task.WithPeriodStrategy(
+				mrprocess.NewQuadQuickStartStrategy(
+					opts.Cfg.TaskScheduleAuth.TrimSessions.Period,
+					opts.Cfg.TaskScheduleSettings.DefaultPeriodRatio,
+				),
+			),
+			task.WithTimeout(opts.Cfg.TaskScheduleAuth.TrimSessions.Timeout),
+		),
 	)
 }
