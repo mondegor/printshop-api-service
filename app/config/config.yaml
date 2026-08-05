@@ -1,59 +1,6 @@
 ---
 app_name: "Print Shop Service" # env:APPX_NAME
 # app_version: "v0.0.0" # env:APPX_VER
-app_languages: # env:APPX_LANGS; keep in sync with -lang in localization/dict/*/generate.go
-  - "ru-RU" # the first language is default
-  - "en-US"
-
-app_time_zones: # IANA names
-  - "Europe/Moscow"       # +03:00, the first timezone is default
-  # - "Etc/GMT+12"          # -12:00
-  - "Pacific/Pago_Pago"   # -11:00
-  - "Pacific/Tahiti"      # -10:00
-  - "Pacific/Marquesas"   # -09:30
-  - "America/Anchorage"   # -09:00, DST
-  - "America/Los_Angeles" # -08:00, DST
-  - "America/Phoenix"     # -07:00
-  - "America/Denver"      # -07:00, DST
-  - "America/Mexico_City" # -06:00
-  - "America/Chicago"     # -06:00, DST
-  - "America/New_York"    # -05:00, DST
-  - "America/Lima"        # -05:00
-  - "America/Santiago"    # -04:00, DST
-  - "America/Caracas"     # -04:00
-  - "America/St_Johns"    # -03:30, DST
-  - "America/Sao_Paulo"   # -03:00
-  - "America/Nuuk"        # -02:00, DST
-  - "Atlantic/Cape_Verde" # -01:00
-  - "Europe/London"       # +00:00, DST
-  - "Africa/Abidjan"      # +00:00 (alias UTC)
-  - "Africa/Lagos"        # +01:00
-  - "Europe/Paris"        # +01:00, DST
-  - "Africa/Cairo"        # +02:00, DST
-  - "Africa/Khartoum"     # +02:00
-  # - "Europe/Moscow"       # +03:00
-  - "Asia/Tehran"         # +03:30
-  - "Asia/Baku"           # +04:00
-  - "Asia/Kabul"          # +04:30
-  - "Asia/Karachi"        # +05:00
-  - "Asia/Kolkata"        # +05:30
-  - "Asia/Kathmandu"      # +05:45
-  - "Asia/Dhaka"          # +06:00
-  - "Asia/Yangon"         # +06:30
-  - "Asia/Jakarta"        # +07:00
-  - "Asia/Shanghai"       # +08:00
-  - "Australia/Eucla"     # +08:45
-  - "Asia/Tokyo"          # +09:00
-  - "Australia/Darwin"    # +09:30
-  - "Australia/Sydney"    # +10:00, DST
-  - "Australia/Brisbane"  # +10:00
-  - "Australia/Lord_Howe" # +10:30, DST
-  - "Pacific/Noumea"      # +11:00
-  - "Pacific/Auckland"    # +12:00, DST
-  - "Pacific/Fiji"        # +12:00
-  - "Pacific/Chatham"     # +12:45, DST
-  - "Pacific/Apia"        # +13:00
-  - "Pacific/Kiritimati"  # +14:00
 
 log_level: info # debug, info, warn, error
 log_time_format: DateTime # RFC3339, RFC3339Nano, DateTime, TimeOnly, Kitchen
@@ -157,6 +104,7 @@ cors_allowed_headers:
   - X-Idempotency-Key
   - X-Use-Cookie
 cors_exposed_headers:
+  - Retry-After
   - X-Request-Id
 cors_allow_credentials: true
 
@@ -384,6 +332,11 @@ task_schedule_settings:
   default_period_ratio: 0.1 # 10% of period
 
 task_schedule_auth:
+  clean_records:
+    period: 5m
+    timeout: 300s # 4 зацикленных воркера очистки подряд, у каждого предел длительности 30s
+  clean_records_limit: 100
+  logs_life_time: 168h # 1 week
   user_stat_request_collector:
     ready_timeout: 5s
     flush_period: 1m
@@ -396,11 +349,10 @@ task_schedule_auth:
     handler_timeout: 30s
     batch_size: 100
     workers_count: 1
-  clean_records:
+  trim_sessions:
+    # period также уходит клиенту как Retry-After ответа 429 по hard-порогу лимита сессий
     period: 5m
-    timeout: 15s
-  clean_records_limit: 100
-  logs_life_time: 168h # 1 week
+    timeout: 60s # предел длительности зацикленного воркера-триммера 30s
 
 task_schedule_mailer:
   message_processor:
@@ -446,3 +398,148 @@ task_schedule_notifier:
   change_retry_timeout: 30s
   change_retry_delayed: 30s
   clean_queue_batch_size: 1000
+
+app_languages: # env:APPX_LANGS; keep in sync with -lang in localization/dict/*/generate.go
+  - "ru-RU" # the first language is default
+  - "en-US"
+
+app_time_zones: # IANA names
+  - "Europe/Moscow"                  # +03:00, Moscow, St. Petersburg, the first timezone is default
+  - "Etc/GMT+12"                     # -12:00, International Date Line West
+  - "Etc/GMT+11"                     # -11:00, Coordinated Universal Time-11
+  - "America/Adak"                   # -10:00, DST, Aleutian Islands
+  - "Pacific/Honolulu"               # -10:00, Hawaii
+  - "Pacific/Marquesas"              # -09:30, Marquesas Islands
+  - "America/Anchorage"              # -09:00, DST, Alaska
+  - "Etc/GMT+9"                      # -09:00, Coordinated Universal Time-09
+  - "America/Tijuana"                # -08:00, DST, Baja California
+  - "Etc/GMT+8"                      # -08:00, Coordinated Universal Time-08
+  - "America/Los_Angeles"            # -08:00, DST, Pacific Time (US & Canada)
+  - "America/Phoenix"                # -07:00, Arizona
+  - "America/Mazatlan"               # -07:00, La Paz, Mazatlan
+  - "America/Denver"                 # -07:00, DST, Mountain Time (US & Canada)
+  - "America/Whitehorse"             # -07:00, Yukon
+  - "America/Guatemala"              # -06:00, Central America
+  - "America/Chicago"                # -06:00, DST, Central Time (US & Canada)
+  - "Pacific/Easter"                 # -06:00, DST, Easter Island
+  - "America/Mexico_City"            # -06:00, Guadalajara, Mexico City, Monterrey
+  - "America/Regina"                 # -06:00, Saskatchewan
+  - "America/Bogota"                 # -05:00, Bogota, Lima, Quito, Rio Branco
+  - "America/Cancun"                 # -05:00, Chetumal
+  - "America/New_York"               # -05:00, DST, Eastern Time (US & Canada)
+  - "America/Port-au-Prince"         # -05:00, DST, Haiti
+  - "America/Havana"                 # -05:00, DST, Havana
+  - "America/Indiana/Indianapolis"   # -05:00, DST, Indiana (East)
+  - "America/Grand_Turk"             # -05:00, DST, Turks and Caicos
+  - "America/Halifax"                # -04:00, DST, Atlantic Time (Canada)
+  - "America/Caracas"                # -04:00, Caracas
+  - "America/Cuiaba"                 # -04:00, Cuiaba
+  - "America/La_Paz"                 # -04:00, Georgetown, La Paz, Manaus, San Juan
+  - "America/Santiago"               # -04:00, DST, Santiago
+  - "America/St_Johns"               # -03:30, DST, Newfoundland
+  - "America/Araguaina"              # -03:00, Araguaina
+  - "America/Asuncion"               # -03:00, Asuncion
+  - "America/Sao_Paulo"              # -03:00, Brasilia
+  - "America/Cayenne"                # -03:00, Cayenne, Fortaleza
+  - "America/Argentina/Buenos_Aires" # -03:00, City of Buenos Aires
+  - "America/Montevideo"             # -03:00, Montevideo
+  - "America/Punta_Arenas"           # -03:00, Punta Arenas
+  - "America/Miquelon"               # -03:00, DST, Saint Pierre and Miquelon
+  - "America/Bahia"                  # -03:00, Salvador
+  - "Etc/GMT+2"                      # -02:00, Coordinated Universal Time-02
+  - "America/Godthab"                # -02:00, DST, Greenland (совр. America/Nuuk)
+  - "Atlantic/Azores"                # -01:00, DST, Azores
+  - "Atlantic/Cape_Verde"            # -01:00, Cabo Verde Is.
+  - "UTC"                            # +00:00, Coordinated Universal Time
+  - "Europe/London"                  # +00:00, DST, Dublin, Edinburgh, Lisbon, London
+  - "Atlantic/Reykjavik"             # +00:00, Monrovia, Reykjavik
+  - "Africa/Sao_Tome"                # +00:00, Sao Tome
+  - "Africa/Casablanca"              # +01:00, Casablanca (сдвиг на +00:00 в Рамадан)
+  - "Europe/Berlin"                  # +01:00, DST, Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna
+  - "Europe/Budapest"                # +01:00, DST, Belgrade, Bratislava, Budapest, Ljubljana, Prague
+  - "Europe/Paris"                   # +01:00, DST, Brussels, Copenhagen, Madrid, Paris
+  - "Europe/Warsaw"                  # +01:00, DST, Sarajevo, Skopje, Warsaw, Zagreb
+  - "Africa/Lagos"                   # +01:00, West Central Africa
+  - "Europe/Bucharest"               # +02:00, DST, Athens, Bucharest
+  - "Asia/Beirut"                    # +02:00, DST, Beirut
+  - "Africa/Cairo"                   # +02:00, DST, Cairo
+  - "Europe/Chisinau"                # +02:00, DST, Chisinau
+  - "Asia/Hebron"                    # +02:00, DST, Gaza, Hebron
+  - "Africa/Johannesburg"            # +02:00, Harare, Pretoria
+  - "Europe/Kiev"                    # +02:00, DST, Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius (совр. Europe/Kyiv)
+  - "Asia/Jerusalem"                 # +02:00, DST, Jerusalem
+  - "Africa/Juba"                    # +02:00, Juba
+  - "Europe/Kaliningrad"             # +02:00, Kaliningrad
+  - "Africa/Khartoum"                # +02:00, Khartoum
+  - "Africa/Tripoli"                 # +02:00, Tripoli
+  - "Africa/Windhoek"                # +02:00, Windhoek
+  - "Asia/Amman"                     # +03:00, Amman
+  - "Asia/Baghdad"                   # +03:00, Baghdad
+  - "Asia/Damascus"                  # +03:00, Damascus
+  - "Europe/Istanbul"                # +03:00, Istanbul
+  - "Asia/Riyadh"                    # +03:00, Kuwait, Riyadh
+  - "Europe/Minsk"                   # +03:00, Minsk
+  - "Africa/Nairobi"                 # +03:00, Nairobi
+  - "Europe/Volgograd"               # +03:00, Volgograd
+  - "Asia/Tehran"                    # +03:30, Tehran
+  - "Asia/Dubai"                     # +04:00, Abu Dhabi, Muscat
+  - "Europe/Astrakhan"               # +04:00, Astrakhan, Ulyanovsk
+  - "Asia/Baku"                      # +04:00, Baku
+  - "Europe/Samara"                  # +04:00, Izhevsk, Samara
+  - "Indian/Mauritius"               # +04:00, Port Louis
+  - "Europe/Saratov"                 # +04:00, Saratov
+  - "Asia/Tbilisi"                   # +04:00, Tbilisi
+  - "Asia/Yerevan"                   # +04:00, Yerevan
+  - "Asia/Kabul"                     # +04:30, Kabul
+  - "Asia/Tashkent"                  # +05:00, Ashgabat, Tashkent
+  - "Asia/Almaty"                    # +05:00, Astana
+  - "Asia/Yekaterinburg"             # +05:00, Ekaterinburg
+  - "Asia/Karachi"                   # +05:00, Islamabad, Karachi
+  - "Asia/Kolkata"                   # +05:30, Chennai, Kolkata, Mumbai, New Delhi
+  - "Asia/Colombo"                   # +05:30, Sri Jayawardenepura
+  - "Asia/Kathmandu"                 # +05:45, Kathmandu
+  - "Asia/Bishkek"                   # +06:00, Bishkek
+  - "Asia/Dhaka"                     # +06:00, Dhaka
+  - "Asia/Omsk"                      # +06:00, Omsk
+  - "Asia/Yangon"                    # +06:30, Yangon (Rangoon)
+  - "Asia/Bangkok"                   # +07:00, Bangkok, Hanoi, Jakarta
+  - "Asia/Barnaul"                   # +07:00, Barnaul, Gorno-Altaysk
+  - "Asia/Hovd"                      # +07:00, Hovd
+  - "Asia/Krasnoyarsk"               # +07:00, Krasnoyarsk
+  - "Asia/Novosibirsk"               # +07:00, Novosibirsk
+  - "Asia/Tomsk"                     # +07:00, Tomsk
+  - "Asia/Shanghai"                  # +08:00, Beijing, Chongqing, Hong Kong, Urumqi
+  - "Asia/Irkutsk"                   # +08:00, Irkutsk
+  - "Asia/Singapore"                 # +08:00, Kuala Lumpur, Singapore
+  - "Australia/Perth"                # +08:00, Perth
+  - "Asia/Taipei"                    # +08:00, Taipei
+  - "Asia/Ulaanbaatar"               # +08:00, Ulaanbaatar
+  - "Australia/Eucla"                # +08:45, Eucla
+  - "Asia/Chita"                     # +09:00, Chita
+  - "Asia/Tokyo"                     # +09:00, Osaka, Sapporo, Tokyo
+  - "Asia/Pyongyang"                 # +09:00, Pyongyang
+  - "Asia/Seoul"                     # +09:00, Seoul
+  - "Asia/Yakutsk"                   # +09:00, Yakutsk
+  - "Australia/Adelaide"             # +09:30, DST, Adelaide
+  - "Australia/Darwin"               # +09:30, Darwin
+  - "Australia/Brisbane"             # +10:00, Brisbane
+  - "Australia/Sydney"               # +10:00, DST, Canberra, Melbourne, Sydney
+  - "Pacific/Port_Moresby"           # +10:00, Guam, Port Moresby
+  - "Australia/Hobart"               # +10:00, DST, Hobart
+  - "Asia/Vladivostok"               # +10:00, Vladivostok
+  - "Australia/Lord_Howe"            # +10:30, DST, Lord Howe Island
+  - "Pacific/Bougainville"           # +11:00, Bougainville Island
+  - "Asia/Srednekolymsk"             # +11:00, Chokurdakh
+  - "Asia/Magadan"                   # +11:00, Magadan
+  - "Pacific/Norfolk"                # +11:00, DST, Norfolk Island
+  - "Asia/Sakhalin"                  # +11:00, Sakhalin
+  - "Pacific/Guadalcanal"            # +11:00, Solomon Is., New Caledonia
+  - "Asia/Kamchatka"                 # +12:00, Anadyr, Petropavlovsk-Kamchatsky
+  - "Pacific/Auckland"               # +12:00, DST, Auckland, Wellington
+  - "Etc/GMT-12"                     # +12:00, Coordinated Universal Time+12
+  - "Pacific/Fiji"                   # +12:00, Fiji
+  - "Pacific/Chatham"                # +12:45, DST, Chatham Islands
+  - "Etc/GMT-13"                     # +13:00, Coordinated Universal Time+13
+  - "Pacific/Tongatapu"              # +13:00, Nuku'alofa
+  - "Pacific/Apia"                   # +13:00, Samoa
+  - "Pacific/Kiritimati"             # +14:00, Kiritimati Island

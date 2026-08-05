@@ -80,6 +80,7 @@ func getAuthAPIControllers(opts app.Options) []initing.HttpModule {
 			opts.Cfg.RefreshCookie,
 			opts.Cfg.AccessControl.SessionSoftThreshold,
 			opts.Cfg.AccessControl.SessionHardThreshold,
+			opts.Cfg.TaskScheduleAuth.TrimSessions.Period,
 			nil, // appResolver
 			nil, // locationResolver
 			serviceAuthTokensTableName,
