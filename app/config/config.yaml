@@ -131,7 +131,7 @@ access_control:
       register_user_kind: standard
       operation_confirm:
         token_length: 64
-        code_length: 4
+        code_length: 6
         # session_expiry: 10m
         send_by_email:
           max_attempts: 3
@@ -235,6 +235,7 @@ access_control:
     code_length: 6
     code_max_attempts: 3
     session_expiry: 10m
+    # new_email_expiry: 24h # 0 - by default
     send_by_email:
       max_attempts: 5
       max_resends: 8
@@ -249,6 +250,11 @@ access_control:
     recovery_count: 10
     recovery_code_length: 17
     recovery_low_threshold: 3
+    confirm_max_attempts: 5
+    confirm_expiry: 30m
+    decoy_totp_percent: 10
+    # decoy_factor_salt: "..." # required, min 32 bytes, env:APPX_2FA_DECOY_FACTOR_SALT
+    password_min_strength: STRONG # WEAK, MIDDLE, STRONG, THE_BEST
 
   session_soft_threshold: 0
   session_hard_threshold: 4

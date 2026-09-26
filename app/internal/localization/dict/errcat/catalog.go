@@ -38,73 +38,86 @@ func NewCatalog() catalog.Catalog {
 }
 
 var messageKeyToIndex = map[string]int{
+	"2fa is disabled":                                                        71,
 	"401. client is unauthorized":                                            4,
 	"403. access forbidden":                                                  5,
 	"404. resource not found":                                                7,
-	"Validator_gte: %[1]s, %[2]s, %[3]s, %[4]s":                              74,
-	"Validator_http_url: %[1]s, %[2]s, %[3]s":                                72,
-	"Validator_lte: %[1]s, %[2]s, %[3]s, %[4]s":                              75,
-	"Validator_max: %[1]s, %[2]s, %[3]s, %[4]s":                              76,
-	"Validator_min: %[1]s, %[2]s, %[3]s, %[4]s":                              77,
-	"Validator_required: %[1]s, %[2]s, %[3]s":                                73,
-	"Validator_tag_2d_size: %[1]s, %[2]s, %[3]s":                             85,
-	"Validator_tag_3d_size: %[1]s, %[2]s, %[3]s":                             86,
-	"Validator_tag_article: %[1]s, %[2]s, %[3]s":                             78,
-	"Validator_tag_email: %[1]s, %[2]s, %[3]s":                               79,
-	"Validator_tag_email_phone: %[1]s, %[2]s, %[3]s":                         80,
-	"Validator_tag_password: %[1]s, %[2]s, %[3]s":                            81,
-	"Validator_tag_phone: %[1]s, %[2]s, %[3]s":                               82,
-	"Validator_tag_rewrite_name: %[1]s, %[2]s, %[3]s":                        83,
-	"Validator_tag_variable: %[1]s, %[2]s, %[3]s":                            84,
+	"Validator_gte: %[1]s, %[2]s, %[3]s, %[4]s":                              85,
+	"Validator_http_url: %[1]s, %[2]s, %[3]s":                                83,
+	"Validator_lte: %[1]s, %[2]s, %[3]s, %[4]s":                              86,
+	"Validator_max: %[1]s, %[2]s, %[3]s, %[4]s":                              87,
+	"Validator_min: %[1]s, %[2]s, %[3]s, %[4]s":                              88,
+	"Validator_required: %[1]s, %[2]s, %[3]s":                                84,
+	"Validator_tag_2d_size: %[1]s, %[2]s, %[3]s":                             100,
+	"Validator_tag_3d_size: %[1]s, %[2]s, %[3]s":                             101,
+	"Validator_tag_article: %[1]s, %[2]s, %[3]s":                             89,
+	"Validator_tag_email: %[1]s, %[2]s, %[3]s":                               90,
+	"Validator_tag_email_phone: %[1]s, %[2]s, %[3]s":                         91,
+	"Validator_tag_lang: %[1]s, %[2]s, %[3]s":                                92,
+	"Validator_tag_name: %[1]s, %[2]s, %[3]s":                                93,
+	"Validator_tag_password: %[1]s, %[2]s, %[3]s":                            94,
+	"Validator_tag_phone: %[1]s, %[2]s, %[3]s":                               95,
+	"Validator_tag_realm: %[1]s, %[2]s, %[3]s":                               96,
+	"Validator_tag_rewrite_name: %[1]s, %[2]s, %[3]s":                        97,
+	"Validator_tag_tz: %[1]s, %[2]s, %[3]s":                                  98,
+	"Validator_tag_variable: %[1]s, %[2]s, %[3]s":                            99,
 	"access forbidden":                                                       6,
-	"after node with ID=%[1]s not found":                                     63,
-	"all attempts to confirm the operation have been used":                   61,
-	"box article '%[1]s' already exists":                                     29,
-	"box with ID=%[1]s not found":                                            28,
-	"confirm code is incorrect":                                              60,
-	"element template ID is required":                                        41,
-	"element template with ID=%[1]s is disabled":                             43,
-	"element template with ID=%[1]s not found":                               42,
-	"email already exists":                                                   25,
-	"email is invalid":                                                       23,
-	"entity already exists":                                                  19,
-	"entity is not available":                                                18,
-	"file is invalid":                                                        21,
-	"form ID is required":                                                    34,
-	"form element with ID=%[1]s not found":                                   39,
-	"form with ID=%[1]s is disabled":                                         38,
-	"form with ID=%[1]s not found":                                           35,
+	"after node with ID=%[1]s not found":                                     74,
+	"all attempts to confirm the operation have been spent":                  57,
+	"auth token is empty or invalid":                                         67,
+	"auth token not found or expired":                                        68,
+	"box article '%[1]s' already exists":                                     26,
+	"box with ID=%[1]s not found":                                            25,
+	"confirm code is incorrect":                                              55,
+	"confirm code is required":                                               56,
+	"disable current 2fa before setting a new one":                           72,
+	"element template ID is required":                                        38,
+	"element template with ID=%[1]s is disabled":                             40,
+	"element template with ID=%[1]s not found":                               39,
+	"email already exists":                                                   22,
+	"email is invalid":                                                       20,
+	"file is invalid":                                                        19,
+	"form ID is required":                                                    31,
+	"form element with ID=%[1]s not found":                                   36,
+	"form with ID=%[1]s is disabled":                                         35,
+	"form with ID=%[1]s not found":                                           32,
 	"input data is incorrect: '%[1]s'":                                       17,
 	"internal error":                                                         0,
-	"invalid file extension: %[1]s":                                          66,
-	"invalid file size, max size = %[1]sb":                                   65,
-	"invalid file size, min size = %[1]sb":                                   64,
-	"invalid file total size, max total size = %[1]sb":                       67,
-	"invalid image height, max size = %[1]spx":                               71,
-	"invalid image width, max size = %[1]spx":                                70,
-	"item detailing '%[1]s' not allowed for form detailing '%[2]s'":          40,
-	"laminate article '%[1]s' already exists":                                31,
-	"laminate type ID is required":                                           44,
-	"laminate type with ID=%[1]s is not available":                           45,
-	"laminate type with ID=%[1]s not found":                                  46,
-	"laminate with ID=%[1]s not found":                                       30,
-	"login is invalid":                                                       22,
+	"invalid file extension: %[1]s":                                          77,
+	"invalid file size, max size = %[1]sb":                                   76,
+	"invalid file size, min size = %[1]sb":                                   75,
+	"invalid file total size, max total size = %[1]sb":                       78,
+	"invalid image height, max size = %[1]spx":                               82,
+	"invalid image width, max size = %[1]spx":                                81,
+	"item detailing '%[1]s' not allowed for form detailing '%[2]s'":          37,
+	"laminate article '%[1]s' already exists":                                28,
+	"laminate type ID is required":                                           41,
+	"laminate type with ID=%[1]s is not available":                           42,
+	"laminate type with ID=%[1]s not found":                                  43,
+	"laminate with ID=%[1]s not found":                                       27,
+	"login not exists":                                                       65,
+	"no attempts to resend confirm code":                                     58,
 	"not implemented":                                                        3,
-	"paper article '%[1]s' already exists":                                   33,
-	"paper color ID is required":                                             47,
-	"paper color with ID=%[1]s is not available":                             48,
-	"paper color with ID=%[1]s not found":                                    49,
-	"paper facture ID is required":                                           50,
-	"paper facture with ID=%[1]s is not available":                           51,
-	"paper facture with ID=%[1]s not found":                                  52,
-	"paper with ID=%[1]s not found":                                          32,
-	"param name '%[1]s' already exists":                                      37,
-	"phone already exists":                                                   26,
-	"phone is invalid":                                                       24,
-	"print format ID is required":                                            53,
-	"print format with ID=%[1]s is not available":                            54,
-	"print format with ID=%[1]s not found":                                   55,
-	"query %[1]s not found":                                                  27,
+	"operation already confirmed":                                            62,
+	"operation already expired":                                              63,
+	"operation is empty or invalid":                                          61,
+	"operation is not confirmed":                                             64,
+	"paper article '%[1]s' already exists":                                   30,
+	"paper color ID is required":                                             44,
+	"paper color with ID=%[1]s is not available":                             45,
+	"paper color with ID=%[1]s not found":                                    46,
+	"paper facture ID is required":                                           47,
+	"paper facture with ID=%[1]s is not available":                           48,
+	"paper facture with ID=%[1]s not found":                                  49,
+	"paper with ID=%[1]s not found":                                          29,
+	"param name '%[1]s' already exists":                                      34,
+	"password is too weak":                                                   66,
+	"phone already exists":                                                   23,
+	"phone is invalid":                                                       21,
+	"print format ID is required":                                            50,
+	"print format with ID=%[1]s is not available":                            51,
+	"print format with ID=%[1]s not found":                                   52,
+	"query %[1]s not found":                                                  24,
 	"record not found":                                                       8,
 	"record version conflict":                                                9,
 	"request body is not valid: '%[1]s'":                                     10,
@@ -112,149 +125,246 @@ var messageKeyToIndex = map[string]int{
 	"request param with key '%[1]s' has value length greater then max '%[2]s' characters": 16,
 	"request param with key '%[1]s' is empty":                                             14,
 	"request param with key '%[1]s' of type '%[2]s' contains incorrect value '%[3]s'":     13,
-	"rewrite name '%[1]s' already exists":                                                 36,
-	"sending new messages is temporarily restricted":                                      62,
-	"switching from '%[1]s' to '%[2]s' is rejected":                                       20,
+	"resend confirm code is not supported for the current action":                         59,
+	"rewrite name '%[1]s' already exists":                                                 33,
+	"sending new messages is temporarily restricted":                                      60,
+	"session limit exceeded, try again later":                                             69,
+	"signup already in progress, try again later":                                         70,
+	"switching from '%[1]s' to '%[2]s' is rejected":                                       18,
 	"system error": 1,
-	"the content type '%[1]s' does not match the detected type": 68,
+	"the content type '%[1]s' does not match the detected type": 79,
 	"the file with the specified key '%[1]s' was not uploaded":  12,
-	"token is already revoked":                                  59,
-	"token is invalid":                                          57,
-	"token not found or expired : %[1]s, %[2]s, %[1]s":          56,
-	"token section %[1]s is invalid":                            58,
+	"token not found or expired : %[1]s, %[2]s, %[1]s":          53,
+	"token section %[1]s is invalid":                            54,
 	"too many requests":                                         11,
+	"totp code is incorrect":                                    73,
 	"unexpected internal error":                                 2,
-	"unsupported file type '%[1]s'":                             69,
+	"unsupported file type '%[1]s'":                             80,
 }
 
-var en_USIndex = []uint32{ // 88 elements
+var en_USIndex = []uint32{ // 103 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000016, 0x00000068, 0x0000009f,
 	0x000000af, 0x000000cb, 0x000000fb, 0x0000012b,
-	0x0000013e, 0x0000014f, 0x00000167, 0x00000222,
-	0x00000234, 0x0000026d, 0x000002bd, 0x000002e5,
-	0x0000032c, 0x00000380, 0x000003a1, 0x000003b9,
-	0x000003cf, 0x000003fd, 0x0000040d, 0x0000041e,
-	0x0000042f, 0x00000440, 0x00000455, 0x0000046a,
-	0x00000480, 0x0000049c, 0x000004bf, 0x000004e0,
+	0x0000013e, 0x0000014f, 0x00000193, 0x00000201,
+	0x0000022b, 0x00000264, 0x000002b2, 0x000002d5,
+	0x00000321, 0x00000373, 0x00000394, 0x000003c2,
+	0x000003d2, 0x000003eb, 0x00000403, 0x0000042c,
+	0x00000454, 0x0000046a, 0x00000486, 0x000004ae,
+	0x000004cf, 0x000004fc, 0x0000051a, 0x00000544,
 	// Entry 20 - 3F
-	0x00000508, 0x00000526, 0x0000054b, 0x0000055f,
-	0x0000057c, 0x000005a0, 0x000005c2, 0x000005e1,
-	0x00000606, 0x00000644, 0x00000664, 0x0000068d,
-	0x000006b8, 0x000006d5, 0x00000702, 0x00000728,
-	0x00000743, 0x0000076e, 0x00000792, 0x000007af,
-	0x000007dc, 0x00000802, 0x0000081e, 0x0000084a,
-	0x0000086f, 0x000008a0, 0x000008b1, 0x000008d0,
-	0x000008e9, 0x00000903, 0x00000938, 0x00000967,
+	0x00000558, 0x00000575, 0x00000599, 0x000005bf,
+	0x000005de, 0x00000603, 0x00000644, 0x00000664,
+	0x0000068d, 0x000006b8, 0x000006d5, 0x00000702,
+	0x00000728, 0x00000743, 0x0000076e, 0x00000792,
+	0x000007af, 0x000007dc, 0x00000802, 0x0000081e,
+	0x0000084a, 0x0000086f, 0x0000089f, 0x000008be,
+	0x000008dd, 0x000008fb, 0x00000930, 0x00000961,
+	0x000009a9, 0x000009d8, 0x000009fe, 0x00000a1d,
 	// Entry 40 - 5F
-	0x0000098a, 0x000009af, 0x000009d4, 0x000009f2,
-	0x00000a23, 0x00000a5d, 0x00000a7b, 0x00000aa3,
-	0x00000acc, 0x00000b09, 0x00000b1f, 0x00000b6f,
-	0x00000bbc, 0x00000bf2, 0x00000c3d, 0x00000c68,
-	0x00000ca7, 0x00000cf6, 0x00000d6f, 0x00000d98,
-	0x00000dc8, 0x00000df4, 0x00000e1f, 0x00000e4a,
-} // Size: 376 bytes
+	0x00000a3b, 0x00000a56, 0x00000a7e, 0x00000a93,
+	0x00000ac3, 0x00000aec, 0x00000b1b, 0x00000b51,
+	0x00000b77, 0x00000bbe, 0x00000bd5, 0x00000c1b,
+	0x00000c45, 0x00000c6f, 0x00000c8d, 0x00000cc3,
+	0x00000d07, 0x00000d25, 0x00000d52, 0x00000d81,
+	0x00000dbe, 0x00000dd4, 0x00000e24, 0x00000e71,
+	0x00000ea7, 0x00000ef2, 0x00000f4d, 0x00000f8c,
+	0x00000fdb, 0x00001030, 0x000010b4, 0x0000112d,
+	// Entry 60 - 7F
+	0x0000116d, 0x000011ba, 0x00001249, 0x0000129f,
+	0x00001311, 0x0000137b, 0x000013f0,
+} // Size: 436 bytes
 
-const en_USData string = "" + // Size: 3658 bytes
+const en_USData string = "" + // Size: 5104 bytes
 	"\x02Internal server error\x02The service is temporarily unable to proces" +
 	"s your request. Please try again later\x02Internal server error [problem" +
-	"]\x0a\x0a599. unexpected error\x02not implemented\x02User authorization " +
+	"]\x0a\x0a599. unexpected error\x02Not implemented\x02User authorization " +
 	"required\x02Forbidden - You don't have permission to access\x02Forbidden" +
-	" - You don't have permission to access\x02Resource not found\x02record n" +
-	"ot found\x02record version conflict\x02Request body is not valid: '%[1]s" +
-	"'\x0a\x0aпроверьте параметры запроса, правильность формата json и соотве" +
-	"тствующих ему типов\x02too many requests\x02the file with the specified" +
-	" key '%[1]s' was not uploaded\x02request param with key '%[1]s' of type " +
-	"'%[2]s' contains incorrect value '%[3]s'\x02request param with key '%[1]" +
-	"s' is empty\x02request param with key '%[1]s' contains value greater the" +
-	"n max '%[2]s'\x02request param with key '%[1]s' has value length greater" +
-	" then max '%[2]s' characters\x02Input data is incorrect: '%[1]s'\x02enti" +
-	"ty is not available\x02entity already exists\x02switching from '%[1]s' t" +
-	"o '%[2]s' is rejected\x02file is invalid\x02login is invalid\x02email is" +
-	" invalid\x02phone is invalid\x02email already exists\x02phone already ex" +
-	"ists\x02query %[1]s not found\x02box with ID=%[1]s not found\x02box arti" +
-	"cle '%[1]s' already exists\x02laminate with ID=%[1]s not found\x02lamina" +
-	"te article '%[1]s' already exists\x02paper with ID=%[1]s not found\x02pa" +
-	"per article '%[1]s' already exists\x02form ID is required\x02form with I" +
-	"D=%[1]s not found\x02rewrite name '%[1]s' already exists\x02param name '" +
-	"%[1]s' already exists\x02form with ID=%[1]s is disabled\x02form element " +
-	"with ID=%[1]s not found\x02item detailing '%[1]s' not allowed for form d" +
-	"etailing '%[2]s'\x02element template ID is required\x02element template " +
-	"with ID=%[1]s not found\x02element template with ID=%[1]s is disabled" +
-	"\x02laminate type ID is required\x02laminate type with ID=%[1]s is not a" +
-	"vailable\x02laminate type with ID=%[1]s not found\x02paper color ID is r" +
-	"equired\x02paper color with ID=%[1]s is not available\x02paper color wit" +
-	"h ID=%[1]s not found\x02paper facture ID is required\x02paper facture wi" +
-	"th ID=%[1]s is not available\x02paper facture with ID=%[1]s not found" +
-	"\x02print format ID is required\x02print format with ID=%[1]s is not ava" +
-	"ilable\x02print format with ID=%[1]s not found\x02token not found or exp" +
-	"ired : %[1]s, %[2]s, %[1]s\x02token is invalid\x02token section %[1]s is" +
-	" invalid\x02token is already revoked\x02confirm code is incorrect\x02all" +
-	" attempts to confirm the operation have been used\x02sending new message" +
-	"s is temporarily restricted\x02after node with ID=%[1]s not found\x02inv" +
-	"alid file size, min size = %[1]sb\x02invalid file size, max size = %[1]s" +
-	"b\x02invalid file extension: %[1]s\x02invalid file total size, max total" +
-	" size = %[1]sb\x02the content type '%[1]s' does not match the detected t" +
-	"ype\x02unsupported file type '%[1]s'\x02invalid image width, max size = " +
-	"%[1]spx\x02invalid image height, max size = %[1]spx\x02The field value m" +
+	" - You don't have permission to access\x02Resource not found\x02Record n" +
+	"ot found\x02Record version conflict, the record was modified by another " +
+	"process\x02Request body is not valid: '%[1]s'\x0a\x0acheck the request p" +
+	"arameters, the json format and the corresponding types\x02Too many reque" +
+	"sts, please try again later\x02The file with the specified key '%[1]s' w" +
+	"as not uploaded\x02Request parameter '%[1]s' of type '%[2]s' contains an" +
+	" incorrect value '%[3]s'\x02Request parameter '%[1]s' is empty\x02Reques" +
+	"t parameter '%[1]s' contains a value greater than the maximum '%[2]s'" +
+	"\x02Request parameter '%[1]s' has a value longer than the maximum of %[2" +
+	"]s characters\x02Input data is incorrect: '%[1]s'\x02Switching from '%[1" +
+	"]s' to '%[2]s' is rejected\x02File is invalid\x02Email address is invali" +
+	"d\x02Phone number is invalid\x02This email address is already registered" +
+	"\x02This phone number is already registered\x02Query %[1]s not found\x02" +
+	"Box with ID=%[1]s not found\x02Box with article '%[1]s' already exists" +
+	"\x02Laminate with ID=%[1]s not found\x02Laminate with article '%[1]s' al" +
+	"ready exists\x02Paper with ID=%[1]s not found\x02Paper with article '%[1" +
+	"]s' already exists\x02Form ID is required\x02Form with ID=%[1]s not foun" +
+	"d\x02Rewrite name '%[1]s' already exists\x02Parameter name '%[1]s' alrea" +
+	"dy exists\x02Form with ID=%[1]s is disabled\x02Form element with ID=%[1]" +
+	"s not found\x02Item detailing '%[1]s' is not allowed for form detailing " +
+	"'%[2]s'\x02Element template ID is required\x02Element template with ID=%" +
+	"[1]s not found\x02Element template with ID=%[1]s is disabled\x02Laminate" +
+	" type ID is required\x02Laminate type with ID=%[1]s is not available\x02" +
+	"Laminate type with ID=%[1]s not found\x02Paper color ID is required\x02P" +
+	"aper color with ID=%[1]s is not available\x02Paper color with ID=%[1]s n" +
+	"ot found\x02Paper facture ID is required\x02Paper facture with ID=%[1]s " +
+	"is not available\x02Paper facture with ID=%[1]s not found\x02Print forma" +
+	"t ID is required\x02Print format with ID=%[1]s is not available\x02Print" +
+	" format with ID=%[1]s not found\x02Token not found or expired: %[1]s, %[" +
+	"2]s, %[1]s\x02Token section %[1]s is invalid\x02Confirmation code is inc" +
+	"orrect\x02Confirmation code is required\x02All attempts to confirm the o" +
+	"peration have been used\x02No attempts left to resend the confirmation c" +
+	"ode\x02Resending the confirmation code is not supported for the current " +
+	"action\x02Sending new messages is temporarily restricted\x02Operation is" +
+	" not specified or invalid\x02Operation is already confirmed\x02Operation" +
+	" has already expired\x02Operation is not confirmed\x02User with the spec" +
+	"ified login not found\x02Password is too weak\x02Authorization token is " +
+	"not specified or invalid\x02Authorization token not found or expired\x02" +
+	"Session limit exceeded, please try again later\x02Signup is already in p" +
+	"rogress, please try again later\x02Two-factor authentication is disabled" +
+	"\x02Disable the current two-factor authentication before setting a new o" +
+	"ne\x02TOTP code is incorrect\x02Node with ID=%[1]s, after which the inse" +
+	"rtion is performed, not found\x02Invalid file size, minimum size = %[1]s" +
+	" b\x02Invalid file size, maximum size = %[1]s b\x02Invalid file extensio" +
+	"n: %[1]s\x02Invalid total file size, maximum total size = %[1]s b\x02The" +
+	" specified content type '%[1]s' does not match the detected type\x02Unsu" +
+	"pported file type '%[1]s'\x02Invalid image width, maximum width = %[1]sp" +
+	"x\x02Invalid image height, maximum height = %[1]spx\x02The field value m" +
 	"ust be URL address (current value: '%[3]s')\x02The field is required\x02" +
 	"The field value must be greater than or equal to %[4]s (current value: '" +
 	"%[3]s')\x02The field value must be less than or equal to %[4]s (current " +
 	"value: '%[3]s')\x02The field value must be no more than %[4]s characters" +
 	"\x02The field value must be at least %[4]s characters (current value: '%" +
-	"[3]s')\x02Validator_tag_article: %[1]s, %[2]s, %[3]s\x02The field value " +
-	"must be email address (current value: '%[3]s')\x02The field value must b" +
-	"e email address or phone number (current value: '%[3]s')\x02The field va" +
-	"lue must contain only latin letters, numbers, and special characters wit" +
-	"hout spaces (current value: '%[3]s')\x02Validator_tag_phone: %[1]s, %[2]" +
-	"s, %[3]s\x02Validator_tag_rewrite_name: %[1]s, %[2]s, %[3]s\x02Validator" +
-	"_tag_variable: %[1]s, %[2]s, %[3]s\x02Validator_tag_2d_size: %[1]s, %[2]" +
-	"s, %[3]s\x02Validator_tag_3d_size: %[1]s, %[2]s, %[3]s"
+	"[3]s')\x02The field value must not be empty and must not contain whitesp" +
+	"ace (current value: '%[3]s')\x02The field value must be email address (c" +
+	"urrent value: '%[3]s')\x02The field value must be email address or phone" +
+	" number (current value: '%[3]s')\x02The field value must be one of the s" +
+	"upported language codes (current value: '%[3]s')\x02The field value must" +
+	" start and end with a latin letter or a digit and may contain the charac" +
+	"ters / _ . + - (current value: '%[3]s')\x02The field value must contain " +
+	"only latin letters, numbers, and special characters without spaces (curr" +
+	"ent value: '%[3]s')\x02The field value must be a phone number (current v" +
+	"alue: '%[3]s')\x02The field value must be one of the supported realms (c" +
+	"urrent value: '%[3]s')\x02The field value must start with a lowercase la" +
+	"tin letter and contain only lowercase latin letters, digits and hyphens " +
+	"(current value: '%[3]s')\x02The field value must be one of the supported" +
+	" time zone names (current value: '%[3]s')\x02The field value must start " +
+	"with a latin letter and contain only latin letters and digits (current v" +
+	"alue: '%[3]s')\x02The field value must be a size in the 'lengthxwidth' f" +
+	"ormat, for example 100x200 (current value: '%[3]s')\x02The field value m" +
+	"ust be a size in the 'lengthxwidthxheight' format, for example 100x200x3" +
+	"00 (current value: '%[3]s')"
 
-var ru_RUIndex = []uint32{ // 88 elements
+var ru_RUIndex = []uint32{ // 103 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000031, 0x000000ca, 0x00000105,
-	0x00000105, 0x00000148, 0x00000178, 0x000001a8,
-	0x000001e9, 0x000001e9, 0x000001e9, 0x000002b7,
-	0x000002b7, 0x000002b7, 0x000002b7, 0x000002b7,
-	0x000002b7, 0x000002b7, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
+	0x0000012a, 0x0000016d, 0x0000019d, 0x000001cd,
+	0x0000020e, 0x0000022f, 0x000002a2, 0x00000370,
+	0x000003c9, 0x0000041a, 0x00000496, 0x000004d4,
+	0x0000054e, 0x000005ed, 0x00000629, 0x0000067d,
+	0x0000069f, 0x000006c9, 0x000006fe, 0x00000748,
+	0x0000079d, 0x000007c2, 0x000007f1, 0x0000083a,
+	0x00000867, 0x000008b0, 0x000008dd, 0x00000924,
 	// Entry 20 - 3F
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
+	0x00000944, 0x0000096f, 0x000009af, 0x000009ed,
+	0x00000a17, 0x00000a4f, 0x00000ac7, 0x00000afc,
+	0x00000b38, 0x00000b73, 0x00000ba2, 0x00000bdb,
+	0x00000c11, 0x00000c3e, 0x00000c75, 0x00000ca9,
+	0x00000cda, 0x00000d17, 0x00000d53, 0x00000d84,
+	0x00000dbf, 0x00000df7, 0x00000e5c, 0x00000e95,
+	0x00000ec8, 0x00000efd, 0x00000f52, 0x00000fc3,
+	0x00001056, 0x000010ab, 0x000010ee, 0x0000111f,
 	// Entry 40 - 5F
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x000002f3, 0x000002f3, 0x000002f3,
-	0x000002f3, 0x00000367, 0x000003a3, 0x00000421,
-	0x0000049f, 0x000004f6, 0x00000576, 0x00000576,
-	0x000005dc, 0x00000669, 0x00000736, 0x00000736,
-	0x00000736, 0x00000736, 0x00000736, 0x00000736,
-} // Size: 376 bytes
+	0x00001155, 0x00001184, 0x000011d4, 0x000011fd,
+	0x0000124f, 0x000012b6, 0x0000130d, 0x00001370,
+	0x000013bb, 0x00001440, 0x0000145d, 0x000014c8,
+	0x00001529, 0x0000158c, 0x000015cc, 0x00001657,
+	0x000016c9, 0x00001704, 0x00001772, 0x000017e0,
+	0x00001854, 0x00001890, 0x0000190e, 0x0000198c,
+	0x000019e3, 0x00001a63, 0x00001b0a, 0x00001b82,
+	0x00001c21, 0x00001ccb, 0x00001dbe, 0x00001e9d,
+	// Entry 60 - 7F
+	0x00001f20, 0x00001fd0, 0x000020d7, 0x00002192,
+	0x00002269, 0x00002323, 0x000023ee,
+} // Size: 436 bytes
 
-const ru_RUData string = "" + // Size: 1846 bytes
+const ru_RUData string = "" + // Size: 9198 bytes
 	"\x02Внутренняя ошибка сервера\x02Сервис временно не может обработать ваш" +
 	" запрос. Пожалуйста, повторите запрос позже\x02Внутренняя ошибка сервера" +
-	" [problem]\x02Требуется авторизация пользователя\x02Доступ к ресурсу отк" +
-	"лонён\x02Доступ к ресурсу отклонён\x02Запрашиваемый ресурс не был найде" +
-	"н\x02Тело запроса невалидное: '%[1]s'\x0a\x0aпроверьте параметры запрос" +
-	"а, правильность формата json и соответствующих ему типов\x02Входные дан" +
-	"ные некорректны: '%[1]s'\x02Значение поля должно являться URL адресом (" +
-	"текущее значение: %[3]s)\x02Поле обязательно для заполнения\x02Значение" +
-	" поля должно быть больше или равно %[4]s (текущее значение: %[3]s)\x02Зн" +
-	"ачение поля должно быть меньше или равно %[4]s (текущее значение: %[3]s" +
-	")\x02Значение поля должно быть не более %[4]s символов\x02Значение поля " +
-	"должно быть не менее %[4]s символов (текущее значение: %[3]s)\x02Значен" +
-	"ие поля должно являться email адресом (current value: '%[3]s')\x02Значе" +
-	"ние поля должно являться email адресом или номером телефона (current va" +
-	"lue: '%[3]s')\x02Значение поля должно содержать только латинские буквы, " +
-	"цифры и специальные символы кроме пробела (current value: '%[3]s')"
+	" [problem]\x02Метод не реализован\x02Требуется авторизация пользователя" +
+	"\x02Доступ к ресурсу отклонён\x02Доступ к ресурсу отклонён\x02Запрашивае" +
+	"мый ресурс не был найден\x02Запись не найдена\x02Конфликт версий записи" +
+	", запись была изменена другим процессом\x02Тело запроса невалидное: '%[1" +
+	"]s'\x0a\x0aпроверьте параметры запроса, правильность формата json и соот" +
+	"ветствующих ему типов\x02Слишком много запросов, повторите попытку позж" +
+	"е\x02Файл с указанным ключом '%[1]s' не был загружен\x02Параметр запрос" +
+	"а '%[1]s' типа '%[2]s' содержит некорректное значение '%[3]s'\x02Параме" +
+	"тр запроса '%[1]s' не заполнен\x02Параметр запроса '%[1]s' содержит зна" +
+	"чение больше максимального '%[2]s'\x02Длина значения параметра запроса " +
+	"'%[1]s' превышает максимально допустимую в %[2]s символов\x02Входные дан" +
+	"ные некорректны: '%[1]s'\x02Переход из статуса '%[1]s' в статус '%[2]s'" +
+	" запрещён\x02Некорректный файл\x02Некорректный email адрес\x02Некорректн" +
+	"ый номер телефона\x02Указанный email адрес уже зарегистрирован\x02Указа" +
+	"нный номер телефона уже зарегистрирован\x02Запрос %[1]s не найден\x02Ко" +
+	"робка с ID=%[1]s не найдена\x02Коробка с артикулом '%[1]s' уже существу" +
+	"ет\x02Ламинат с ID=%[1]s не найден\x02Ламинат с артикулом '%[1]s' уже с" +
+	"уществует\x02Бумага с ID=%[1]s не найдена\x02Бумага с артикулом '%[1]s'" +
+	" уже существует\x02Не указан ID формы\x02Форма с ID=%[1]s не найдена\x02" +
+	"Символьное имя '%[1]s' уже существует\x02Имя параметра '%[1]s' уже суще" +
+	"ствует\x02Форма с ID=%[1]s отключена\x02Элемент формы с ID=%[1]s не най" +
+	"ден\x02Детализация элемента '%[1]s' недопустима для детализации формы '" +
+	"%[2]s'\x02Не указан ID шаблона элемента\x02Шаблон элемента с ID=%[1]s не" +
+	" найден\x02Шаблон элемента с ID=%[1]s отключён\x02Не указан ID типа лами" +
+	"ната\x02Тип ламината с ID=%[1]s недоступен\x02Тип ламината с ID=%[1]s н" +
+	"е найден\x02Не указан ID цвета бумаги\x02Цвет бумаги с ID=%[1]s недосту" +
+	"пен\x02Цвет бумаги с ID=%[1]s не найден\x02Не указан ID фактуры бумаги" +
+	"\x02Фактура бумаги с ID=%[1]s недоступна\x02Фактура бумаги с ID=%[1]s не" +
+	" найдена\x02Не указан ID формата печати\x02Формат печати с ID=%[1]s недо" +
+	"ступен\x02Формат печати с ID=%[1]s не найден\x02Токен не найден или сро" +
+	"к его действия истёк: %[1]s, %[2]s, %[1]s\x02Некорректная секция токена" +
+	" %[1]s\x02Неверный код подтверждения\x02Требуется код подтверждения\x02И" +
+	"счерпаны все попытки подтверждения операции\x02Исчерпаны все попытки по" +
+	"вторной отправки кода подтверждения\x02Повторная отправка кода подтверж" +
+	"дения не поддерживается для текущего действия\x02Отправка новых сообщен" +
+	"ий временно ограничена\x02Операция не указана или некорректна\x02Операц" +
+	"ия уже подтверждена\x02Срок действия операции истёк\x02Операция не подт" +
+	"верждена\x02Пользователь с указанным логином не найден\x02Пароль слишко" +
+	"м слабый\x02Токен авторизации не указан или некорректен\x02Токен автори" +
+	"зации не найден или срок его действия истёк\x02Превышен лимит сессий, п" +
+	"овторите попытку позже\x02Регистрация уже выполняется, повторите попытк" +
+	"у позже\x02Двухфакторная аутентификация отключена\x02Отключите текущую " +
+	"двухфакторную аутентификацию перед настройкой новой\x02Неверный TOTP ко" +
+	"д\x02Узел с ID=%[1]s, после которого выполняется вставка, не найден\x02" +
+	"Недопустимый размер файла, минимальный размер = %[1]s б\x02Недопустимый" +
+	" размер файла, максимальный размер = %[1]s б\x02Недопустимое расширение " +
+	"файла: %[1]s\x02Недопустимый суммарный размер файлов, максимальный сумм" +
+	"арный размер = %[1]s б\x02Указанный тип содержимого '%[1]s' не соответс" +
+	"твует фактическому\x02Неподдерживаемый тип файла '%[1]s'\x02Недопустима" +
+	"я ширина изображения, максимальная ширина = %[1]spx\x02Недопустимая выс" +
+	"ота изображения, максимальная высота = %[1]spx\x02Значение поля должно " +
+	"являться URL адресом (текущее значение: %[3]s)\x02Поле обязательно для " +
+	"заполнения\x02Значение поля должно быть больше или равно %[4]s (текущее" +
+	" значение: %[3]s)\x02Значение поля должно быть меньше или равно %[4]s (т" +
+	"екущее значение: %[3]s)\x02Значение поля должно быть не более %[4]s сим" +
+	"волов\x02Значение поля должно быть не менее %[4]s символов (текущее зна" +
+	"чение: %[3]s)\x02Значение поля не должно быть пустым и содержать пробел" +
+	"ьные символы (текущее значение: '%[3]s')\x02Значение поля должно являть" +
+	"ся email адресом (текущее значение: '%[3]s')\x02Значение поля должно яв" +
+	"ляться email адресом или номером телефона (текущее значение: '%[3]s')" +
+	"\x02Значение поля должно являться кодом одного из поддерживаемых языков " +
+	"(текущее значение: '%[3]s')\x02Значение поля должно начинаться и заканчи" +
+	"ваться латинской буквой или цифрой и может содержать символы / _ . + - " +
+	"(текущее значение: '%[3]s')\x02Значение поля должно содержать только лат" +
+	"инские буквы, цифры и специальные символы кроме пробела (текущее значен" +
+	"ие: '%[3]s')\x02Значение поля должно являться номером телефона (текущее" +
+	" значение: '%[3]s')\x02Значение поля должно являться одной из поддержива" +
+	"емых областей доступа (текущее значение: '%[3]s')\x02Значение поля долж" +
+	"но начинаться со строчной латинской буквы и содержать только строчные л" +
+	"атинские буквы, цифры и дефис (текущее значение: '%[3]s')\x02Значение п" +
+	"оля должно являться именем одного из поддерживаемых часовых поясов (тек" +
+	"ущее значение: '%[3]s')\x02Значение поля должно начинаться с латинской " +
+	"буквы и содержать только латинские буквы и цифры (текущее значение: '%[" +
+	"3]s')\x02Значение поля должно являться размером в формате 'длинаxширина'" +
+	", например 100x200 (текущее значение: '%[3]s')\x02Значение поля должно я" +
+	"вляться размером в формате 'длинаxширинаxвысота', например 100x200x300 " +
+	"(текущее значение: '%[3]s')"
 
-	// Total table size 6256 bytes (6KiB); checksum: 8F05E88F
+	// Total table size 15174 bytes (14KiB); checksum: 69460166

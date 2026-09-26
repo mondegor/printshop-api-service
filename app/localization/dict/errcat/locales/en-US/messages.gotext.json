@@ -25,7 +25,7 @@
         {
             "id": "not implemented",
             "message": "not implemented",
-            "translation": "not implemented",
+            "translation": "Not implemented",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -60,21 +60,21 @@
         {
             "id": "record not found",
             "message": "record not found",
-            "translation": "record not found",
+            "translation": "Record not found",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "record version conflict",
             "message": "record version conflict",
-            "translation": "record version conflict",
+            "translation": "Record version conflict, the record was modified by another process",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "request body is not valid: '{Reason}'",
             "message": "request body is not valid: '{Reason}'",
-            "translation": "Request body is not valid: '{Reason}'\n\nпроверьте параметры запроса, правильность формата json и соответствующих ему типов",
+            "translation": "Request body is not valid: '{Reason}'\n\ncheck the request parameters, the json format and the corresponding types",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -91,14 +91,14 @@
         {
             "id": "too many requests",
             "message": "too many requests",
-            "translation": "too many requests",
+            "translation": "Too many requests, please try again later",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "the file with the specified key '{Key}' was not uploaded",
             "message": "the file with the specified key '{Key}' was not uploaded",
-            "translation": "the file with the specified key '{Key}' was not uploaded",
+            "translation": "The file with the specified key '{Key}' was not uploaded",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -115,7 +115,7 @@
         {
             "id": "request param with key '{Key}' of type '{Type}' contains incorrect value '{Value}'",
             "message": "request param with key '{Key}' of type '{Type}' contains incorrect value '{Value}'",
-            "translation": "request param with key '{Key}' of type '{Type}' contains incorrect value '{Value}'",
+            "translation": "Request parameter '{Key}' of type '{Type}' contains an incorrect value '{Value}'",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -148,7 +148,7 @@
         {
             "id": "request param with key '{Key}' is empty",
             "message": "request param with key '{Key}' is empty",
-            "translation": "request param with key '{Key}' is empty",
+            "translation": "Request parameter '{Key}' is empty",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -165,7 +165,7 @@
         {
             "id": "request param with key '{Key}' contains value greater then max '{Max}'",
             "message": "request param with key '{Key}' contains value greater then max '{Max}'",
-            "translation": "request param with key '{Key}' contains value greater then max '{Max}'",
+            "translation": "Request parameter '{Key}' contains a value greater than the maximum '{Max}'",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -190,7 +190,7 @@
         {
             "id": "request param with key '{Key}' has value length greater then max '{MaxLength}' characters",
             "message": "request param with key '{Key}' has value length greater then max '{MaxLength}' characters",
-            "translation": "request param with key '{Key}' has value length greater then max '{MaxLength}' characters",
+            "translation": "Request parameter '{Key}' has a value longer than the maximum of {MaxLength} characters",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -230,23 +230,9 @@
             "fuzzy": true
         },
         {
-            "id": "entity is not available",
-            "message": "entity is not available",
-            "translation": "entity is not available",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
-            "id": "entity already exists",
-            "message": "entity already exists",
-            "translation": "entity already exists",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
             "id": "switching from '{StatusFrom}' to '{StatusTo}' is rejected",
             "message": "switching from '{StatusFrom}' to '{StatusTo}' is rejected",
-            "translation": "switching from '{StatusFrom}' to '{StatusTo}' is rejected",
+            "translation": "Switching from '{StatusFrom}' to '{StatusTo}' is rejected",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -271,49 +257,42 @@
         {
             "id": "file is invalid",
             "message": "file is invalid",
-            "translation": "file is invalid",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
-            "id": "login is invalid",
-            "message": "login is invalid",
-            "translation": "login is invalid",
+            "translation": "File is invalid",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "email is invalid",
             "message": "email is invalid",
-            "translation": "email is invalid",
+            "translation": "Email address is invalid",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "phone is invalid",
             "message": "phone is invalid",
-            "translation": "phone is invalid",
+            "translation": "Phone number is invalid",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "email already exists",
             "message": "email already exists",
-            "translation": "email already exists",
+            "translation": "This email address is already registered",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "phone already exists",
             "message": "phone already exists",
-            "translation": "phone already exists",
+            "translation": "This phone number is already registered",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "query {ShortLink} not found",
             "message": "query {ShortLink} not found",
-            "translation": "query {ShortLink} not found",
+            "translation": "Query {ShortLink} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -330,7 +309,7 @@
         {
             "id": "box with ID={Id} not found",
             "message": "box with ID={Id} not found",
-            "translation": "box with ID={Id} not found",
+            "translation": "Box with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -347,7 +326,7 @@
         {
             "id": "box article '{Name}' already exists",
             "message": "box article '{Name}' already exists",
-            "translation": "box article '{Name}' already exists",
+            "translation": "Box with article '{Name}' already exists",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -364,7 +343,7 @@
         {
             "id": "laminate with ID={Id} not found",
             "message": "laminate with ID={Id} not found",
-            "translation": "laminate with ID={Id} not found",
+            "translation": "Laminate with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -381,7 +360,7 @@
         {
             "id": "laminate article '{Name}' already exists",
             "message": "laminate article '{Name}' already exists",
-            "translation": "laminate article '{Name}' already exists",
+            "translation": "Laminate with article '{Name}' already exists",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -398,7 +377,7 @@
         {
             "id": "paper with ID={Id} not found",
             "message": "paper with ID={Id} not found",
-            "translation": "paper with ID={Id} not found",
+            "translation": "Paper with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -415,7 +394,7 @@
         {
             "id": "paper article '{Name}' already exists",
             "message": "paper article '{Name}' already exists",
-            "translation": "paper article '{Name}' already exists",
+            "translation": "Paper with article '{Name}' already exists",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -432,14 +411,14 @@
         {
             "id": "form ID is required",
             "message": "form ID is required",
-            "translation": "form ID is required",
+            "translation": "Form ID is required",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "form with ID={Id} not found",
             "message": "form with ID={Id} not found",
-            "translation": "form with ID={Id} not found",
+            "translation": "Form with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -456,7 +435,7 @@
         {
             "id": "rewrite name '{Name}' already exists",
             "message": "rewrite name '{Name}' already exists",
-            "translation": "rewrite name '{Name}' already exists",
+            "translation": "Rewrite name '{Name}' already exists",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -473,7 +452,7 @@
         {
             "id": "param name '{Name}' already exists",
             "message": "param name '{Name}' already exists",
-            "translation": "param name '{Name}' already exists",
+            "translation": "Parameter name '{Name}' already exists",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -490,7 +469,7 @@
         {
             "id": "form with ID={Id} is disabled",
             "message": "form with ID={Id} is disabled",
-            "translation": "form with ID={Id} is disabled",
+            "translation": "Form with ID={Id} is disabled",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -507,7 +486,7 @@
         {
             "id": "form element with ID={Id} not found",
             "message": "form element with ID={Id} not found",
-            "translation": "form element with ID={Id} not found",
+            "translation": "Form element with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -524,7 +503,7 @@
         {
             "id": "item detailing '{Name1}' not allowed for form detailing '{Name2}'",
             "message": "item detailing '{Name1}' not allowed for form detailing '{Name2}'",
-            "translation": "item detailing '{Name1}' not allowed for form detailing '{Name2}'",
+            "translation": "Item detailing '{Name1}' is not allowed for form detailing '{Name2}'",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -549,14 +528,14 @@
         {
             "id": "element template ID is required",
             "message": "element template ID is required",
-            "translation": "element template ID is required",
+            "translation": "Element template ID is required",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "element template with ID={Id} not found",
             "message": "element template with ID={Id} not found",
-            "translation": "element template with ID={Id} not found",
+            "translation": "Element template with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -573,7 +552,7 @@
         {
             "id": "element template with ID={Id} is disabled",
             "message": "element template with ID={Id} is disabled",
-            "translation": "element template with ID={Id} is disabled",
+            "translation": "Element template with ID={Id} is disabled",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -590,14 +569,14 @@
         {
             "id": "laminate type ID is required",
             "message": "laminate type ID is required",
-            "translation": "laminate type ID is required",
+            "translation": "Laminate type ID is required",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "laminate type with ID={Id} is not available",
             "message": "laminate type with ID={Id} is not available",
-            "translation": "laminate type with ID={Id} is not available",
+            "translation": "Laminate type with ID={Id} is not available",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -614,7 +593,7 @@
         {
             "id": "laminate type with ID={Id} not found",
             "message": "laminate type with ID={Id} not found",
-            "translation": "laminate type with ID={Id} not found",
+            "translation": "Laminate type with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -631,14 +610,14 @@
         {
             "id": "paper color ID is required",
             "message": "paper color ID is required",
-            "translation": "paper color ID is required",
+            "translation": "Paper color ID is required",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "paper color with ID={Id} is not available",
             "message": "paper color with ID={Id} is not available",
-            "translation": "paper color with ID={Id} is not available",
+            "translation": "Paper color with ID={Id} is not available",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -655,7 +634,7 @@
         {
             "id": "paper color with ID={Id} not found",
             "message": "paper color with ID={Id} not found",
-            "translation": "paper color with ID={Id} not found",
+            "translation": "Paper color with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -672,14 +651,14 @@
         {
             "id": "paper facture ID is required",
             "message": "paper facture ID is required",
-            "translation": "paper facture ID is required",
+            "translation": "Paper facture ID is required",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "paper facture with ID={Id} is not available",
             "message": "paper facture with ID={Id} is not available",
-            "translation": "paper facture with ID={Id} is not available",
+            "translation": "Paper facture with ID={Id} is not available",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -696,7 +675,7 @@
         {
             "id": "paper facture with ID={Id} not found",
             "message": "paper facture with ID={Id} not found",
-            "translation": "paper facture with ID={Id} not found",
+            "translation": "Paper facture with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -713,14 +692,14 @@
         {
             "id": "print format ID is required",
             "message": "print format ID is required",
-            "translation": "print format ID is required",
+            "translation": "Print format ID is required",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "print format with ID={Id} is not available",
             "message": "print format with ID={Id} is not available",
-            "translation": "print format with ID={Id} is not available",
+            "translation": "Print format with ID={Id} is not available",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -737,7 +716,7 @@
         {
             "id": "print format with ID={Id} not found",
             "message": "print format with ID={Id} not found",
-            "translation": "print format with ID={Id} not found",
+            "translation": "Print format with ID={Id} not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -754,7 +733,7 @@
         {
             "id": "token not found or expired : {Value1}, {Value2}, {Value1}",
             "message": "token not found or expired : {Value1}, {Value2}, {Value1}",
-            "translation": "token not found or expired : {Value1}, {Value2}, {Value1}",
+            "translation": "Token not found or expired: {Value1}, {Value2}, {Value1}",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -785,16 +764,9 @@
             "fuzzy": true
         },
         {
-            "id": "token is invalid",
-            "message": "token is invalid",
-            "translation": "token is invalid",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
             "id": "token section {Key} is invalid",
             "message": "token section {Key} is invalid",
-            "translation": "token section {Key} is invalid",
+            "translation": "Token section {Key} is invalid",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -809,37 +781,142 @@
             "fuzzy": true
         },
         {
-            "id": "token is already revoked",
-            "message": "token is already revoked",
-            "translation": "token is already revoked",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
             "id": "confirm code is incorrect",
             "message": "confirm code is incorrect",
-            "translation": "confirm code is incorrect",
+            "translation": "Confirmation code is incorrect",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
-            "id": "all attempts to confirm the operation have been used",
-            "message": "all attempts to confirm the operation have been used",
-            "translation": "all attempts to confirm the operation have been used",
+            "id": "confirm code is required",
+            "message": "confirm code is required",
+            "translation": "Confirmation code is required",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "all attempts to confirm the operation have been spent",
+            "message": "all attempts to confirm the operation have been spent",
+            "translation": "All attempts to confirm the operation have been used",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "no attempts to resend confirm code",
+            "message": "no attempts to resend confirm code",
+            "translation": "No attempts left to resend the confirmation code",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "resend confirm code is not supported for the current action",
+            "message": "resend confirm code is not supported for the current action",
+            "translation": "Resending the confirmation code is not supported for the current action",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "sending new messages is temporarily restricted",
             "message": "sending new messages is temporarily restricted",
-            "translation": "sending new messages is temporarily restricted",
+            "translation": "Sending new messages is temporarily restricted",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "operation is empty or invalid",
+            "message": "operation is empty or invalid",
+            "translation": "Operation is not specified or invalid",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "operation already confirmed",
+            "message": "operation already confirmed",
+            "translation": "Operation is already confirmed",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "operation already expired",
+            "message": "operation already expired",
+            "translation": "Operation has already expired",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "operation is not confirmed",
+            "message": "operation is not confirmed",
+            "translation": "Operation is not confirmed",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "login not exists",
+            "message": "login not exists",
+            "translation": "User with the specified login not found",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "password is too weak",
+            "message": "password is too weak",
+            "translation": "Password is too weak",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "auth token is empty or invalid",
+            "message": "auth token is empty or invalid",
+            "translation": "Authorization token is not specified or invalid",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "auth token not found or expired",
+            "message": "auth token not found or expired",
+            "translation": "Authorization token not found or expired",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "session limit exceeded, try again later",
+            "message": "session limit exceeded, try again later",
+            "translation": "Session limit exceeded, please try again later",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "signup already in progress, try again later",
+            "message": "signup already in progress, try again later",
+            "translation": "Signup is already in progress, please try again later",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "2fa is disabled",
+            "message": "2fa is disabled",
+            "translation": "Two-factor authentication is disabled",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "disable current 2fa before setting a new one",
+            "message": "disable current 2fa before setting a new one",
+            "translation": "Disable the current two-factor authentication before setting a new one",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "totp code is incorrect",
+            "message": "totp code is incorrect",
+            "translation": "TOTP code is incorrect",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
             "id": "after node with ID={Id} not found",
             "message": "after node with ID={Id} not found",
-            "translation": "after node with ID={Id} not found",
+            "translation": "Node with ID={Id}, after which the insertion is performed, not found",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -856,7 +933,7 @@
         {
             "id": "invalid file size, min size = {Value}b",
             "message": "invalid file size, min size = {Value}b",
-            "translation": "invalid file size, min size = {Value}b",
+            "translation": "Invalid file size, minimum size = {Value} b",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -873,7 +950,7 @@
         {
             "id": "invalid file size, max size = {Value}b",
             "message": "invalid file size, max size = {Value}b",
-            "translation": "invalid file size, max size = {Value}b",
+            "translation": "Invalid file size, maximum size = {Value} b",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -890,7 +967,7 @@
         {
             "id": "invalid file extension: {Value}",
             "message": "invalid file extension: {Value}",
-            "translation": "invalid file extension: {Value}",
+            "translation": "Invalid file extension: {Value}",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -907,7 +984,7 @@
         {
             "id": "invalid file total size, max total size = {Value}b",
             "message": "invalid file total size, max total size = {Value}b",
-            "translation": "invalid file total size, max total size = {Value}b",
+            "translation": "Invalid total file size, maximum total size = {Value} b",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -924,7 +1001,7 @@
         {
             "id": "the content type '{Value}' does not match the detected type",
             "message": "the content type '{Value}' does not match the detected type",
-            "translation": "the content type '{Value}' does not match the detected type",
+            "translation": "The specified content type '{Value}' does not match the detected type",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -941,7 +1018,7 @@
         {
             "id": "unsupported file type '{Value}'",
             "message": "unsupported file type '{Value}'",
-            "translation": "unsupported file type '{Value}'",
+            "translation": "Unsupported file type '{Value}'",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -958,7 +1035,7 @@
         {
             "id": "invalid image width, max size = {Value}px",
             "message": "invalid image width, max size = {Value}px",
-            "translation": "invalid image width, max size = {Value}px",
+            "translation": "Invalid image width, maximum width = {Value}px",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -975,7 +1052,7 @@
         {
             "id": "invalid image height, max size = {Value}px",
             "message": "invalid image height, max size = {Value}px",
-            "translation": "invalid image height, max size = {Value}px",
+            "translation": "Invalid image height, maximum height = {Value}px",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -1222,7 +1299,7 @@
         {
             "id": "Validator_tag_article: {Name}, {Type}, {Value}",
             "message": "Validator_tag_article: {Name}, {Type}, {Value}",
-            "translation": "Validator_tag_article: {Name}, {Type}, {Value}",
+            "translation": "The field value must not be empty and must not contain whitespace (current value: '{Value}')",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -1319,6 +1396,72 @@
             "fuzzy": true
         },
         {
+            "id": "Validator_tag_lang: {Name}, {Type}, {Value}",
+            "message": "Validator_tag_lang: {Name}, {Type}, {Value}",
+            "translation": "The field value must be one of the supported language codes (current value: '{Value}')",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "Name",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "\"Name\""
+                },
+                {
+                    "id": "Type",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "\"Type\""
+                },
+                {
+                    "id": "Value",
+                    "string": "%[3]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 3,
+                    "expr": "\"Value\""
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "Validator_tag_name: {Name}, {Type}, {Value}",
+            "message": "Validator_tag_name: {Name}, {Type}, {Value}",
+            "translation": "The field value must start and end with a latin letter or a digit and may contain the characters / _ . + - (current value: '{Value}')",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "Name",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "\"Name\""
+                },
+                {
+                    "id": "Type",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "\"Type\""
+                },
+                {
+                    "id": "Value",
+                    "string": "%[3]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 3,
+                    "expr": "\"Value\""
+                }
+            ],
+            "fuzzy": true
+        },
+        {
             "id": "Validator_tag_password: {Name}, {Type}, {Value}",
             "message": "Validator_tag_password: {Name}, {Type}, {Value}",
             "translation": "The field value must contain only latin letters, numbers, and special characters without spaces (current value: '{Value}')",
@@ -1354,7 +1497,40 @@
         {
             "id": "Validator_tag_phone: {Name}, {Type}, {Value}",
             "message": "Validator_tag_phone: {Name}, {Type}, {Value}",
-            "translation": "Validator_tag_phone: {Name}, {Type}, {Value}",
+            "translation": "The field value must be a phone number (current value: '{Value}')",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "Name",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "\"Name\""
+                },
+                {
+                    "id": "Type",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "\"Type\""
+                },
+                {
+                    "id": "Value",
+                    "string": "%[3]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 3,
+                    "expr": "\"Value\""
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "Validator_tag_realm: {Name}, {Type}, {Value}",
+            "message": "Validator_tag_realm: {Name}, {Type}, {Value}",
+            "translation": "The field value must be one of the supported realms (current value: '{Value}')",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -1387,7 +1563,40 @@
         {
             "id": "Validator_tag_rewrite_name: {Name}, {Type}, {Value}",
             "message": "Validator_tag_rewrite_name: {Name}, {Type}, {Value}",
-            "translation": "Validator_tag_rewrite_name: {Name}, {Type}, {Value}",
+            "translation": "The field value must start with a lowercase latin letter and contain only lowercase latin letters, digits and hyphens (current value: '{Value}')",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "Name",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "\"Name\""
+                },
+                {
+                    "id": "Type",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "\"Type\""
+                },
+                {
+                    "id": "Value",
+                    "string": "%[3]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 3,
+                    "expr": "\"Value\""
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "Validator_tag_tz: {Name}, {Type}, {Value}",
+            "message": "Validator_tag_tz: {Name}, {Type}, {Value}",
+            "translation": "The field value must be one of the supported time zone names (current value: '{Value}')",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -1420,7 +1629,7 @@
         {
             "id": "Validator_tag_variable: {Name}, {Type}, {Value}",
             "message": "Validator_tag_variable: {Name}, {Type}, {Value}",
-            "translation": "Validator_tag_variable: {Name}, {Type}, {Value}",
+            "translation": "The field value must start with a latin letter and contain only latin letters and digits (current value: '{Value}')",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -1453,7 +1662,7 @@
         {
             "id": "Validator_tag_2d_size: {Name}, {Type}, {Value}",
             "message": "Validator_tag_2d_size: {Name}, {Type}, {Value}",
-            "translation": "Validator_tag_2d_size: {Name}, {Type}, {Value}",
+            "translation": "The field value must be a size in the 'lengthxwidth' format, for example 100x200 (current value: '{Value}')",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
@@ -1486,7 +1695,7 @@
         {
             "id": "Validator_tag_3d_size: {Name}, {Type}, {Value}",
             "message": "Validator_tag_3d_size: {Name}, {Type}, {Value}",
-            "translation": "Validator_tag_3d_size: {Name}, {Type}, {Value}",
+            "translation": "The field value must be a size in the 'lengthxwidthxheight' format, for example 100x200x300 (current value: '{Value}')",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {

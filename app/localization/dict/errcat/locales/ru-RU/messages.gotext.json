@@ -19,7 +19,7 @@
         {
             "id": "not implemented",
             "message": "not implemented",
-            "translation": ""
+            "translation": "Метод не реализован"
         },
         {
             "id": "401. client is unauthorized",
@@ -44,12 +44,12 @@
         {
             "id": "record not found",
             "message": "record not found",
-            "translation": ""
+            "translation": "Запись не найдена"
         },
         {
             "id": "record version conflict",
             "message": "record version conflict",
-            "translation": ""
+            "translation": "Конфликт версий записи, запись была изменена другим процессом"
         },
         {
             "id": "request body is not valid: '{Reason}'",
@@ -69,12 +69,12 @@
         {
             "id": "too many requests",
             "message": "too many requests",
-            "translation": ""
+            "translation": "Слишком много запросов, повторите попытку позже"
         },
         {
             "id": "the file with the specified key '{Key}' was not uploaded",
             "message": "the file with the specified key '{Key}' was not uploaded",
-            "translation": "",
+            "translation": "Файл с указанным ключом '{Key}' не был загружен",
             "placeholders": [
                 {
                     "id": "Key",
@@ -89,7 +89,7 @@
         {
             "id": "request param with key '{Key}' of type '{Type}' contains incorrect value '{Value}'",
             "message": "request param with key '{Key}' of type '{Type}' contains incorrect value '{Value}'",
-            "translation": "",
+            "translation": "Параметр запроса '{Key}' типа '{Type}' содержит некорректное значение '{Value}'",
             "placeholders": [
                 {
                     "id": "Key",
@@ -120,7 +120,7 @@
         {
             "id": "request param with key '{Key}' is empty",
             "message": "request param with key '{Key}' is empty",
-            "translation": "",
+            "translation": "Параметр запроса '{Key}' не заполнен",
             "placeholders": [
                 {
                     "id": "Key",
@@ -135,7 +135,7 @@
         {
             "id": "request param with key '{Key}' contains value greater then max '{Max}'",
             "message": "request param with key '{Key}' contains value greater then max '{Max}'",
-            "translation": "",
+            "translation": "Параметр запроса '{Key}' содержит значение больше максимального '{Max}'",
             "placeholders": [
                 {
                     "id": "Key",
@@ -158,7 +158,7 @@
         {
             "id": "request param with key '{Key}' has value length greater then max '{MaxLength}' characters",
             "message": "request param with key '{Key}' has value length greater then max '{MaxLength}' characters",
-            "translation": "",
+            "translation": "Длина значения параметра запроса '{Key}' превышает максимально допустимую в {MaxLength} символов",
             "placeholders": [
                 {
                     "id": "Key",
@@ -194,19 +194,9 @@
             ]
         },
         {
-            "id": "entity is not available",
-            "message": "entity is not available",
-            "translation": ""
-        },
-        {
-            "id": "entity already exists",
-            "message": "entity already exists",
-            "translation": ""
-        },
-        {
             "id": "switching from '{StatusFrom}' to '{StatusTo}' is rejected",
             "message": "switching from '{StatusFrom}' to '{StatusTo}' is rejected",
-            "translation": "",
+            "translation": "Переход из статуса '{StatusFrom}' в статус '{StatusTo}' запрещён",
             "placeholders": [
                 {
                     "id": "StatusFrom",
@@ -229,37 +219,32 @@
         {
             "id": "file is invalid",
             "message": "file is invalid",
-            "translation": ""
-        },
-        {
-            "id": "login is invalid",
-            "message": "login is invalid",
-            "translation": ""
+            "translation": "Некорректный файл"
         },
         {
             "id": "email is invalid",
             "message": "email is invalid",
-            "translation": ""
+            "translation": "Некорректный email адрес"
         },
         {
             "id": "phone is invalid",
             "message": "phone is invalid",
-            "translation": ""
+            "translation": "Некорректный номер телефона"
         },
         {
             "id": "email already exists",
             "message": "email already exists",
-            "translation": ""
+            "translation": "Указанный email адрес уже зарегистрирован"
         },
         {
             "id": "phone already exists",
             "message": "phone already exists",
-            "translation": ""
+            "translation": "Указанный номер телефона уже зарегистрирован"
         },
         {
             "id": "query {ShortLink} not found",
             "message": "query {ShortLink} not found",
-            "translation": "",
+            "translation": "Запрос {ShortLink} не найден",
             "placeholders": [
                 {
                     "id": "ShortLink",
@@ -274,7 +259,7 @@
         {
             "id": "box with ID={Id} not found",
             "message": "box with ID={Id} not found",
-            "translation": "",
+            "translation": "Коробка с ID={Id} не найдена",
             "placeholders": [
                 {
                     "id": "Id",
@@ -289,7 +274,7 @@
         {
             "id": "box article '{Name}' already exists",
             "message": "box article '{Name}' already exists",
-            "translation": "",
+            "translation": "Коробка с артикулом '{Name}' уже существует",
             "placeholders": [
                 {
                     "id": "Name",
@@ -304,7 +289,7 @@
         {
             "id": "laminate with ID={Id} not found",
             "message": "laminate with ID={Id} not found",
-            "translation": "",
+            "translation": "Ламинат с ID={Id} не найден",
             "placeholders": [
                 {
                     "id": "Id",
@@ -319,7 +304,7 @@
         {
             "id": "laminate article '{Name}' already exists",
             "message": "laminate article '{Name}' already exists",
-            "translation": "",
+            "translation": "Ламинат с артикулом '{Name}' уже существует",
             "placeholders": [
                 {
                     "id": "Name",
@@ -334,7 +319,7 @@
         {
             "id": "paper with ID={Id} not found",
             "message": "paper with ID={Id} not found",
-            "translation": "",
+            "translation": "Бумага с ID={Id} не найдена",
             "placeholders": [
                 {
                     "id": "Id",
@@ -349,7 +334,7 @@
         {
             "id": "paper article '{Name}' already exists",
             "message": "paper article '{Name}' already exists",
-            "translation": "",
+            "translation": "Бумага с артикулом '{Name}' уже существует",
             "placeholders": [
                 {
                     "id": "Name",
@@ -364,12 +349,12 @@
         {
             "id": "form ID is required",
             "message": "form ID is required",
-            "translation": ""
+            "translation": "Не указан ID формы"
         },
         {
             "id": "form with ID={Id} not found",
             "message": "form with ID={Id} not found",
-            "translation": "",
+            "translation": "Форма с ID={Id} не найдена",
             "placeholders": [
                 {
                     "id": "Id",
@@ -384,7 +369,7 @@
         {
             "id": "rewrite name '{Name}' already exists",
             "message": "rewrite name '{Name}' already exists",
-            "translation": "",
+            "translation": "Символьное имя '{Name}' уже существует",
             "placeholders": [
                 {
                     "id": "Name",
@@ -399,7 +384,7 @@
         {
             "id": "param name '{Name}' already exists",
             "message": "param name '{Name}' already exists",
-            "translation": "",
+            "translation": "Имя параметра '{Name}' уже существует",
             "placeholders": [
                 {
                     "id": "Name",
@@ -414,7 +399,7 @@
         {
             "id": "form with ID={Id} is disabled",
             "message": "form with ID={Id} is disabled",
-            "translation": "",
+            "translation": "Форма с ID={Id} отключена",
             "placeholders": [
                 {
                     "id": "Id",
@@ -429,7 +414,7 @@
         {
             "id": "form element with ID={Id} not found",
             "message": "form element with ID={Id} not found",
-            "translation": "",
+            "translation": "Элемент формы с ID={Id} не найден",
             "placeholders": [
                 {
                     "id": "Id",
@@ -444,7 +429,7 @@
         {
             "id": "item detailing '{Name1}' not allowed for form detailing '{Name2}'",
             "message": "item detailing '{Name1}' not allowed for form detailing '{Name2}'",
-            "translation": "",
+            "translation": "Детализация элемента '{Name1}' недопустима для детализации формы '{Name2}'",
             "placeholders": [
                 {
                     "id": "Name1",
@@ -467,12 +452,12 @@
         {
             "id": "element template ID is required",
             "message": "element template ID is required",
-            "translation": ""
+            "translation": "Не указан ID шаблона элемента"
         },
         {
             "id": "element template with ID={Id} not found",
             "message": "element template with ID={Id} not found",
-            "translation": "",
+            "translation": "Шаблон элемента с ID={Id} не найден",
             "placeholders": [
                 {
                     "id": "Id",
@@ -487,7 +472,7 @@
         {
             "id": "element template with ID={Id} is disabled",
             "message": "element template with ID={Id} is disabled",
-            "translation": "",
+            "translation": "Шаблон элемента с ID={Id} отключён",
             "placeholders": [
                 {
                     "id": "Id",
@@ -502,12 +487,12 @@
         {
             "id": "laminate type ID is required",
             "message": "laminate type ID is required",
-            "translation": ""
+            "translation": "Не указан ID типа ламината"
         },
         {
             "id": "laminate type with ID={Id} is not available",
             "message": "laminate type with ID={Id} is not available",
-            "translation": "",
+            "translation": "Тип ламината с ID={Id} недоступен",
             "placeholders": [
                 {
                     "id": "Id",
@@ -522,7 +507,7 @@
         {
             "id": "laminate type with ID={Id} not found",
             "message": "laminate type with ID={Id} not found",
-            "translation": "",
+            "translation": "Тип ламината с ID={Id} не найден",
             "placeholders": [
                 {
                     "id": "Id",
@@ -537,12 +522,12 @@
         {
             "id": "paper color ID is required",
             "message": "paper color ID is required",
-            "translation": ""
+            "translation": "Не указан ID цвета бумаги"
         },
         {
             "id": "paper color with ID={Id} is not available",
             "message": "paper color with ID={Id} is not available",
-            "translation": "",
+            "translation": "Цвет бумаги с ID={Id} недоступен",
             "placeholders": [
                 {
                     "id": "Id",
@@ -557,7 +542,7 @@
         {
             "id": "paper color with ID={Id} not found",
             "message": "paper color with ID={Id} not found",
-            "translation": "",
+            "translation": "Цвет бумаги с ID={Id} не найден",
             "placeholders": [
                 {
                     "id": "Id",
@@ -572,12 +557,12 @@
         {
             "id": "paper facture ID is required",
             "message": "paper facture ID is required",
-            "translation": ""
+            "translation": "Не указан ID фактуры бумаги"
         },
         {
             "id": "paper facture with ID={Id} is not available",
             "message": "paper facture with ID={Id} is not available",
-            "translation": "",
+            "translation": "Фактура бумаги с ID={Id} недоступна",
             "placeholders": [
                 {
                     "id": "Id",
@@ -592,7 +577,7 @@
         {
             "id": "paper facture with ID={Id} not found",
             "message": "paper facture with ID={Id} not found",
-            "translation": "",
+            "translation": "Фактура бумаги с ID={Id} не найдена",
             "placeholders": [
                 {
                     "id": "Id",
@@ -607,12 +592,12 @@
         {
             "id": "print format ID is required",
             "message": "print format ID is required",
-            "translation": ""
+            "translation": "Не указан ID формата печати"
         },
         {
             "id": "print format with ID={Id} is not available",
             "message": "print format with ID={Id} is not available",
-            "translation": "",
+            "translation": "Формат печати с ID={Id} недоступен",
             "placeholders": [
                 {
                     "id": "Id",
@@ -627,7 +612,7 @@
         {
             "id": "print format with ID={Id} not found",
             "message": "print format with ID={Id} not found",
-            "translation": "",
+            "translation": "Формат печати с ID={Id} не найден",
             "placeholders": [
                 {
                     "id": "Id",
@@ -642,7 +627,7 @@
         {
             "id": "token not found or expired : {Value1}, {Value2}, {Value1}",
             "message": "token not found or expired : {Value1}, {Value2}, {Value1}",
-            "translation": "",
+            "translation": "Токен не найден или срок его действия истёк: {Value1}, {Value2}, {Value1}",
             "placeholders": [
                 {
                     "id": "Value1",
@@ -671,14 +656,9 @@
             ]
         },
         {
-            "id": "token is invalid",
-            "message": "token is invalid",
-            "translation": ""
-        },
-        {
             "id": "token section {Key} is invalid",
             "message": "token section {Key} is invalid",
-            "translation": "",
+            "translation": "Некорректная секция токена {Key}",
             "placeholders": [
                 {
                     "id": "Key",
@@ -691,29 +671,104 @@
             ]
         },
         {
-            "id": "token is already revoked",
-            "message": "token is already revoked",
-            "translation": ""
-        },
-        {
             "id": "confirm code is incorrect",
             "message": "confirm code is incorrect",
-            "translation": ""
+            "translation": "Неверный код подтверждения"
         },
         {
-            "id": "all attempts to confirm the operation have been used",
-            "message": "all attempts to confirm the operation have been used",
-            "translation": ""
+            "id": "confirm code is required",
+            "message": "confirm code is required",
+            "translation": "Требуется код подтверждения"
+        },
+        {
+            "id": "all attempts to confirm the operation have been spent",
+            "message": "all attempts to confirm the operation have been spent",
+            "translation": "Исчерпаны все попытки подтверждения операции"
+        },
+        {
+            "id": "no attempts to resend confirm code",
+            "message": "no attempts to resend confirm code",
+            "translation": "Исчерпаны все попытки повторной отправки кода подтверждения"
+        },
+        {
+            "id": "resend confirm code is not supported for the current action",
+            "message": "resend confirm code is not supported for the current action",
+            "translation": "Повторная отправка кода подтверждения не поддерживается для текущего действия"
         },
         {
             "id": "sending new messages is temporarily restricted",
             "message": "sending new messages is temporarily restricted",
-            "translation": ""
+            "translation": "Отправка новых сообщений временно ограничена"
+        },
+        {
+            "id": "operation is empty or invalid",
+            "message": "operation is empty or invalid",
+            "translation": "Операция не указана или некорректна"
+        },
+        {
+            "id": "operation already confirmed",
+            "message": "operation already confirmed",
+            "translation": "Операция уже подтверждена"
+        },
+        {
+            "id": "operation already expired",
+            "message": "operation already expired",
+            "translation": "Срок действия операции истёк"
+        },
+        {
+            "id": "operation is not confirmed",
+            "message": "operation is not confirmed",
+            "translation": "Операция не подтверждена"
+        },
+        {
+            "id": "login not exists",
+            "message": "login not exists",
+            "translation": "Пользователь с указанным логином не найден"
+        },
+        {
+            "id": "password is too weak",
+            "message": "password is too weak",
+            "translation": "Пароль слишком слабый"
+        },
+        {
+            "id": "auth token is empty or invalid",
+            "message": "auth token is empty or invalid",
+            "translation": "Токен авторизации не указан или некорректен"
+        },
+        {
+            "id": "auth token not found or expired",
+            "message": "auth token not found or expired",
+            "translation": "Токен авторизации не найден или срок его действия истёк"
+        },
+        {
+            "id": "session limit exceeded, try again later",
+            "message": "session limit exceeded, try again later",
+            "translation": "Превышен лимит сессий, повторите попытку позже"
+        },
+        {
+            "id": "signup already in progress, try again later",
+            "message": "signup already in progress, try again later",
+            "translation": "Регистрация уже выполняется, повторите попытку позже"
+        },
+        {
+            "id": "2fa is disabled",
+            "message": "2fa is disabled",
+            "translation": "Двухфакторная аутентификация отключена"
+        },
+        {
+            "id": "disable current 2fa before setting a new one",
+            "message": "disable current 2fa before setting a new one",
+            "translation": "Отключите текущую двухфакторную аутентификацию перед настройкой новой"
+        },
+        {
+            "id": "totp code is incorrect",
+            "message": "totp code is incorrect",
+            "translation": "Неверный TOTP код"
         },
         {
             "id": "after node with ID={Id} not found",
             "message": "after node with ID={Id} not found",
-            "translation": "",
+            "translation": "Узел с ID={Id}, после которого выполняется вставка, не найден",
             "placeholders": [
                 {
                     "id": "Id",
@@ -728,7 +783,7 @@
         {
             "id": "invalid file size, min size = {Value}b",
             "message": "invalid file size, min size = {Value}b",
-            "translation": "",
+            "translation": "Недопустимый размер файла, минимальный размер = {Value} б",
             "placeholders": [
                 {
                     "id": "Value",
@@ -743,7 +798,7 @@
         {
             "id": "invalid file size, max size = {Value}b",
             "message": "invalid file size, max size = {Value}b",
-            "translation": "",
+            "translation": "Недопустимый размер файла, максимальный размер = {Value} б",
             "placeholders": [
                 {
                     "id": "Value",
@@ -758,7 +813,7 @@
         {
             "id": "invalid file extension: {Value}",
             "message": "invalid file extension: {Value}",
-            "translation": "",
+            "translation": "Недопустимое расширение файла: {Value}",
             "placeholders": [
                 {
                     "id": "Value",
@@ -773,7 +828,7 @@
         {
             "id": "invalid file total size, max total size = {Value}b",
             "message": "invalid file total size, max total size = {Value}b",
-            "translation": "",
+            "translation": "Недопустимый суммарный размер файлов, максимальный суммарный размер = {Value} б",
             "placeholders": [
                 {
                     "id": "Value",
@@ -788,7 +843,7 @@
         {
             "id": "the content type '{Value}' does not match the detected type",
             "message": "the content type '{Value}' does not match the detected type",
-            "translation": "",
+            "translation": "Указанный тип содержимого '{Value}' не соответствует фактическому",
             "placeholders": [
                 {
                     "id": "Value",
@@ -803,7 +858,7 @@
         {
             "id": "unsupported file type '{Value}'",
             "message": "unsupported file type '{Value}'",
-            "translation": "",
+            "translation": "Неподдерживаемый тип файла '{Value}'",
             "placeholders": [
                 {
                     "id": "Value",
@@ -818,7 +873,7 @@
         {
             "id": "invalid image width, max size = {Value}px",
             "message": "invalid image width, max size = {Value}px",
-            "translation": "",
+            "translation": "Недопустимая ширина изображения, максимальная ширина = {Value}px",
             "placeholders": [
                 {
                     "id": "Value",
@@ -833,7 +888,7 @@
         {
             "id": "invalid image height, max size = {Value}px",
             "message": "invalid image height, max size = {Value}px",
-            "translation": "",
+            "translation": "Недопустимая высота изображения, максимальная высота = {Value}px",
             "placeholders": [
                 {
                     "id": "Value",
@@ -1066,7 +1121,7 @@
         {
             "id": "Validator_tag_article: {Name}, {Type}, {Value}",
             "message": "Validator_tag_article: {Name}, {Type}, {Value}",
-            "translation": "",
+            "translation": "Значение поля не должно быть пустым и содержать пробельные символы (текущее значение: '{Value}')",
             "placeholders": [
                 {
                     "id": "Name",
@@ -1097,7 +1152,7 @@
         {
             "id": "Validator_tag_email: {Name}, {Type}, {Value}",
             "message": "Validator_tag_email: {Name}, {Type}, {Value}",
-            "translation": "Значение поля должно являться email адресом (current value: '{Value}')",
+            "translation": "Значение поля должно являться email адресом (текущее значение: '{Value}')",
             "placeholders": [
                 {
                     "id": "Name",
@@ -1128,7 +1183,69 @@
         {
             "id": "Validator_tag_email_phone: {Name}, {Type}, {Value}",
             "message": "Validator_tag_email_phone: {Name}, {Type}, {Value}",
-            "translation": "Значение поля должно являться email адресом или номером телефона (current value: '{Value}')",
+            "translation": "Значение поля должно являться email адресом или номером телефона (текущее значение: '{Value}')",
+            "placeholders": [
+                {
+                    "id": "Name",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "\"Name\""
+                },
+                {
+                    "id": "Type",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "\"Type\""
+                },
+                {
+                    "id": "Value",
+                    "string": "%[3]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 3,
+                    "expr": "\"Value\""
+                }
+            ]
+        },
+        {
+            "id": "Validator_tag_lang: {Name}, {Type}, {Value}",
+            "message": "Validator_tag_lang: {Name}, {Type}, {Value}",
+            "translation": "Значение поля должно являться кодом одного из поддерживаемых языков (текущее значение: '{Value}')",
+            "placeholders": [
+                {
+                    "id": "Name",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "\"Name\""
+                },
+                {
+                    "id": "Type",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "\"Type\""
+                },
+                {
+                    "id": "Value",
+                    "string": "%[3]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 3,
+                    "expr": "\"Value\""
+                }
+            ]
+        },
+        {
+            "id": "Validator_tag_name: {Name}, {Type}, {Value}",
+            "message": "Validator_tag_name: {Name}, {Type}, {Value}",
+            "translation": "Значение поля должно начинаться и заканчиваться латинской буквой или цифрой и может содержать символы / _ . + - (текущее значение: '{Value}')",
             "placeholders": [
                 {
                     "id": "Name",
@@ -1159,7 +1276,7 @@
         {
             "id": "Validator_tag_password: {Name}, {Type}, {Value}",
             "message": "Validator_tag_password: {Name}, {Type}, {Value}",
-            "translation": "Значение поля должно содержать только латинские буквы, цифры и специальные символы кроме пробела (current value: '{Value}')",
+            "translation": "Значение поля должно содержать только латинские буквы, цифры и специальные символы кроме пробела (текущее значение: '{Value}')",
             "placeholders": [
                 {
                     "id": "Name",
@@ -1190,7 +1307,38 @@
         {
             "id": "Validator_tag_phone: {Name}, {Type}, {Value}",
             "message": "Validator_tag_phone: {Name}, {Type}, {Value}",
-            "translation": "",
+            "translation": "Значение поля должно являться номером телефона (текущее значение: '{Value}')",
+            "placeholders": [
+                {
+                    "id": "Name",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "\"Name\""
+                },
+                {
+                    "id": "Type",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "\"Type\""
+                },
+                {
+                    "id": "Value",
+                    "string": "%[3]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 3,
+                    "expr": "\"Value\""
+                }
+            ]
+        },
+        {
+            "id": "Validator_tag_realm: {Name}, {Type}, {Value}",
+            "message": "Validator_tag_realm: {Name}, {Type}, {Value}",
+            "translation": "Значение поля должно являться одной из поддерживаемых областей доступа (текущее значение: '{Value}')",
             "placeholders": [
                 {
                     "id": "Name",
@@ -1221,7 +1369,38 @@
         {
             "id": "Validator_tag_rewrite_name: {Name}, {Type}, {Value}",
             "message": "Validator_tag_rewrite_name: {Name}, {Type}, {Value}",
-            "translation": "",
+            "translation": "Значение поля должно начинаться со строчной латинской буквы и содержать только строчные латинские буквы, цифры и дефис (текущее значение: '{Value}')",
+            "placeholders": [
+                {
+                    "id": "Name",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "\"Name\""
+                },
+                {
+                    "id": "Type",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "\"Type\""
+                },
+                {
+                    "id": "Value",
+                    "string": "%[3]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 3,
+                    "expr": "\"Value\""
+                }
+            ]
+        },
+        {
+            "id": "Validator_tag_tz: {Name}, {Type}, {Value}",
+            "message": "Validator_tag_tz: {Name}, {Type}, {Value}",
+            "translation": "Значение поля должно являться именем одного из поддерживаемых часовых поясов (текущее значение: '{Value}')",
             "placeholders": [
                 {
                     "id": "Name",
@@ -1252,7 +1431,7 @@
         {
             "id": "Validator_tag_variable: {Name}, {Type}, {Value}",
             "message": "Validator_tag_variable: {Name}, {Type}, {Value}",
-            "translation": "",
+            "translation": "Значение поля должно начинаться с латинской буквы и содержать только латинские буквы и цифры (текущее значение: '{Value}')",
             "placeholders": [
                 {
                     "id": "Name",
@@ -1283,7 +1462,7 @@
         {
             "id": "Validator_tag_2d_size: {Name}, {Type}, {Value}",
             "message": "Validator_tag_2d_size: {Name}, {Type}, {Value}",
-            "translation": "",
+            "translation": "Значение поля должно являться размером в формате 'длинаxширина', например 100x200 (текущее значение: '{Value}')",
             "placeholders": [
                 {
                     "id": "Name",
@@ -1314,7 +1493,7 @@
         {
             "id": "Validator_tag_3d_size: {Name}, {Type}, {Value}",
             "message": "Validator_tag_3d_size: {Name}, {Type}, {Value}",
-            "translation": "",
+            "translation": "Значение поля должно являться размером в формате 'длинаxширинаxвысота', например 100x200x300 (текущее значение: '{Value}')",
             "placeholders": [
                 {
                     "id": "Name",
