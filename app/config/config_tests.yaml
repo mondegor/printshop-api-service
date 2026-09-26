@@ -41,6 +41,8 @@ module_settings:
 access_control:
   override_auth_token:
     access_type: session
+  auth_2fa:
+    decoy_factor_salt: "test-decoy-salt-0123456789abcdef012" # env:APPX_2FA_DECOY_FACTOR_SALT
 
 task_schedule_settings:
   notification_check_conn_period: 1h

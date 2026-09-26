@@ -2,11 +2,74 @@
     "language": "en-US",
     "messages": [
         {
-            "id": "Confirm your identity to sign in",
-            "message": "Confirm your identity to sign in",
-            "translation": "To sign in, enter the confirmation code sent to your email",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
+            "id": "Confirm the creation of the user by code",
+            "message": "Confirm the creation of the user by code",
+            "translation": "To complete the registration, enter the confirmation code that has been sent to you"
+        },
+        {
+            "id": "Confirm your identity to sign in by code",
+            "message": "Confirm your identity to sign in by code",
+            "translation": "To sign in, enter the confirmation code sent to your email"
+        },
+        {
+            "id": "Confirm your identity to sign in by second factor",
+            "message": "Confirm your identity to sign in by second factor",
+            "translation": "To sign in, confirm your identity with your second factor and then enter one of your recovery codes"
+        },
+        {
+            "id": "Confirm your identity to sign in by 2fa",
+            "message": "Confirm your identity to sign in by 2fa",
+            "translation": "To sign in, enter your password or the one-time code from your authenticator app"
+        },
+        {
+            "id": "Confirm your operation 'change email' by code",
+            "message": "Confirm your operation 'change email' by code",
+            "translation": "To change your email, enter the confirmation code that has been sent to you"
+        },
+        {
+            "id": "Confirm your operation 'change email' by second factor",
+            "message": "Confirm your operation 'change email' by second factor",
+            "translation": "To change your email, confirm the operation with your second factor and then enter one of your recovery codes"
+        },
+        {
+            "id": "Confirm your new email by code",
+            "message": "Confirm your new email by code",
+            "translation": "To confirm your new email, enter the confirmation code that has been sent to it"
+        },
+        {
+            "id": "Confirm your operation 'change phone' by code",
+            "message": "Confirm your operation 'change phone' by code",
+            "translation": "To change your phone number, enter the confirmation code that has been sent to you"
+        },
+        {
+            "id": "Confirm your operation 'change password' by code",
+            "message": "Confirm your operation 'change password' by code",
+            "translation": "To change your password, enter the confirmation code that has been sent to you"
+        },
+        {
+            "id": "Confirm your operation 'change TOTP generator' by code",
+            "message": "Confirm your operation 'change TOTP generator' by code",
+            "translation": "To change your authenticator app, enter the confirmation code that has been sent to you"
+        },
+        {
+            "id": "Confirm your operation 'regenerate recovery codes' by code",
+            "message": "Confirm your operation 'regenerate recovery codes' by code",
+            "translation": "To reissue your recovery codes, enter the confirmation code that has been sent to you"
+        },
+        {
+            "id": "Confirm your operation 'disable 2fa' by code",
+            "message": "Confirm your operation 'disable 2fa' by code",
+            "translation": "To disable two-factor authentication, enter the confirmation code that has been sent to you"
+        },
+        {
+            "id": "Confirm your operation by 2fa",
+            "message": "Confirm your operation by 2fa",
+            "translation": "Confirm the operation with your password or the one-time code from your authenticator app"
+        },
+        {
+            "id": "The confirmation code has been sent successfully",
+            "message": "The confirmation code has been sent successfully",
+            "translation": "The confirmation code has been sent"
         }
     ]
 }

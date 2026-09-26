@@ -38,22 +38,72 @@ func NewCatalog() catalog.Catalog {
 }
 
 var messageKeyToIndex = map[string]int{
-	"Confirm your identity to sign in": 0,
+	"Confirm the creation of the user by code":                   0,
+	"Confirm your identity to sign in by 2fa":                    3,
+	"Confirm your identity to sign in by code":                   1,
+	"Confirm your identity to sign in by second factor":          2,
+	"Confirm your new email by code":                             6,
+	"Confirm your operation 'change TOTP generator' by code":     9,
+	"Confirm your operation 'change email' by code":              4,
+	"Confirm your operation 'change email' by second factor":     5,
+	"Confirm your operation 'change password' by code":           8,
+	"Confirm your operation 'change phone' by code":              7,
+	"Confirm your operation 'disable 2fa' by code":               11,
+	"Confirm your operation 'regenerate recovery codes' by code": 10,
+	"Confirm your operation by 2fa":                              12,
+	"The confirmation code has been sent successfully":           13,
 }
 
-var en_USIndex = []uint32{ // 2 elements
-	0x00000000, 0x0000003b,
-} // Size: 32 bytes
+var en_USIndex = []uint32{ // 15 elements
+	0x00000000, 0x00000054, 0x0000008f, 0x000000f3,
+	0x00000144, 0x00000190, 0x000001fe, 0x0000024e,
+	0x000002a1, 0x000002f0, 0x00000348, 0x0000039e,
+	0x000003fa, 0x00000454, 0x00000478,
+} // Size: 84 bytes
 
-const en_USData string = "" + // Size: 59 bytes
-	"\x02To sign in, enter the confirmation code sent to your email"
+const en_USData string = "" + // Size: 1144 bytes
+	"\x02To complete the registration, enter the confirmation code that has b" +
+	"een sent to you\x02To sign in, enter the confirmation code sent to your " +
+	"email\x02To sign in, confirm your identity with your second factor and t" +
+	"hen enter one of your recovery codes\x02To sign in, enter your password " +
+	"or the one-time code from your authenticator app\x02To change your email" +
+	", enter the confirmation code that has been sent to you\x02To change you" +
+	"r email, confirm the operation with your second factor and then enter on" +
+	"e of your recovery codes\x02To confirm your new email, enter the confirm" +
+	"ation code that has been sent to it\x02To change your phone number, ente" +
+	"r the confirmation code that has been sent to you\x02To change your pass" +
+	"word, enter the confirmation code that has been sent to you\x02To change" +
+	" your authenticator app, enter the confirmation code that has been sent " +
+	"to you\x02To reissue your recovery codes, enter the confirmation code th" +
+	"at has been sent to you\x02To disable two-factor authentication, enter t" +
+	"he confirmation code that has been sent to you\x02Confirm the operation " +
+	"with your password or the one-time code from your authenticator app\x02T" +
+	"he confirmation code has been sent"
 
-var ru_RUIndex = []uint32{ // 2 elements
-	0x00000000, 0x000000a2,
-} // Size: 32 bytes
+var ru_RUIndex = []uint32{ // 15 elements
+	0x00000000, 0x00000087, 0x00000129, 0x000001eb,
+	0x0000028e, 0x0000031e, 0x000003ed, 0x00000495,
+	0x0000051f, 0x0000059a, 0x0000063a, 0x000006ce,
+	0x00000776, 0x0000080f, 0x00000844,
+} // Size: 84 bytes
 
-const ru_RUData string = "" + // Size: 162 bytes
-	"\x02Чтобы войти в систему, введите код подтверждения, отправленный на ва" +
-	"ш электронный адрес"
+const ru_RUData string = "" + // Size: 2116 bytes
+	"\x02Чтобы завершить регистрацию, введите отправленный вам код подтвержде" +
+	"ния\x02Чтобы войти в систему, введите код подтверждения, отправленный н" +
+	"а ваш электронный адрес\x02Чтобы войти в систему, подтвердите свою личн" +
+	"ость вторым фактором, а затем введите один из аварийных кодов\x02Чтобы " +
+	"войти в систему, введите пароль или одноразовый код из приложения-аутен" +
+	"тификатора\x02Чтобы изменить электронный адрес, введите отправленный ва" +
+	"м код подтверждения\x02Чтобы изменить электронный адрес, подтвердите оп" +
+	"ерацию вторым фактором, а затем введите один из аварийных кодов\x02Чтоб" +
+	"ы подтвердить новый электронный адрес, введите отправленный на него код" +
+	" подтверждения\x02Чтобы изменить номер телефона, введите отправленный ва" +
+	"м код подтверждения\x02Чтобы изменить пароль, введите отправленный вам " +
+	"код подтверждения\x02Чтобы изменить приложение-аутентификатор, введите " +
+	"отправленный вам код подтверждения\x02Чтобы перевыпустить аварийные код" +
+	"ы, введите отправленный вам код подтверждения\x02Чтобы отключить двухфа" +
+	"кторную аутентификацию, введите отправленный вам код подтверждения\x02П" +
+	"одтвердите операцию паролем или одноразовым кодом из приложения-аутенти" +
+	"фикатора\x02Код подтверждения отправлен"
 
-	// Total table size 285 bytes (0KiB); checksum: EAA54BC9
+	// Total table size 3428 bytes (3KiB); checksum: F1C363A8
