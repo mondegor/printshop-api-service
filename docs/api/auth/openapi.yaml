@@ -1013,17 +1013,18 @@ paths:
         в письмах нет.
 
         ### Созданная операция
-        - живёт долго (порядка 72 часов) и всё это время ждёт пользователя; срок отдаётся
-          в `expires_in`, а сама операция видна в `GET /v1/user` (`pending_operations`) вместе
-          с новым адресом и сроком истечения;
+        - живёт в течение срока, заданного приложением, и всё это время ждёт пользователя;
+          срок отдаётся в `expires_in`, а сама операция видна в `GET /v1/user`
+          (`pending_operations`) вместе с новым адресом и сроком истечения;
         - подтверждается кодом с нового адреса — `PATCH /v1/operation/confirm` (единственное
           звено, `confirm_method`: `EMAIL`); второй фактор повторно не спрашивается, он предъявлен
           на первом шаге;
         - применяется методом `POST /v1/security/apply-operation` — только тогда емаил меняется
           на новый, а на прежний адрес уходит уведомление о состоявшейся смене;
         - отзывается методом `PATCH /v1/operation/revoke` в любой момент до применения;
-        - повторная отправка кода (`PATCH /v1/operation/resend`) выдаёт новый код, но срок жизни
-          операции **не продлевает**: он отсчитывается от её создания;
+        - повторная отправка кода (`PATCH /v1/operation/resend`) выдаёт новый код; долгий срок жизни
+          операции отсчитывается от её создания и повторной отправкой **не продлевается**, короткий
+          продлевается при каждой повторной отправке, как у остальных операций;
         - одновременно у аккаунта существует не более одной такой операции: создание новой
           закрывает предыдущую;
 
@@ -1940,6 +1941,7 @@ components:
           required:
             - token
             - confirm_method
+            - message
           properties:
             token:
               description: |-
@@ -2131,10 +2133,6 @@ components:
             в заголовке Set-Cookie (см. описание метода)
           type: string
           example: 02fb5463db25b91568a1801dc0974b1d50cb1f3bc817f2be3a4b357929cee704
-        message:
-          description: Человекочитаемое сообщение об успешном доступе, текст задаёт хост-приложение и зависит от сценария
-          type: string
-          example: Доступ к вашему аккаунту разрешён
     Auth.Request.Model.ContinueSession:
       type: object
       required:
@@ -2204,19 +2202,11 @@ components:
         Тип защищённой операции личного кабинета, ожидающей подтверждения либо применения:
         - CHANGE_EMAIL - смена емаила, шаг 1: подтверждение владения аккаунтом;
         - CHANGE_EMAIL_CONFIRM - смена емаила, шаг 2: подтверждение владения новым адресом;
-        - CHANGE_PHONE - смена телефона;
-        - CHANGE_PASSWORD - установка пароля (2FA);
-        - CHANGE_TOTP - установка TOTP генератора (2FA);
-        - REGENERATE_RECOVERY - перевыпуск одноразовых аварийных кодов;
         - DISABLE_2FA - отключение 2FA;
       type: string
       enum:
         - CHANGE_EMAIL
         - CHANGE_EMAIL_CONFIRM
-        - CHANGE_PHONE
-        - CHANGE_PASSWORD
-        - CHANGE_TOTP
-        - REGENERATE_RECOVERY
         - DISABLE_2FA
       example: CHANGE_EMAIL_CONFIRM
     Auth.Enum.OperationStatus:
@@ -2233,6 +2223,8 @@ components:
     Auth.Response.Model.PendingOperation:
       description: |-
         Защищённая операция пользователя, ожидающая подтверждения либо применения.
+        В список входят только операции, в которых может быть применён аварийный код,
+        и все долгоживущие операции.
         Токеном операции она подтверждается (`PATCH /v1/operation/confirm`), при необходимости
         переотправляет код (`PATCH /v1/operation/resend`), отзывается (`PATCH /v1/operation/revoke`)
         и применяется завершающим методом (`POST /v1/security/apply-*`).
@@ -2260,8 +2252,7 @@ components:
         extra_value:
           description: |-
             Значение операции, отображаемое пользователю: новый емаил у операций смены адреса
-            (`CHANGE_EMAIL`, `CHANGE_EMAIL_CONFIRM`) и новый телефон у `CHANGE_PHONE`; у остальных
-            операций поле отсутствует
+            (`CHANGE_EMAIL`, `CHANGE_EMAIL_CONFIRM`); у остальных операций поле отсутствует
           type: string
           maxLength: 128
           example: new-user-email@example.com
@@ -2367,8 +2358,8 @@ components:
         pending_operations:
           description: |-
             Действующие операции личного кабинета пользователя, ожидающие его подтверждения либо
-            применения, в порядке их истечения. Отсутствует, если таких операций нет. Операции входа
-            и регистрации сюда не попадают.
+            применения, в порядке их истечения. Отсутствует, если таких операций нет. В список входят
+            только операции, в которых может быть применён аварийный код, и все долгоживущие операции.
           type: array
           items:
             $ref: '#/components/schemas/Auth.Response.Model.PendingOperation'
@@ -2507,6 +2498,7 @@ components:
       required:
         - kty
         - use
+        - alg
       properties:
         kty:
           $ref: '#/components/schemas/Auth.Check.Enum.KeyType'

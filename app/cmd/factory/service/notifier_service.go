@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/mondegor/go-components/mrnotifier/notifier/entity"
-	"github.com/mondegor/go-components/mrnotifier/notifier/service/produce"
+	notifierservice "github.com/mondegor/go-components/mrnotifier/notifier/service"
 	"github.com/mondegor/go-components/wire/mrmailer"
 	"github.com/mondegor/go-components/wire/mrnotifier/processor"
 	"github.com/mondegor/go-components/wire/mrnotifier/producer"
@@ -26,7 +26,7 @@ const (
 )
 
 // InitNotifierAPI - создаёт отправителя сообщений получателям.
-func InitNotifierAPI(opts app.Options) *produce.NoteProducer {
+func InitNotifierAPI(opts app.Options) *notifierservice.NoteProducer {
 	log.Info(opts.Logger, "Create and init notifier sender API")
 
 	return producer.InitService(
@@ -40,7 +40,7 @@ func InitNotifierAPI(opts app.Options) *produce.NoteProducer {
 			Name:       serviceNotifierQueueTableName,
 			PrimaryKey: serviceNotifierPrimaryKey,
 		},
-		produce.WithRetryAttempts(int16(opts.Cfg.TaskScheduleNotifier.SendRetryAttempts)),
+		notifierservice.WithRetryAttempts(int16(opts.Cfg.TaskScheduleNotifier.SendRetryAttempts)),
 	)
 }
 
