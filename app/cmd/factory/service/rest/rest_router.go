@@ -1,7 +1,7 @@
 package rest
 
 import (
-	"github.com/mondegor/go-components/mrauth/component/produce"
+	"github.com/mondegor/go-components/mrauth/infra/adapter/collect"
 	"github.com/mondegor/go-components/wire/mrauth/mapping"
 	"github.com/mondegor/go-core/wire/mraccess"
 	"github.com/mondegor/go-webcore/mrserver"
@@ -72,7 +72,7 @@ func initRestRouter(opts app.Options) (*mrchi.RouterAdapter, error) {
 		stat.NewRequestMetrics(initPrometheusRequestObserve(opts)),
 		stat.NewRequestTracer(opts.Tracer),
 		stat.NewRequestLogger(opts.Logger),
-		produce.NewUserRequest(
+		collect.NewUserRequest(
 			opts.UserStatRequestCollectorService, // TODO: заменить на API
 			opts.Logger,
 			opts.RequestParsers.ClientIP,

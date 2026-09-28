@@ -4,10 +4,9 @@ import (
 	"fmt"
 
 	"github.com/mondegor/go-components/mrmailer/entity"
-	"github.com/mondegor/go-components/mrmailer/sendmessage"
-	"github.com/mondegor/go-components/mrmailer/sendmessage/adapter"
-	"github.com/mondegor/go-components/mrmailer/sendmessage/provider"
-	"github.com/mondegor/go-components/mrmailer/service/produce"
+	"github.com/mondegor/go-components/mrmailer/infra/adapter/sender"
+	"github.com/mondegor/go-components/mrmailer/infra/adapter/senderrouter"
+	mailerservice "github.com/mondegor/go-components/mrmailer/service"
 	"github.com/mondegor/go-components/wire/mrmailer/processor"
 	"github.com/mondegor/go-components/wire/mrmailer/producer"
 	"github.com/mondegor/go-components/wire/mrmailer/scheduler"
@@ -30,7 +29,7 @@ const (
 )
 
 // InitMailerAPI - создаёт отправителя персонализированных уведомлений получателям.
-func InitMailerAPI(opts app.Options) *produce.MessageProducer {
+func InitMailerAPI(opts app.Options) *mailerservice.MessageProducer {
 	log.Info(opts.Logger, "Create and init mailer sender API")
 
 	return producer.InitService(
@@ -44,8 +43,8 @@ func InitMailerAPI(opts app.Options) *produce.MessageProducer {
 			Name:       serviceMailerQueueTableName,
 			PrimaryKey: serviceMailerPrimaryKey,
 		},
-		produce.WithRetryAttempts(int16(opts.Cfg.TaskScheduleMailer.SendRetryAttempts)),
-		produce.WithDelayCorrection(opts.Cfg.TaskScheduleMailer.SendDelayCorrection),
+		mailerservice.WithRetryAttempts(int16(opts.Cfg.TaskScheduleMailer.SendRetryAttempts)),
+		mailerservice.WithDelayCorrection(opts.Cfg.TaskScheduleMailer.SendDelayCorrection),
 	)
 }
 
@@ -54,15 +53,15 @@ func InitMailerAPI(opts app.Options) *produce.MessageProducer {
 func InitMailerProcessorService(opts app.Options) (*consume.MessageProcessor[entity.Message], error) {
 	log.Info(opts.Logger, "Create and init mail processor service")
 
-	mailSender := sendmessage.NewNopSender()
-	messengerSender := sendmessage.NewNopSender()
+	mailSender := sender.NewNopSender()
+	messengerSender := sender.NewNopSender()
 
 	log.Info(opts.Logger, "opts.Cfg.MailDefaultFrom", opts.Cfg.MailDefaultFrom)
 
 	if opts.Cfg.MailSmtpHost != "" {
 		log.Info(opts.Logger, "Create and init mail client", "host", opts.Cfg.MailSmtpHost, "port", opts.Cfg.MailSmtpPort)
 
-		sender, err := adapter.NewMailSender(
+		mailer, err := sender.NewMailSender(
 			mail.NewSMTPClient(
 				opts.Cfg.MailSmtpHost,
 				opts.Cfg.MailSmtpPort,
@@ -76,18 +75,18 @@ func InitMailerProcessorService(opts app.Options) (*consume.MessageProcessor[ent
 			return nil, fmt.Errorf("mail.New(): %w", err)
 		}
 
-		mailSender = sender
+		mailSender = mailer
 	}
 
 	if opts.Cfg.TelegramChannelName != "" {
 		log.Info(opts.Logger, "Create and init telegram bot", "name", opts.Cfg.TelegramChannelName)
 
-		sender, err := telegram.NewBotClient(opts.Cfg.TelegramChannelToken, opts.Tracer)
+		bot, err := telegram.NewBotClient(opts.Cfg.TelegramChannelToken, opts.Tracer)
 		if err != nil {
 			return nil, fmt.Errorf("telegrambot.NewMessageClient(): %w", err)
 		}
 
-		messengerSender = adapter.NewMessengerSender(sender)
+		messengerSender = sender.NewMessengerSender(bot)
 	}
 
 	return processor.InitService(
@@ -123,10 +122,10 @@ func InitMailerProcessorService(opts app.Options) (*consume.MessageProcessor[ent
 				opts.PostgresNotificationService.MustFind(opts.Cfg.TaskScheduleMailer.MessageProcessor.NotificationChannel),
 			),
 		),
-		processor.WithSenderProviderOpts(
-			provider.WithTracer(opts.Tracer),
-			provider.WithClientMail(mailSender),
-			provider.WithClientMessenger(messengerSender),
+		processor.WithSenderRouterOpts(
+			senderrouter.WithTracer(opts.Tracer),
+			senderrouter.WithClientMail(mailSender),
+			senderrouter.WithClientMessenger(messengerSender),
 		),
 	), nil
 }
