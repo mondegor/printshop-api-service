@@ -131,13 +131,14 @@ access_control:
       register_user_kind: standard
       operation_confirm:
         token_length: 64
-        code_length: 6
         # session_expiry: 10m
         send_by_email:
+          code_length: 6
           max_attempts: 3
           # max_resends: 8
           # min_resend_time: 1m
         send_by_phone:
+          code_length: 6
           max_attempts: 3
           # max_resends: 2
           min_resend_time: 3m
@@ -162,13 +163,14 @@ access_control:
       register_user_kind: standard
       # operation_confirm:
         # token_length: 80
-        # code_length: 6
         # session_expiry: 10m
         # send_by_email:
+          # code_length: 6
           # max_attempts: 5
           # max_resends: 8
           # min_resend_time: 1m
         # send_by_phone:
+          # code_length: 6
           # max_attempts: 5
           # max_resends: 2
           # min_resend_time: 2m
@@ -188,13 +190,14 @@ access_control:
       register_user_kind: none
       operation_confirm:
         token_length: 96
-        # code_length: 6
         session_expiry: 5m
         send_by_email:
+          # code_length: 6
           max_attempts: 3
           # max_resends: 8
           # min_resend_time: 1m
         send_by_phone:
+          # code_length: 6
           max_attempts: 3
           max_resends: 2
           # min_resend_time: 2m
@@ -228,19 +231,18 @@ access_control:
 #    access_type: jwt
 #    access_expiry: 720h # 30 days
 #    refresh_expiry: 1440h # 60 days
-#    length: 64
 
   default_operation_confirm:
     token_length: 80
-    code_length: 6
-    code_max_attempts: 3
     session_expiry: 10m
     # new_email_expiry: 24h # 0 - by default
     send_by_email:
+      code_length: 6
       max_attempts: 5
       max_resends: 8
       min_resend_time: 1m
     send_by_phone:
+      code_length: 6
       max_attempts: 5
       max_resends: 2
       min_resend_time: 2m
