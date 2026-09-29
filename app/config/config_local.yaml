@@ -27,4 +27,3 @@ access_control:
     access_type: jwt
     access_expiry: 720h # 30 days
     refresh_expiry: 1440h # 60 days
-    length: 64
