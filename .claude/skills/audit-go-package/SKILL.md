@@ -1,6 +1,6 @@
 ---
 name: audit-go-package
-description: Use when asked to "audit" / "провести аудит" a Go package or module, to re-audit one against a prior AUDIT.md, or to do a deep correctness/robustness pass (concurrency, leaks, panics, security) that ordinary diff review misses. Not for normal PR diffs — use /code-review for those.
+description: Use when asked to "audit" a Go package or module, to re-audit one against a prior AUDIT.md, or to do a deep correctness/robustness pass (concurrency, leaks, panics, security) that ordinary diff review misses. Not for normal PR diffs — use /code-review for those.
 ---
 
 # Audit a Go package (multi-dimensional)

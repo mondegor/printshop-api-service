@@ -1,6 +1,6 @@
 ---
 name: check-go-style
-description: Use when asked to check Go code against the project Style Guide — "проверь стиль", "check style compliance", "соответствует ли style guide", "нарушения стиля" — over the whole repo, a package/path, or the uncommitted diff. Report-only. For deep correctness/robustness audits use audit-go-package; for reviewing a PR diff use /code-review.
+description: Use when asked to check Go code against the project Style Guide — "check style compliance", "style guide violations", "does this match the style guide" — over the whole repo, a package/path, or the uncommitted diff. Report-only. For deep correctness/robustness audits use audit-go-package; for reviewing a PR diff use /code-review.
 ---
 
 # Style compliance check
@@ -118,11 +118,10 @@ Grouped by Style Guide section. These need reading, not grepping.
 
 ### Comments
 
-- Exported symbols: `// Name - описание.` — name, space-dash-space, text, terminating period.
+- Exported symbols: `// Name - description.` — name, space-dash-space, text, terminating period.
   `godot` catches the period, nothing catches the missing `Name - ` prefix.
 - Internal comments (inside bodies) starting lowercase must **not** end with a period —
   `godot` doesn't reach them.
-- Non-trivial constructors document params as a bulleted `// Параметры:` list.
 - Comment language (EN/RU) matches the surrounding file.
 - In every file you touch, **all** stale or copy-pasted doc comments are fixed, not just the ones
   on changed lines.
