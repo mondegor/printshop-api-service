@@ -731,6 +731,11 @@
             "translation": "Пароль слишком слабый"
         },
         {
+            "id": "password has recovery code format",
+            "message": "password has recovery code format",
+            "translation": "Пароль не должен совпадать по формату с аварийным кодом"
+        },
+        {
             "id": "auth token is empty or invalid",
             "message": "auth token is empty or invalid",
             "translation": "Токен авторизации не указан или некорректен"
@@ -759,6 +764,11 @@
             "id": "disable current 2fa before setting a new one",
             "message": "disable current 2fa before setting a new one",
             "translation": "Отключите текущую двухфакторную аутентификацию перед настройкой новой"
+        },
+        {
+            "id": "recovery code is not accepted at this step",
+            "message": "recovery code is not accepted at this step",
+            "translation": "Аварийный код на этом шаге не принимается"
         },
         {
             "id": "totp code is incorrect",

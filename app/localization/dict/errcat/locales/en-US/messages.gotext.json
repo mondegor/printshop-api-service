@@ -865,6 +865,11 @@
             "fuzzy": true
         },
         {
+            "id": "password has recovery code format",
+            "message": "password has recovery code format",
+            "translation": "Password must not have the recovery code format"
+        },
+        {
             "id": "auth token is empty or invalid",
             "message": "auth token is empty or invalid",
             "translation": "Authorization token is not specified or invalid",
@@ -905,6 +910,11 @@
             "translation": "Disable the current two-factor authentication before setting a new one",
             "translatorComment": "Copied from source.",
             "fuzzy": true
+        },
+        {
+            "id": "recovery code is not accepted at this step",
+            "message": "recovery code is not accepted at this step",
+            "translation": "Recovery code is not accepted at this step"
         },
         {
             "id": "totp code is incorrect",

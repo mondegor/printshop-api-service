@@ -90,7 +90,7 @@ For crypto/SQL/auth packages, also use the **Auth / crypto / SQL** block below.
 
 ## 9. Comments / docs — Agent D
 
-- Comments contradicting code (precision claims, old names after a rename, "до секунды" vs ms).
+- Comments contradicting code (precision claims, old names after a rename, "to the second" vs ms).
 - Missing godoc on exported symbols; duplicated doc text on option pairs (`WithX`/`WithXStrategy`).
 - Generated mocks: stale `Source:`/`mockgen` header, archived deps (`github.com/golang/mock` →
   `go.uber.org/mock`).

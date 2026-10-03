@@ -38,39 +38,39 @@ func NewCatalog() catalog.Catalog {
 }
 
 var messageKeyToIndex = map[string]int{
-	"2fa is disabled":                                                        71,
+	"2fa is disabled":                                                        72,
 	"401. client is unauthorized":                                            4,
 	"403. access forbidden":                                                  5,
 	"404. resource not found":                                                7,
-	"Validator_gte: %[1]s, %[2]s, %[3]s, %[4]s":                              85,
-	"Validator_http_url: %[1]s, %[2]s, %[3]s":                                83,
-	"Validator_lte: %[1]s, %[2]s, %[3]s, %[4]s":                              86,
-	"Validator_max: %[1]s, %[2]s, %[3]s, %[4]s":                              87,
-	"Validator_min: %[1]s, %[2]s, %[3]s, %[4]s":                              88,
-	"Validator_required: %[1]s, %[2]s, %[3]s":                                84,
-	"Validator_tag_2d_size: %[1]s, %[2]s, %[3]s":                             100,
-	"Validator_tag_3d_size: %[1]s, %[2]s, %[3]s":                             101,
-	"Validator_tag_article: %[1]s, %[2]s, %[3]s":                             89,
-	"Validator_tag_email: %[1]s, %[2]s, %[3]s":                               90,
-	"Validator_tag_email_phone: %[1]s, %[2]s, %[3]s":                         91,
-	"Validator_tag_lang: %[1]s, %[2]s, %[3]s":                                92,
-	"Validator_tag_name: %[1]s, %[2]s, %[3]s":                                93,
-	"Validator_tag_password: %[1]s, %[2]s, %[3]s":                            94,
-	"Validator_tag_phone: %[1]s, %[2]s, %[3]s":                               95,
-	"Validator_tag_realm: %[1]s, %[2]s, %[3]s":                               96,
-	"Validator_tag_rewrite_name: %[1]s, %[2]s, %[3]s":                        97,
-	"Validator_tag_tz: %[1]s, %[2]s, %[3]s":                                  98,
-	"Validator_tag_variable: %[1]s, %[2]s, %[3]s":                            99,
+	"Validator_gte: %[1]s, %[2]s, %[3]s, %[4]s":                              87,
+	"Validator_http_url: %[1]s, %[2]s, %[3]s":                                85,
+	"Validator_lte: %[1]s, %[2]s, %[3]s, %[4]s":                              88,
+	"Validator_max: %[1]s, %[2]s, %[3]s, %[4]s":                              89,
+	"Validator_min: %[1]s, %[2]s, %[3]s, %[4]s":                              90,
+	"Validator_required: %[1]s, %[2]s, %[3]s":                                86,
+	"Validator_tag_2d_size: %[1]s, %[2]s, %[3]s":                             102,
+	"Validator_tag_3d_size: %[1]s, %[2]s, %[3]s":                             103,
+	"Validator_tag_article: %[1]s, %[2]s, %[3]s":                             91,
+	"Validator_tag_email: %[1]s, %[2]s, %[3]s":                               92,
+	"Validator_tag_email_phone: %[1]s, %[2]s, %[3]s":                         93,
+	"Validator_tag_lang: %[1]s, %[2]s, %[3]s":                                94,
+	"Validator_tag_name: %[1]s, %[2]s, %[3]s":                                95,
+	"Validator_tag_password: %[1]s, %[2]s, %[3]s":                            96,
+	"Validator_tag_phone: %[1]s, %[2]s, %[3]s":                               97,
+	"Validator_tag_realm: %[1]s, %[2]s, %[3]s":                               98,
+	"Validator_tag_rewrite_name: %[1]s, %[2]s, %[3]s":                        99,
+	"Validator_tag_tz: %[1]s, %[2]s, %[3]s":                                  100,
+	"Validator_tag_variable: %[1]s, %[2]s, %[3]s":                            101,
 	"access forbidden":                                                       6,
-	"after node with ID=%[1]s not found":                                     74,
+	"after node with ID=%[1]s not found":                                     76,
 	"all attempts to confirm the operation have been spent":                  57,
-	"auth token is empty or invalid":                                         67,
-	"auth token not found or expired":                                        68,
+	"auth token is empty or invalid":                                         68,
+	"auth token not found or expired":                                        69,
 	"box article '%[1]s' already exists":                                     26,
 	"box with ID=%[1]s not found":                                            25,
 	"confirm code is incorrect":                                              55,
 	"confirm code is required":                                               56,
-	"disable current 2fa before setting a new one":                           72,
+	"disable current 2fa before setting a new one":                           73,
 	"element template ID is required":                                        38,
 	"element template with ID=%[1]s is disabled":                             40,
 	"element template with ID=%[1]s not found":                               39,
@@ -83,12 +83,12 @@ var messageKeyToIndex = map[string]int{
 	"form with ID=%[1]s not found":                                           32,
 	"input data is incorrect: '%[1]s'":                                       17,
 	"internal error":                                                         0,
-	"invalid file extension: %[1]s":                                          77,
-	"invalid file size, max size = %[1]sb":                                   76,
-	"invalid file size, min size = %[1]sb":                                   75,
-	"invalid file total size, max total size = %[1]sb":                       78,
-	"invalid image height, max size = %[1]spx":                               82,
-	"invalid image width, max size = %[1]spx":                                81,
+	"invalid file extension: %[1]s":                                          79,
+	"invalid file size, max size = %[1]sb":                                   78,
+	"invalid file size, min size = %[1]sb":                                   77,
+	"invalid file total size, max total size = %[1]sb":                       80,
+	"invalid image height, max size = %[1]spx":                               84,
+	"invalid image width, max size = %[1]spx":                                83,
 	"item detailing '%[1]s' not allowed for form detailing '%[2]s'":          37,
 	"laminate article '%[1]s' already exists":                                28,
 	"laminate type ID is required":                                           41,
@@ -111,6 +111,7 @@ var messageKeyToIndex = map[string]int{
 	"paper facture with ID=%[1]s not found":                                  49,
 	"paper with ID=%[1]s not found":                                          29,
 	"param name '%[1]s' already exists":                                      34,
+	"password has recovery code format":                                      67,
 	"password is too weak":                                                   66,
 	"phone already exists":                                                   23,
 	"phone is invalid":                                                       21,
@@ -120,6 +121,7 @@ var messageKeyToIndex = map[string]int{
 	"query %[1]s not found":                                                  24,
 	"record not found":                                                       8,
 	"record version conflict":                                                9,
+	"recovery code is not accepted at this step":                             74,
 	"request body is not valid: '%[1]s'":                                     10,
 	"request param with key '%[1]s' contains value greater then max '%[2]s'": 15,
 	"request param with key '%[1]s' has value length greater then max '%[2]s' characters": 16,
@@ -128,21 +130,21 @@ var messageKeyToIndex = map[string]int{
 	"resend confirm code is not supported for the current action":                         59,
 	"rewrite name '%[1]s' already exists":                                                 33,
 	"sending new messages is temporarily restricted":                                      60,
-	"session limit exceeded, try again later":                                             69,
-	"signup already in progress, try again later":                                         70,
+	"session limit exceeded, try again later":                                             70,
+	"signup already in progress, try again later":                                         71,
 	"switching from '%[1]s' to '%[2]s' is rejected":                                       18,
 	"system error": 1,
-	"the content type '%[1]s' does not match the detected type": 79,
+	"the content type '%[1]s' does not match the detected type": 81,
 	"the file with the specified key '%[1]s' was not uploaded":  12,
 	"token not found or expired : %[1]s, %[2]s, %[1]s":          53,
 	"token section %[1]s is invalid":                            54,
 	"too many requests":                                         11,
-	"totp code is incorrect":                                    73,
+	"totp code is incorrect":                                    75,
 	"unexpected internal error":                                 2,
-	"unsupported file type '%[1]s'":                             80,
+	"unsupported file type '%[1]s'":                             82,
 }
 
-var en_USIndex = []uint32{ // 103 elements
+var en_USIndex = []uint32{ // 105 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000016, 0x00000068, 0x0000009f,
 	0x000000af, 0x000000cb, 0x000000fb, 0x0000012b,
@@ -163,19 +165,20 @@ var en_USIndex = []uint32{ // 103 elements
 	0x000009a9, 0x000009d8, 0x000009fe, 0x00000a1d,
 	// Entry 40 - 5F
 	0x00000a3b, 0x00000a56, 0x00000a7e, 0x00000a93,
-	0x00000ac3, 0x00000aec, 0x00000b1b, 0x00000b51,
-	0x00000b77, 0x00000bbe, 0x00000bd5, 0x00000c1b,
-	0x00000c45, 0x00000c6f, 0x00000c8d, 0x00000cc3,
-	0x00000d07, 0x00000d25, 0x00000d52, 0x00000d81,
-	0x00000dbe, 0x00000dd4, 0x00000e24, 0x00000e71,
-	0x00000ea7, 0x00000ef2, 0x00000f4d, 0x00000f8c,
-	0x00000fdb, 0x00001030, 0x000010b4, 0x0000112d,
+	0x00000ac3, 0x00000af3, 0x00000b1c, 0x00000b4b,
+	0x00000b81, 0x00000ba7, 0x00000bee, 0x00000c19,
+	0x00000c30, 0x00000c76, 0x00000ca0, 0x00000cca,
+	0x00000ce8, 0x00000d1e, 0x00000d62, 0x00000d80,
+	0x00000dad, 0x00000ddc, 0x00000e19, 0x00000e2f,
+	0x00000e7f, 0x00000ecc, 0x00000f02, 0x00000f4d,
+	0x00000fa8, 0x00000fe7, 0x00001036, 0x0000108b,
 	// Entry 60 - 7F
-	0x0000116d, 0x000011ba, 0x00001249, 0x0000129f,
-	0x00001311, 0x0000137b, 0x000013f0,
-} // Size: 436 bytes
+	0x0000110f, 0x00001188, 0x000011c8, 0x00001215,
+	0x000012a4, 0x000012fa, 0x0000136c, 0x000013d6,
+	0x0000144b,
+} // Size: 444 bytes
 
-const en_USData string = "" + // Size: 5104 bytes
+const en_USData string = "" + // Size: 5195 bytes
 	"\x02Internal server error\x02The service is temporarily unable to proces" +
 	"s your request. Please try again later\x02Internal server error [problem" +
 	"]\x0a\x0a599. unexpected error\x02Not implemented\x02User authorization " +
@@ -216,44 +219,45 @@ const en_USData string = "" + // Size: 5104 bytes
 	"action\x02Sending new messages is temporarily restricted\x02Operation is" +
 	" not specified or invalid\x02Operation is already confirmed\x02Operation" +
 	" has already expired\x02Operation is not confirmed\x02User with the spec" +
-	"ified login not found\x02Password is too weak\x02Authorization token is " +
-	"not specified or invalid\x02Authorization token not found or expired\x02" +
-	"Session limit exceeded, please try again later\x02Signup is already in p" +
-	"rogress, please try again later\x02Two-factor authentication is disabled" +
-	"\x02Disable the current two-factor authentication before setting a new o" +
-	"ne\x02TOTP code is incorrect\x02Node with ID=%[1]s, after which the inse" +
-	"rtion is performed, not found\x02Invalid file size, minimum size = %[1]s" +
-	" b\x02Invalid file size, maximum size = %[1]s b\x02Invalid file extensio" +
-	"n: %[1]s\x02Invalid total file size, maximum total size = %[1]s b\x02The" +
-	" specified content type '%[1]s' does not match the detected type\x02Unsu" +
-	"pported file type '%[1]s'\x02Invalid image width, maximum width = %[1]sp" +
-	"x\x02Invalid image height, maximum height = %[1]spx\x02The field value m" +
-	"ust be URL address (current value: '%[3]s')\x02The field is required\x02" +
-	"The field value must be greater than or equal to %[4]s (current value: '" +
-	"%[3]s')\x02The field value must be less than or equal to %[4]s (current " +
-	"value: '%[3]s')\x02The field value must be no more than %[4]s characters" +
-	"\x02The field value must be at least %[4]s characters (current value: '%" +
-	"[3]s')\x02The field value must not be empty and must not contain whitesp" +
-	"ace (current value: '%[3]s')\x02The field value must be email address (c" +
-	"urrent value: '%[3]s')\x02The field value must be email address or phone" +
-	" number (current value: '%[3]s')\x02The field value must be one of the s" +
-	"upported language codes (current value: '%[3]s')\x02The field value must" +
-	" start and end with a latin letter or a digit and may contain the charac" +
-	"ters / _ . + - (current value: '%[3]s')\x02The field value must contain " +
-	"only latin letters, numbers, and special characters without spaces (curr" +
-	"ent value: '%[3]s')\x02The field value must be a phone number (current v" +
-	"alue: '%[3]s')\x02The field value must be one of the supported realms (c" +
-	"urrent value: '%[3]s')\x02The field value must start with a lowercase la" +
-	"tin letter and contain only lowercase latin letters, digits and hyphens " +
-	"(current value: '%[3]s')\x02The field value must be one of the supported" +
-	" time zone names (current value: '%[3]s')\x02The field value must start " +
-	"with a latin letter and contain only latin letters and digits (current v" +
-	"alue: '%[3]s')\x02The field value must be a size in the 'lengthxwidth' f" +
-	"ormat, for example 100x200 (current value: '%[3]s')\x02The field value m" +
-	"ust be a size in the 'lengthxwidthxheight' format, for example 100x200x3" +
-	"00 (current value: '%[3]s')"
+	"ified login not found\x02Password is too weak\x02Password must not have " +
+	"the recovery code format\x02Authorization token is not specified or inva" +
+	"lid\x02Authorization token not found or expired\x02Session limit exceede" +
+	"d, please try again later\x02Signup is already in progress, please try a" +
+	"gain later\x02Two-factor authentication is disabled\x02Disable the curre" +
+	"nt two-factor authentication before setting a new one\x02Recovery code i" +
+	"s not accepted at this step\x02TOTP code is incorrect\x02Node with ID=%[" +
+	"1]s, after which the insertion is performed, not found\x02Invalid file s" +
+	"ize, minimum size = %[1]s b\x02Invalid file size, maximum size = %[1]s b" +
+	"\x02Invalid file extension: %[1]s\x02Invalid total file size, maximum to" +
+	"tal size = %[1]s b\x02The specified content type '%[1]s' does not match " +
+	"the detected type\x02Unsupported file type '%[1]s'\x02Invalid image widt" +
+	"h, maximum width = %[1]spx\x02Invalid image height, maximum height = %[1" +
+	"]spx\x02The field value must be URL address (current value: '%[3]s')\x02" +
+	"The field is required\x02The field value must be greater than or equal t" +
+	"o %[4]s (current value: '%[3]s')\x02The field value must be less than or" +
+	" equal to %[4]s (current value: '%[3]s')\x02The field value must be no m" +
+	"ore than %[4]s characters\x02The field value must be at least %[4]s char" +
+	"acters (current value: '%[3]s')\x02The field value must not be empty and" +
+	" must not contain whitespace (current value: '%[3]s')\x02The field value" +
+	" must be email address (current value: '%[3]s')\x02The field value must " +
+	"be email address or phone number (current value: '%[3]s')\x02The field v" +
+	"alue must be one of the supported language codes (current value: '%[3]s'" +
+	")\x02The field value must start and end with a latin letter or a digit a" +
+	"nd may contain the characters / _ . + - (current value: '%[3]s')\x02The " +
+	"field value must contain only latin letters, numbers, and special charac" +
+	"ters without spaces (current value: '%[3]s')\x02The field value must be " +
+	"a phone number (current value: '%[3]s')\x02The field value must be one o" +
+	"f the supported realms (current value: '%[3]s')\x02The field value must " +
+	"start with a lowercase latin letter and contain only lowercase latin let" +
+	"ters, digits and hyphens (current value: '%[3]s')\x02The field value mus" +
+	"t be one of the supported time zone names (current value: '%[3]s')\x02Th" +
+	"e field value must start with a latin letter and contain only latin lett" +
+	"ers and digits (current value: '%[3]s')\x02The field value must be a siz" +
+	"e in the 'lengthxwidth' format, for example 100x200 (current value: '%[3" +
+	"]s')\x02The field value must be a size in the 'lengthxwidthxheight' form" +
+	"at, for example 100x200x300 (current value: '%[3]s')"
 
-var ru_RUIndex = []uint32{ // 103 elements
+var ru_RUIndex = []uint32{ // 105 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000031, 0x000000ca, 0x00000105,
 	0x0000012a, 0x0000016d, 0x0000019d, 0x000001cd,
@@ -274,19 +278,20 @@ var ru_RUIndex = []uint32{ // 103 elements
 	0x00001056, 0x000010ab, 0x000010ee, 0x0000111f,
 	// Entry 40 - 5F
 	0x00001155, 0x00001184, 0x000011d4, 0x000011fd,
-	0x0000124f, 0x000012b6, 0x0000130d, 0x00001370,
-	0x000013bb, 0x00001440, 0x0000145d, 0x000014c8,
-	0x00001529, 0x0000158c, 0x000015cc, 0x00001657,
-	0x000016c9, 0x00001704, 0x00001772, 0x000017e0,
-	0x00001854, 0x00001890, 0x0000190e, 0x0000198c,
-	0x000019e3, 0x00001a63, 0x00001b0a, 0x00001b82,
-	0x00001c21, 0x00001ccb, 0x00001dbe, 0x00001e9d,
+	0x00001264, 0x000012b6, 0x0000131d, 0x00001374,
+	0x000013d7, 0x00001422, 0x000014a7, 0x000014f4,
+	0x00001511, 0x0000157c, 0x000015dd, 0x00001640,
+	0x00001680, 0x0000170b, 0x0000177d, 0x000017b8,
+	0x00001826, 0x00001894, 0x00001908, 0x00001944,
+	0x000019c2, 0x00001a40, 0x00001a97, 0x00001b17,
+	0x00001bbe, 0x00001c36, 0x00001cd5, 0x00001d7f,
 	// Entry 60 - 7F
-	0x00001f20, 0x00001fd0, 0x000020d7, 0x00002192,
-	0x00002269, 0x00002323, 0x000023ee,
-} // Size: 436 bytes
+	0x00001e72, 0x00001f51, 0x00001fd4, 0x00002084,
+	0x0000218b, 0x00002246, 0x0000231d, 0x000023d7,
+	0x000024a2,
+} // Size: 444 bytes
 
-const ru_RUData string = "" + // Size: 9198 bytes
+const ru_RUData string = "" + // Size: 9378 bytes
 	"\x02Внутренняя ошибка сервера\x02Сервис временно не может обработать ваш" +
 	" запрос. Пожалуйста, повторите запрос позже\x02Внутренняя ошибка сервера" +
 	" [problem]\x02Метод не реализован\x02Требуется авторизация пользователя" +
@@ -327,44 +332,45 @@ const ru_RUData string = "" + // Size: 9198 bytes
 	"ий временно ограничена\x02Операция не указана или некорректна\x02Операц" +
 	"ия уже подтверждена\x02Срок действия операции истёк\x02Операция не подт" +
 	"верждена\x02Пользователь с указанным логином не найден\x02Пароль слишко" +
-	"м слабый\x02Токен авторизации не указан или некорректен\x02Токен автори" +
-	"зации не найден или срок его действия истёк\x02Превышен лимит сессий, п" +
-	"овторите попытку позже\x02Регистрация уже выполняется, повторите попытк" +
-	"у позже\x02Двухфакторная аутентификация отключена\x02Отключите текущую " +
-	"двухфакторную аутентификацию перед настройкой новой\x02Неверный TOTP ко" +
-	"д\x02Узел с ID=%[1]s, после которого выполняется вставка, не найден\x02" +
-	"Недопустимый размер файла, минимальный размер = %[1]s б\x02Недопустимый" +
-	" размер файла, максимальный размер = %[1]s б\x02Недопустимое расширение " +
-	"файла: %[1]s\x02Недопустимый суммарный размер файлов, максимальный сумм" +
-	"арный размер = %[1]s б\x02Указанный тип содержимого '%[1]s' не соответс" +
-	"твует фактическому\x02Неподдерживаемый тип файла '%[1]s'\x02Недопустима" +
-	"я ширина изображения, максимальная ширина = %[1]spx\x02Недопустимая выс" +
-	"ота изображения, максимальная высота = %[1]spx\x02Значение поля должно " +
-	"являться URL адресом (текущее значение: %[3]s)\x02Поле обязательно для " +
-	"заполнения\x02Значение поля должно быть больше или равно %[4]s (текущее" +
-	" значение: %[3]s)\x02Значение поля должно быть меньше или равно %[4]s (т" +
-	"екущее значение: %[3]s)\x02Значение поля должно быть не более %[4]s сим" +
-	"волов\x02Значение поля должно быть не менее %[4]s символов (текущее зна" +
-	"чение: %[3]s)\x02Значение поля не должно быть пустым и содержать пробел" +
-	"ьные символы (текущее значение: '%[3]s')\x02Значение поля должно являть" +
-	"ся email адресом (текущее значение: '%[3]s')\x02Значение поля должно яв" +
-	"ляться email адресом или номером телефона (текущее значение: '%[3]s')" +
-	"\x02Значение поля должно являться кодом одного из поддерживаемых языков " +
-	"(текущее значение: '%[3]s')\x02Значение поля должно начинаться и заканчи" +
-	"ваться латинской буквой или цифрой и может содержать символы / _ . + - " +
-	"(текущее значение: '%[3]s')\x02Значение поля должно содержать только лат" +
-	"инские буквы, цифры и специальные символы кроме пробела (текущее значен" +
-	"ие: '%[3]s')\x02Значение поля должно являться номером телефона (текущее" +
-	" значение: '%[3]s')\x02Значение поля должно являться одной из поддержива" +
-	"емых областей доступа (текущее значение: '%[3]s')\x02Значение поля долж" +
-	"но начинаться со строчной латинской буквы и содержать только строчные л" +
-	"атинские буквы, цифры и дефис (текущее значение: '%[3]s')\x02Значение п" +
-	"оля должно являться именем одного из поддерживаемых часовых поясов (тек" +
-	"ущее значение: '%[3]s')\x02Значение поля должно начинаться с латинской " +
-	"буквы и содержать только латинские буквы и цифры (текущее значение: '%[" +
-	"3]s')\x02Значение поля должно являться размером в формате 'длинаxширина'" +
-	", например 100x200 (текущее значение: '%[3]s')\x02Значение поля должно я" +
-	"вляться размером в формате 'длинаxширинаxвысота', например 100x200x300 " +
-	"(текущее значение: '%[3]s')"
+	"м слабый\x02Пароль не должен совпадать по формату с аварийным кодом\x02" +
+	"Токен авторизации не указан или некорректен\x02Токен авторизации не най" +
+	"ден или срок его действия истёк\x02Превышен лимит сессий, повторите поп" +
+	"ытку позже\x02Регистрация уже выполняется, повторите попытку позже\x02Д" +
+	"вухфакторная аутентификация отключена\x02Отключите текущую двухфакторну" +
+	"ю аутентификацию перед настройкой новой\x02Аварийный код на этом шаге н" +
+	"е принимается\x02Неверный TOTP код\x02Узел с ID=%[1]s, после которого в" +
+	"ыполняется вставка, не найден\x02Недопустимый размер файла, минимальный" +
+	" размер = %[1]s б\x02Недопустимый размер файла, максимальный размер = %[" +
+	"1]s б\x02Недопустимое расширение файла: %[1]s\x02Недопустимый суммарный " +
+	"размер файлов, максимальный суммарный размер = %[1]s б\x02Указанный тип" +
+	" содержимого '%[1]s' не соответствует фактическому\x02Неподдерживаемый т" +
+	"ип файла '%[1]s'\x02Недопустимая ширина изображения, максимальная ширин" +
+	"а = %[1]spx\x02Недопустимая высота изображения, максимальная высота = %" +
+	"[1]spx\x02Значение поля должно являться URL адресом (текущее значение: %" +
+	"[3]s)\x02Поле обязательно для заполнения\x02Значение поля должно быть бо" +
+	"льше или равно %[4]s (текущее значение: %[3]s)\x02Значение поля должно " +
+	"быть меньше или равно %[4]s (текущее значение: %[3]s)\x02Значение поля " +
+	"должно быть не более %[4]s символов\x02Значение поля должно быть не мен" +
+	"ее %[4]s символов (текущее значение: %[3]s)\x02Значение поля не должно " +
+	"быть пустым и содержать пробельные символы (текущее значение: '%[3]s')" +
+	"\x02Значение поля должно являться email адресом (текущее значение: '%[3]" +
+	"s')\x02Значение поля должно являться email адресом или номером телефона " +
+	"(текущее значение: '%[3]s')\x02Значение поля должно являться кодом одног" +
+	"о из поддерживаемых языков (текущее значение: '%[3]s')\x02Значение поля" +
+	" должно начинаться и заканчиваться латинской буквой или цифрой и может с" +
+	"одержать символы / _ . + - (текущее значение: '%[3]s')\x02Значение поля" +
+	" должно содержать только латинские буквы, цифры и специальные символы кр" +
+	"оме пробела (текущее значение: '%[3]s')\x02Значение поля должно являтьс" +
+	"я номером телефона (текущее значение: '%[3]s')\x02Значение поля должно " +
+	"являться одной из поддерживаемых областей доступа (текущее значение: '%" +
+	"[3]s')\x02Значение поля должно начинаться со строчной латинской буквы и " +
+	"содержать только строчные латинские буквы, цифры и дефис (текущее значе" +
+	"ние: '%[3]s')\x02Значение поля должно являться именем одного из поддерж" +
+	"иваемых часовых поясов (текущее значение: '%[3]s')\x02Значение поля дол" +
+	"жно начинаться с латинской буквы и содержать только латинские буквы и ц" +
+	"ифры (текущее значение: '%[3]s')\x02Значение поля должно являться разме" +
+	"ром в формате 'длинаxширина', например 100x200 (текущее значение: '%[3]" +
+	"s')\x02Значение поля должно являться размером в формате 'длинаxширинаxвы" +
+	"сота', например 100x200x300 (текущее значение: '%[3]s')"
 
-	// Total table size 15174 bytes (14KiB); checksum: 69460166
+	// Total table size 15461 bytes (15KiB); checksum: 8F509871

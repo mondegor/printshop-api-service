@@ -29,7 +29,7 @@ by `.golangci.yaml` (`golangci-lint` runs strict — `make lint` must pass befor
   This is pervasive (the norm here, unlike Uber which groups only related decls):
   ```go
   type (
-      // Service - описание типа ...
+      // Service - service description ...
       Service struct {
           repo Repository
       }
@@ -150,7 +150,7 @@ by `.golangci.yaml` (`golangci-lint` runs strict — `make lint` must pass befor
       FOR UPDATE SKIP LOCKED ...`
   ```
 - **Avoid maps in config/input DTOs — use a slice of structs with an explicit key field.**
-  Конфиги и входные DTO не используют мапы. Вместо `KindLimits map[string]uint32` — слайс:
+  Replace `KindLimits map[string]uint32` with a slice whose element carries the key:
   ```go
   type (
       GroupLimits struct {
@@ -165,8 +165,8 @@ by `.golangci.yaml` (`golangci-lint` runs strict — `make lint` must pass befor
   )
   ```
 - **Avoid nested maps (`map[K1]map[K2]V`) — use a flat map keyed by a small private struct.**
-  Двойные мапы только по согласованию. Внутренний lookup-индекс собирается в конструкторе из
-  входного слайса; ключуется приватной составной структурой:
+  Nested maps only by prior agreement. The internal lookup index is built in the constructor
+  from the input slice, keyed by a private composite struct:
   ```go
   type groupKindKey struct {
       group string
@@ -185,18 +185,24 @@ by `.golangci.yaml` (`golangci-lint` runs strict — `make lint` must pass befor
 ## Comments (English or Russian godot-checked)
 
 - Exported symbols **must** have a doc comment, in **English** or **Russian**, format
-  `// Name - descript / описание.` (name, space-dash-space, then text). Doc comments
+  `// Name - description.` (name, space-dash-space, then text). Doc comments
   end with a period (`godot`). Match the existing terse style.
 - **Internal comments** (inside function/method bodies) may start with a lowercase
   letter; when they do, they **must not** end with a period. (`godot`'s scope is
   declarations only, so these aren't linter-enforced — follow the convention manually.)
-- Document constructor params with a bulleted list when non-trivial:
-  ```go
-  // NewService - создаёт Service ...
-  // Параметры:
-  //   - repo - доступ к хранилищу данных;
-  //   - handler - функция обработки результата.
-  ```
+- **Don't comment what the code already says.** A doc comment carries meaning that isn't
+  visible from the declaration. Don't write "X is absent when empty" next to an `omitempty` tag,
+  and don't restate a type, a pointer or a tag. Don't copy a behavioural rule onto a model when
+  the function that implements it already documents it. Keep one source of truth, where the
+  logic lives. Conditions that the declaration can't show still belong in the comment (e.g.
+  "only when 2FA is enabled"), as do contracts that differ from sibling methods (e.g. "returns an
+  empty slice, not ErrEventStorageNoRecordFound").
+- **Don't restate a constant's value in comments.** Refer to a default or threshold by its
+  meaning ("0 means the default", "longer than the model's fixed-expiry threshold"), not by its
+  current value ("72 hours", "STRONG"). The value lives in the constant and can change there
+  without anyone noticing the comment has gone stale. This covers doc comments, config field
+  comments, test comments and the contract. Tests assert the value itself where it matters, and
+  listing an enum's domain values is fine.
 
 ## Naming
 
@@ -292,7 +298,7 @@ Rules:
   idempotent/bulk operations (ack-deletes, enqueue, expired-row cleanup). State the
   idempotency in the doc comment so the choice is not read as an oversight.
 - Document the sentinel in the method's doc comment when callers depend on it
-  (`// … Если записи нет, возвращает errors.ErrEventStorageNoRecordFound.`).
+  (`// … If no record exists, returns errors.ErrEventStorageNoRecordFound.`).
 - **The sentinel survives the repo's `errorWrapper`, but not as the same error.**
   `NewInfraStorageWrapper` only *returns as-is* what matches `ErrEventStorageNoRecordFound`;
   `ErrEventStorageRecordsNotAffected` has no `Kind()`, so it gets wrapped into
@@ -425,11 +431,17 @@ identifier names its own sentinels the same way.
   `EXPECT()`. Do **not** hand-write mocks or use any other mocking library.
 - **Put the `//go:generate mockgen ...` directives in the `_test.go` file that consumes
   the mocks, not in the production source.** Mocks are test-only tooling, so the
-  directives belong with the tests; place them right after the import block of the
-  package's test file. `go generate` runs per-directory, so `-source=foo.go` (and the
-  `-destination=mock/...` paths) still resolve correctly from the test file. When one
-  directory has several source files generating mocks, group all their directives in the
-  single package test file (e.g. the package's main `<pkg>_test.go`).
+  directives belong with the tests. `go generate` runs per-directory, so `-source=foo.go`
+  (and the `-destination=mock/...` paths) still resolve correctly from any test file of the
+  package. Which test file gets a directive depends on who uses the mock it generates:
+  - **one test file uses it** — put the directive in that file, right after its import block;
+  - **several test files use it** — put the directive in the package's `<pkg>_test.go`,
+    and create that file if it doesn't exist; it may contain nothing but the package clause
+    and directives;
+  - **no test uses it** — delete both the directive and the generated mock file.
+  "Uses" means the test file references `mock.NewMockXxx(` or `*mock.MockXxx` for any type in
+  that mock file. A mock file with no directive producing it is an error as well: add the
+  directive by the same rule. Don't pile a package's directives into one arbitrary test file.
 - **Always generate mocks into a nested `mock/` directory next to the consuming package**
   (`package mock`, e.g. `service/item/mock/`), one `mock/` per package that owns/consumes
   the interfaces — never into `*_mock_test.go` in the test package. The external `_test`
@@ -479,17 +491,21 @@ the directory — the two always move together:
 
 `<kind>` is `fields` / `enums` / `models` / `responses` / `parameters` / `headers`.
 
+- **`allOf` yes, `oneOf`/`anyOf` no.** Use `allOf` to compose a model from a shared one (e.g.
+  `WaitingConfirmOperation` = `ConfirmOperationState` + its own fields) or to attach a
+  `description` on top of a `$ref`. Never use `oneOf`/`anyOf`: a response or request has one
+  fixed shape, and any variants are explained in `description`.
 - **`example` is one valid value, never a description of the alternatives.** OpenAPI 3.0.x has no
   `examples` map inside a schema (it exists only at media-type/parameter level), so `example:
   "A | B"` reaches Swagger UI and the code generators verbatim and clients copy a value that does
   not exist. The variants and the rule for parsing them belong in `description`; `example` carries
   one concrete value, kept consistent with its neighbours (`code: "ValidateError/user_email"` next
-  to `detail: "Атрибут не может быть пустым"`). If the field has no `description` yet, add one
+  to `detail: "Attribute cannot be empty"`). If the field has no `description` yet, add one
   first, then narrow the `example` — otherwise the list of variants is lost, not moved.
 - **Don't reuse a shared field whose `description` doesn't describe your semantics.** A `$ref` pulls
   in the description too, so reuse is semantic, not just structural. `published_at` (time the item
-  was published) must not `$ref` `Api.Field.DateTimeUpdatedAt.yaml` ("Дата и время обновления
-  записи") — that puts a wrong, duplicated description next to the real `updated_at` in the bundled
+  was published) must not `$ref` `Api.Field.DateTimeUpdatedAt.yaml` ("record update date and
+  time") — that puts a wrong, duplicated description next to the real `updated_at` in the bundled
   spec. Add a component field (`Catalog.Field.DateTimePublishedAt.yaml`) instead. Reuse a shared
   field only when the shared description is the one you want verbatim.
 - **An optional request field is a pointer in Go, and it still carries `min` in the contract.**
