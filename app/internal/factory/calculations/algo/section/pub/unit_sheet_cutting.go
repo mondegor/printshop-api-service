@@ -6,12 +6,12 @@ import (
 
 	"print-shop-back/internal/calculations/algo/section/pub/sheet/cutting/controller/httpv1"
 	"print-shop-back/internal/calculations/algo/section/pub/sheet/cutting/usecase"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 func initBoxSheetCuttingController(
 	eventEmitter mrevent.Emitter,
-	requestParser *validate.Parser,
+	requestParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	useCase := usecase.NewSheetCutting(eventEmitter)

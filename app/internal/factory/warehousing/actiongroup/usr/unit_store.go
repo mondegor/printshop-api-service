@@ -7,13 +7,13 @@ import (
 	"print-shop-back/internal/warehousing/actiongroup/usr/repository"
 	"print-shop-back/internal/warehousing/actiongroup/usr/service"
 	"print-shop-back/internal/warehousing/actiongroup/usr/transport/httpv1"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/usr"
 )
 
 func initStoreController(
 	// logger log.Logger,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *usr.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	storage := repository.NewStorePostgres(
@@ -27,7 +27,7 @@ func initStoreController(
 	serviceStore := service.NewStore(storage, container)
 
 	controller := httpv1.NewStore(
-		requestExtendParser,
+		requestParser,
 		responseSender,
 		serviceStore,
 	)

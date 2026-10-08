@@ -29,15 +29,17 @@ func NewStorePostgres(client mrstorage.DBConnManager) *StorePostgres {
 	}
 }
 
-// FetchByCondition - comment method.
+// FetchByCondition - возвращает места хранения аккаунта по фильтру, начиная за позицией params.Cursor
+// (не более params.Cursor.Limit), и признак наличия записей за ней.
 // -- отображение мест на территории (предварительно проверить, что территория принадлежит аккаунту)
 // -- (территории редко меняются, они загружаются отдельно).
 func (re *StorePostgres) FetchByCondition(ctx context.Context, params dto.StoreParams) (rows []entity.Store, hasNext bool, err error) {
 	condition := re.sqlBuilder.BuildFunc(
 		func(c mrstorage.SQLConditionHelper) mrstorage.SQLPartFunc {
-			var condsMax [3]mrstorage.SQLPartFunc // 3 - max conditions
-
-			conds := append(condsMax[:0], c.Expr("deleted_at IS NULL"))
+			conds := []mrstorage.SQLPartFunc{
+				c.Equal("account_id", params.AccountID),
+				c.Expr("deleted_at IS NULL"),
+			}
 
 			if len(params.Filter.SearchTerritories) > 0 {
 				conds = append(conds, c.FilterAnyOf("territory_id", params.Filter.SearchTerritories))
@@ -45,8 +47,13 @@ func (re *StorePostgres) FetchByCondition(ctx context.Context, params dto.StoreP
 
 			if params.Filter.SearchCode != "" {
 				conds = append(conds, c.FilterLikePrefix("store_code", params.Filter.SearchCode))
-			} else if params.Cursor.Code != "" {
-				conds = append(conds, c.Greater("store_code", params.Cursor.Code))
+			}
+
+			if params.Cursor.TerritoryID > 0 {
+				conds = append(
+					conds,
+					c.Expr("(territory_id, store_code) > (%s, %s)", params.Cursor.TerritoryID, params.Cursor.Code),
+				)
 			}
 
 			return c.JoinAnd(conds...)
@@ -87,8 +94,9 @@ func (re *StorePostgres) FetchByCondition(ctx context.Context, params dto.StoreP
 	defer cursor.Close()
 
 	for cursor.Next() {
+		// лишняя строка сверх limit лишь сообщает, что за текущей страницей есть записи
 		if len(rows) == params.Cursor.Limit {
-			hasNext = cursor.Next()
+			hasNext = true
 
 			break
 		}

@@ -8,7 +8,7 @@ import (
 
 	"print-shop-back/internal/adapter/log"
 	"print-shop-back/internal/provideraccounts/module"
-	"print-shop-back/internal/provideraccounts/shared/validate"
+	"print-shop-back/internal/provideraccounts/section/adm/validate"
 )
 
 // InitHttpModule - создаются все компоненты модуля и возвращаются к нему контролеры.

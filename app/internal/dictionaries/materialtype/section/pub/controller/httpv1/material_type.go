@@ -7,7 +7,7 @@ import (
 
 	"print-shop-back/internal/dictionaries/materialtype/section/pub"
 	"print-shop-back/internal/dictionaries/materialtype/section/pub/entity"
-	"print-shop-back/pkg/transport/validate"
+	pubvalidate "print-shop-back/pkg/transport/validate/pub"
 )
 
 const (
@@ -17,14 +17,14 @@ const (
 type (
 	// MaterialType - comment struct.
 	MaterialType struct {
-		parser  validate.RequestParser
+		parser  pubvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase pub.MaterialTypeUseCase
 	}
 )
 
 // NewMaterialType - создаёт контроллер MaterialType.
-func NewMaterialType(parser validate.RequestParser, sender mrserver.ResponseSender, useCase pub.MaterialTypeUseCase) *MaterialType {
+func NewMaterialType(parser pubvalidate.RequestParser, sender mrserver.ResponseSender, useCase pub.MaterialTypeUseCase) *MaterialType {
 	return &MaterialType{
 		parser:  parser,
 		sender:  sender,

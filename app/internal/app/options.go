@@ -31,12 +31,16 @@ import (
 	"github.com/mondegor/go-webcore/mrserver/httpserver"
 	"github.com/mondegor/go-webcore/mrserver/mrresp"
 	"github.com/mondegor/go-webcore/mrserver/request/parser"
+	webvalidate "github.com/mondegor/go-webcore/mrserver/request/validate"
 
 	"print-shop-back/config"
 	"print-shop-back/internal/adapter/log"
 	"print-shop-back/internal/adapter/trace"
 	"print-shop-back/pkg/dictionaries/api"
-	validate2 "print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/adm"
+	"print-shop-back/pkg/transport/validate/prov"
+	"print-shop-back/pkg/transport/validate/pub"
+	"print-shop-back/pkg/transport/validate/usr"
 )
 
 type (
@@ -91,8 +95,9 @@ type (
 
 	// RequestParsers - comment struct.
 	RequestParsers struct {
-		// Bool       *parser.Bool
-		// DateTime   *parser.DateTime
+		Bool       *parser.Bool
+		DateTime   *parser.DateTime
+		Float64    *parser.Float64
 		Int64      *parser.Int64
 		ItemStatus *parser.ItemStatus
 		Uint64     *parser.Uint64
@@ -104,13 +109,18 @@ type (
 		Validator  *parser.Validator
 		Locale     *parser.Locale
 		TimeZone   *parser.TimeZone
-		ClientIP   *parser.ClientIP
+		Client     *parser.Client
 		User       *parser.User
 		FileJson   *parser.File
 		ImageLogo  *parser.Image
 
-		Parser       *validate2.Parser
-		ExtendParser *validate2.ExtendParser
+		BaseParser        *webvalidate.Parser
+		BaseListParser    *webvalidate.ListParser
+		BaseContextParser *webvalidate.ContextParser
+		AdmParser         *adm.Parser
+		PubParser         *pub.Parser
+		ProvParser        *prov.Parser
+		UsrParser         *usr.Parser
 	}
 
 	// ResponseSenders - comment struct.

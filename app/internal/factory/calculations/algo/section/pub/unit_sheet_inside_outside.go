@@ -6,12 +6,12 @@ import (
 
 	"print-shop-back/internal/calculations/algo/section/pub/sheet/insideoutside/controller/httpv1"
 	"print-shop-back/internal/calculations/algo/section/pub/sheet/insideoutside/usecase"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 func initSheetInsideOutsideController(
 	eventEmitter mrevent.Emitter,
-	requestParser *validate.Parser,
+	requestParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	useCase := usecase.NewSheetInsideOutside(eventEmitter)

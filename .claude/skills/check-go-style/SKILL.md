@@ -167,7 +167,7 @@ Grouped by Style Guide section. These need reading, not grepping.
 - Repeated mock/fixture setup across a package uses a `testify/suite` with `SetupTest`, not
   duplicated per-test wiring; mocks are `go.uber.org/mock/gomock` only.
 - Mocks generated into a nested `mock/` package next to the consumer.
-- `t.Parallel()` at the top of every test and subtest — **except** `PostgresTester` integration
+- `t.Parallel()` at the top of every test and subtest — **except** `pgtest.Tester` integration
   suites, where it must be absent *and* a comment must say why, so nobody re-adds it.
 - Table-driven tests use a local `type testCase struct` with named cases; benchmarks live in
   `*_bench_test.go`.

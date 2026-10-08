@@ -9,7 +9,7 @@ import (
 	"print-shop-back/internal/provideraccounts/module"
 	"print-shop-back/internal/provideraccounts/section/adm"
 	"print-shop-back/internal/provideraccounts/section/adm/entity"
-	"print-shop-back/internal/provideraccounts/shared/validate"
+	"print-shop-back/internal/provideraccounts/section/adm/validate"
 )
 
 const (

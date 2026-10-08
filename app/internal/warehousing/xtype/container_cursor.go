@@ -4,11 +4,13 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/mondegor/go-core/mrstorage"
 	"github.com/mondegor/go-core/mrtype"
 )
 
 type (
-	// ContainerCursor - параметры для выборки части списка элементов.
+	// ContainerCursor - позиция выборки контейнеров: записи, следующие за парой (Code, Marker)
+	// (пустой Code - с начала), не более Limit.
 	ContainerCursor struct {
 		Code   string
 		Marker uint16
@@ -16,11 +18,11 @@ type (
 	}
 )
 
-// NewContainerCursor - создаёт объект ContainerCursor.
+// NewContainerCursor - создаёт объект ContainerCursor из параметров курсорной пагинации: значение
+// курсора - "code|marker" последней полученной записи; значение без разделителя означает первую
+// страницу, неразбираемый или выходящий за диапазон container_marker маркер - маркер 0.
 func NewContainerCursor(params mrtype.CursorParams) ContainerCursor {
-	if params.Limit == 0 {
-		params.Limit = 1
-	}
+	params.Limit = mrstorage.PageLimit(params.Limit)
 
 	code, marker, found := strings.Cut(params.Value, "|")
 	if !found {
@@ -29,7 +31,8 @@ func NewContainerCursor(params mrtype.CursorParams) ContainerCursor {
 		}
 	}
 
-	parsedMarker, err := strconv.ParseUint(marker, 10, 16)
+	// container_marker хранится в int2, поэтому значение ограничено 15 битами.
+	parsedMarker, err := strconv.ParseUint(marker, 10, 15)
 	if err != nil {
 		return ContainerCursor{
 			Code:  code,

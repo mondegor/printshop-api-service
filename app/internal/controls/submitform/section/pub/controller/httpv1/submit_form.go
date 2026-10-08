@@ -7,7 +7,7 @@ import (
 
 	"print-shop-back/internal/controls/submitform/section/pub"
 	"print-shop-back/internal/controls/submitform/section/pub/entity"
-	"print-shop-back/pkg/transport/validate"
+	pubvalidate "print-shop-back/pkg/transport/validate/pub"
 )
 
 const (
@@ -18,14 +18,14 @@ const (
 type (
 	// SubmitForm - comment struct.
 	SubmitForm struct {
-		parser  validate.RequestParser
+		parser  pubvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase pub.SubmitFormUseCase
 	}
 )
 
 // NewSubmitForm - создаёт контроллер SubmitForm.
-func NewSubmitForm(parser validate.RequestParser, sender mrserver.ResponseSender, useCase pub.SubmitFormUseCase) *SubmitForm {
+func NewSubmitForm(parser pubvalidate.RequestParser, sender mrserver.ResponseSender, useCase pub.SubmitFormUseCase) *SubmitForm {
 	return &SubmitForm{
 		parser:  parser,
 		sender:  sender,

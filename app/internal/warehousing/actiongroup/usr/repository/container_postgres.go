@@ -38,13 +38,14 @@ func NewContainerPostgres(client mrstorage.DBConnManager) *ContainerPostgres {
 	}
 }
 
-// FetchByCondition - comment method.
+// FetchByCondition - возвращает контейнеры аккаунта по фильтру, начиная за позицией params.Cursor
+// (не более params.Cursor.Limit), и признак наличия записей за ней.
 func (re *ContainerPostgres) FetchByCondition(ctx context.Context, params dto.ContainerParams) (rows []entity.Container, hasNext bool, err error) {
 	condition := re.sqlBuilder.BuildFunc(
 		func(c mrstorage.SQLConditionHelper) mrstorage.SQLPartFunc {
-			var condsMax [4]mrstorage.SQLPartFunc // 4 - max conditions
-
-			conds := append(condsMax[:0], c.Equal("account_id", params.AccountID))
+			conds := []mrstorage.SQLPartFunc{
+				c.Equal("account_id", params.AccountID),
+			}
 
 			if params.Cursor.Code != "" {
 				conds = append(
@@ -99,8 +100,9 @@ func (re *ContainerPostgres) FetchByCondition(ctx context.Context, params dto.Co
 	defer cursor.Close()
 
 	for cursor.Next() {
+		// лишняя строка сверх limit лишь сообщает, что за текущей страницей есть записи
 		if len(rows) == params.Cursor.Limit {
-			hasNext = cursor.Next()
+			hasNext = true
 
 			break
 		}

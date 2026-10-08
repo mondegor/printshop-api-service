@@ -11,7 +11,7 @@ import (
 	"print-shop-back/internal/adapter/log"
 	"print-shop-back/internal/controls/submitform/module"
 	"print-shop-back/internal/controls/submitform/section/adm/repository"
-	"print-shop-back/internal/controls/submitform/shared/validate"
+	"print-shop-back/internal/controls/submitform/section/adm/validate"
 	"print-shop-back/pkg/controls/api"
 )
 

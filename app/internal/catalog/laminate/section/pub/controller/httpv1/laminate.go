@@ -7,7 +7,7 @@ import (
 
 	"print-shop-back/internal/catalog/laminate/section/pub"
 	"print-shop-back/internal/catalog/laminate/section/pub/entity"
-	"print-shop-back/pkg/transport/validate"
+	pubvalidate "print-shop-back/pkg/transport/validate/pub"
 )
 
 const (
@@ -19,14 +19,14 @@ const (
 type (
 	// Laminate - comment struct.
 	Laminate struct {
-		parser  validate.RequestParser
+		parser  pubvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase pub.LaminateUseCase
 	}
 )
 
 // NewLaminate - создаёт контроллер Laminate.
-func NewLaminate(parser validate.RequestParser, sender mrserver.ResponseSender, useCase pub.LaminateUseCase) *Laminate {
+func NewLaminate(parser pubvalidate.RequestParser, sender mrserver.ResponseSender, useCase pub.LaminateUseCase) *Laminate {
 	return &Laminate{
 		parser:  parser,
 		sender:  sender,

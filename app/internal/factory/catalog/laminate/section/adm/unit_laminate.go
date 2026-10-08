@@ -13,14 +13,14 @@ import (
 	"print-shop-back/internal/catalog/laminate/section/adm/repository"
 	"print-shop-back/internal/catalog/laminate/section/adm/usecase"
 	"print-shop-back/pkg/dictionaries/api"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/adm"
 )
 
 func initLaminateController(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *adm.Parser,
 	responseSender mrserver.ResponseSender,
 	materialTypeAPI api.MaterialTypeAvailability,
 	pageSizeMax int,
@@ -42,7 +42,7 @@ func initLaminateController(
 	useCase := usecase.NewLaminate(storage, materialTypeAPI, eventEmitter)
 
 	controller := httpv1.NewLaminate(
-		requestExtendParser,
+		requestParser,
 		responseSender,
 		useCase,
 		entityMeta.MetaOrderBy(),

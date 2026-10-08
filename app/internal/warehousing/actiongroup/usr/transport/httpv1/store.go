@@ -11,7 +11,7 @@ import (
 	"print-shop-back/internal/warehousing/actiongroup/usr/transport/model"
 	"print-shop-back/internal/warehousing/module"
 	"print-shop-back/internal/warehousing/xtype"
-	"print-shop-back/pkg/transport/validate"
+	usrvalidate "print-shop-back/pkg/transport/validate/usr"
 )
 
 const (
@@ -21,7 +21,7 @@ const (
 type (
 	// Store - comment struct.
 	Store struct {
-		parser       validate.RequestExtendParser
+		parser       usrvalidate.RequestParser
 		sender       mrserver.ResponseSender
 		serviceStore usr.StoreService
 	}
@@ -29,7 +29,7 @@ type (
 
 // NewStore - создаёт контроллер Store.
 func NewStore(
-	parser validate.RequestExtendParser,
+	parser usrvalidate.RequestParser,
 	sender mrserver.ResponseSender,
 	serviceStore usr.StoreService,
 ) *Store {

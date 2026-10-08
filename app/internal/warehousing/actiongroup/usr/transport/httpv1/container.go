@@ -15,7 +15,7 @@ import (
 	"print-shop-back/internal/warehousing/module"
 	"print-shop-back/internal/warehousing/xtype"
 	pkgmodel "print-shop-back/pkg/transport/model"
-	"print-shop-back/pkg/transport/validate"
+	usrvalidate "print-shop-back/pkg/transport/validate/usr"
 )
 
 const (
@@ -28,7 +28,7 @@ const (
 type (
 	// Container - comment struct.
 	Container struct {
-		parser                 validate.RequestParser
+		parser                 usrvalidate.RequestParser
 		sender                 mrserver.ResponseSender
 		serviceContainer       usr.ContainerService
 		useCaseCreateContainer createContainerUseCase
@@ -41,7 +41,7 @@ type (
 
 // NewContainer - создаёт контроллер Container.
 func NewContainer(
-	parser validate.RequestParser,
+	parser usrvalidate.RequestParser,
 	sender mrserver.ResponseSender,
 	serviceContainer usr.ContainerService,
 	createContainerUseCase createContainerUseCase,

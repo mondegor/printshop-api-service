@@ -7,7 +7,7 @@ import (
 
 	"print-shop-back/internal/catalog/box/section/pub"
 	"print-shop-back/internal/catalog/box/section/pub/entity"
-	"print-shop-back/pkg/transport/validate"
+	pubvalidate "print-shop-back/pkg/transport/validate/pub"
 )
 
 const (
@@ -17,14 +17,14 @@ const (
 type (
 	// Box - comment struct.
 	Box struct {
-		parser  validate.RequestParser
+		parser  pubvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase pub.BoxUseCase
 	}
 )
 
 // NewBox - создаёт контроллер Box.
-func NewBox(parser validate.RequestParser, sender mrserver.ResponseSender, useCase pub.BoxUseCase) *Box {
+func NewBox(parser pubvalidate.RequestParser, sender mrserver.ResponseSender, useCase pub.BoxUseCase) *Box {
 	return &Box{
 		parser:  parser,
 		sender:  sender,

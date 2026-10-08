@@ -14,7 +14,7 @@ import (
 	"print-shop-back/internal/controls/submitform/section/adm/entity"
 	"print-shop-back/internal/controls/submitform/section/adm/repository"
 	"print-shop-back/internal/controls/submitform/section/adm/usecase"
-	"print-shop-back/internal/controls/submitform/shared/validate"
+	"print-shop-back/internal/controls/submitform/section/adm/validate"
 	"print-shop-back/pkg/controls/api"
 )
 
@@ -37,7 +37,7 @@ func initFormElementController(
 			eventEmitter,
 			mrsql.DBTableInfo{
 				Name:       module.DBTableNameSubmitFormElements,
-				PrimaryKey: "form_id",
+				PrimaryKey: "element_id",
 			},
 		),
 		eventEmitter,

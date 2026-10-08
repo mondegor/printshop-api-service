@@ -7,14 +7,14 @@ import (
 	"github.com/mondegor/go-webcore/mrserver"
 
 	"print-shop-back/internal/calculations/queryhistory/module"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 // InitHttpModule - создаются все компоненты модуля и возвращаются к нему контролеры.
 func InitHttpModule(
 	eventEmitter mrevent.Emitter,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 ) initing.HttpModule {
 	return initing.HttpModule{
@@ -26,7 +26,7 @@ func InitHttpModule(
 					return initQueryHistoryController(
 						eventEmitter,
 						dbConnManager,
-						requestExtendParser,
+						requestParser,
 						responseSender,
 					)
 				},

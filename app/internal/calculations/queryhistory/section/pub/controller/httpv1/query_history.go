@@ -12,7 +12,7 @@ import (
 	"print-shop-back/internal/calculations/queryhistory/section/pub"
 	"print-shop-back/internal/calculations/queryhistory/section/pub/entity"
 	"print-shop-back/pkg/transport/model"
-	"print-shop-back/pkg/transport/validate"
+	pubvalidate "print-shop-back/pkg/transport/validate/pub"
 )
 
 const (
@@ -23,14 +23,14 @@ const (
 type (
 	// QueryHistory - comment struct.
 	QueryHistory struct {
-		parser  validate.RequestParser
+		parser  pubvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase pub.QueryResultUseCase
 	}
 )
 
 // NewQueryHistory - создаёт контроллер QueryHistory.
-func NewQueryHistory(parser validate.RequestParser, sender mrserver.ResponseSender, useCase pub.QueryResultUseCase) *QueryHistory {
+func NewQueryHistory(parser pubvalidate.RequestParser, sender mrserver.ResponseSender, useCase pub.QueryResultUseCase) *QueryHistory {
 	return &QueryHistory{
 		parser:  parser,
 		sender:  sender,

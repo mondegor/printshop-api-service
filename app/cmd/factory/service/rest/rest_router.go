@@ -75,7 +75,7 @@ func initRestRouter(opts app.Options) (*mrchi.RouterAdapter, error) {
 		collect.NewUserRequest(
 			opts.UserStatRequestCollectorService, // TODO: заменить на API
 			opts.Logger,
-			opts.RequestParsers.ClientIP,
+			opts.RequestParsers.Client,
 			opts.RequestParsers.User,
 			mapping.OptionUserRealmsToRealmRegistry(opts.Cfg.AccessControl.Realms),
 		),

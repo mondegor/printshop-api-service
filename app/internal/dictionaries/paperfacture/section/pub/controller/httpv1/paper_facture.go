@@ -7,7 +7,7 @@ import (
 
 	"print-shop-back/internal/dictionaries/paperfacture/section/pub"
 	"print-shop-back/internal/dictionaries/paperfacture/section/pub/entity"
-	"print-shop-back/pkg/transport/validate"
+	pubvalidate "print-shop-back/pkg/transport/validate/pub"
 )
 
 const (
@@ -17,14 +17,14 @@ const (
 type (
 	// PaperFacture - comment struct.
 	PaperFacture struct {
-		parser  validate.RequestParser
+		parser  pubvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase pub.PaperFactureUseCase
 	}
 )
 
 // NewPaperFacture - создаёт контроллер PaperFacture.
-func NewPaperFacture(parser validate.RequestParser, sender mrserver.ResponseSender, useCase pub.PaperFactureUseCase) *PaperFacture {
+func NewPaperFacture(parser pubvalidate.RequestParser, sender mrserver.ResponseSender, useCase pub.PaperFactureUseCase) *PaperFacture {
 	return &PaperFacture{
 		parser:  parser,
 		sender:  sender,

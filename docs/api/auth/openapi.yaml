@@ -1691,6 +1691,49 @@ paths:
           $ref: '#/components/responses/Api.ResponseJson.Error409'
         '500':
           $ref: '#/components/responses/Api.ResponseJson.Error5xx'
+  /v1/security/log:
+    get:
+      summary: Auth/SC/R8. Метод получения журнала безопасности пользователя
+      description: |-
+        Метод возвращает журнал безопасности текущего пользователя постранично, от самых свежих
+        событий к старым. В журнал попадают только состоявшиеся значимые события (вход, включение
+        и снятие 2FA, трата и перевыпуск аварийных кодов, смена емаила и телефона, закрытие сессий,
+        повторное использование токена обновления); неудачные попытки подтверждения по отдельности
+        не записываются. У каждого события — время, IP, приложение и устройство.
+
+        Пользователь удалить журнал не может; записи старше срока хранения, заданного приложением,
+        удаляются автоматически.
+
+        ### Пагинация
+        Первая страница запрашивается без `cursor`. Следующая — с `cursor` из предыдущего ответа,
+        пока `has_next` равен `true`. Некорректные `cursor` и `limit` не приводят к ошибке:
+        при некорректном `cursor` возвращается первая страница; при некорректном `limit` (в том
+        числе больше максимума) — первая страница размера по умолчанию, `cursor` при этом
+        не учитывается.
+
+        ### Причины ответа `403`
+        - общие причины отказа — см. «Аутентификация и доступ» в описании API;
+      operationId: getSecurityLog
+      tags:
+        - Auth.Security
+      x-auth-scopes:
+        - any-users
+      parameters:
+        - $ref: '#/components/parameters/Api.Request.Query.ListCursor.Cursor'
+        - $ref: '#/components/parameters/Auth.Security.Request.Query.Log.Limit'
+      responses:
+        '200':
+          description: Сформирован ответ со страницей журнала безопасности пользователя
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/Auth.Security.Response.Model.SecurityLog'
+        '401':
+          $ref: '#/components/responses/Api.ResponseJson.Error401'
+        '403':
+          $ref: '#/components/responses/Api.ResponseJson.Error403'
+        '500':
+          $ref: '#/components/responses/Api.ResponseJson.Error5xx'
   /v1/sessions:
     get:
       summary: Auth/SES/R1. Метод получения списка открытых сессий пользователя
@@ -1876,6 +1919,27 @@ components:
         minLength: 64
         maxLength: 128
       example: b1d50cb1f3bc817f2be3a4b357929cee70402fb5463db25b91568a1801dc0974
+    Api.Request.Query.ListCursor.Cursor:
+      description: Текущая позиция в списке записей
+      name: cursor
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 256
+      example: Y3Vyc29yLTQwMjc5
+    Auth.Security.Request.Query.Log.Limit:
+      description: Количество записей журнала безопасности на странице
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+        maximum: 100
+        default: 10
+      example: 20
     Auth.Sessions.Request.Query.Realm:
       description: |-
         Realm, чьи сессии нужно вернуть.
@@ -2733,6 +2797,120 @@ components:
           minLength: 6
           maxLength: 6
           example: '183947'
+    Auth.Enum.SecurityEvent:
+      description: |-
+        Тип события журнала безопасности пользователя:
+        - SIGNED_IN - вход в аккаунт (в том числе завершающий регистрацию);
+        - AUTH_2FA_ENABLED - включение 2FA (`factor` - тип второго фактора);
+        - AUTH_2FA_DISABLED - снятие 2FA;
+        - RECOVERY_CODE_USED - трата аварийного кода (`remaining` - остаток кодов);
+        - RECOVERY_CODES_REGENERATED - перевыпуск аварийных кодов;
+        - EMAIL_CHANGE_REQUESTED - запрошена смена емаила (`old_value`, `new_value` - прежний и новый адрес);
+        - EMAIL_CHANGED - смена емаила завершена (`old_value`, `new_value` - прежний и новый адрес);
+        - EMAIL_CHANGE_REVOKED - запрос смены емаила отозван пользователем (`new_value` - отменённый адрес);
+        - PHONE_CHANGED - смена телефона (`old_value`, `new_value` - прежний и новый номер, прежний
+          отсутствует, если номера не было);
+        - SESSIONS_CLOSED - пользователь закрыл сессии из списка открытых сессий;
+        - TOKEN_REUSE_DETECTED - повторно предъявлен уже использованный токен обновления открытой сессии, сессия закрывается;
+      type: string
+      enum:
+        - SIGNED_IN
+        - AUTH_2FA_ENABLED
+        - AUTH_2FA_DISABLED
+        - RECOVERY_CODE_USED
+        - RECOVERY_CODES_REGENERATED
+        - EMAIL_CHANGE_REQUESTED
+        - EMAIL_CHANGED
+        - EMAIL_CHANGE_REVOKED
+        - PHONE_CHANGED
+        - SESSIONS_CLOSED
+        - TOKEN_REUSE_DETECTED
+      example: SIGNED_IN
+    Auth.Security.Response.Model.SecurityLogItem:
+      description: Событие журнала безопасности пользователя
+      type: object
+      required:
+        - id
+        - event_type
+        - ip
+        - app_name
+        - device_name
+        - created_at
+      properties:
+        id:
+          description: Идентификатор записи журнала
+          type: string
+          example: '40279'
+        event_type:
+          $ref: '#/components/schemas/Auth.Enum.SecurityEvent'
+        ip:
+          description: IP адрес, с которого выполнено действие
+          type: string
+          example: 95.165.1.1
+        location:
+          description: Местоположение (только если было вычислено)
+          type: string
+          example: Moscow, Russia
+        app_name:
+          description: Приложение, из которого выполнено действие (пустая строка, если не определено)
+          type: string
+          example: Web, Firefox
+        device_name:
+          description: Устройство, с которого выполнено действие (пустая строка, если не определено)
+          type: string
+          example: Device 1
+        old_value:
+          description: Прежнее значение (адрес или номер телефона); только у событий смены емаила и телефона
+          type: string
+          example: old@example.com
+        new_value:
+          description: Новое значение (адрес или номер телефона); только у событий смены емаила и телефона
+          type: string
+          example: new@example.com
+        factor:
+          description: Тип второго фактора; только у события AUTH_2FA_ENABLED
+          type: string
+          enum:
+            - PASSWORD
+            - TOTP
+          example: TOTP
+        remaining:
+          description: Остаток аварийных кодов после траты; только у события RECOVERY_CODE_USED
+          type: integer
+          format: int32
+          minimum: 0
+          example: 9
+        created_at:
+          description: Дата и время события в часовом поясе пользователя (RFC3339 со смещением; по умолчанию UTC)
+          type: string
+          format: date-time
+          example: '2020-01-01T15:00:00+03:00'
+    Api.Field.ListCursor.Cursor:
+      description: Следующая позиция в списке записей
+      type: string
+      maxLength: 256
+      example: Y3Vyc29yLTQwMjc5
+    Api.Field.ListCursor.HasNext:
+      description: Признак наличия записей в следующей позиции
+      type: boolean
+      example: true
+    Auth.Security.Response.Model.SecurityLog:
+      description: Страница журнала безопасности пользователя, от свежих событий к старым
+      type: object
+      required:
+        - items
+        - cursor
+        - has_next
+      properties:
+        items:
+          description: События журнала, не более limit
+          type: array
+          items:
+            $ref: '#/components/schemas/Auth.Security.Response.Model.SecurityLogItem'
+        cursor:
+          $ref: '#/components/schemas/Api.Field.ListCursor.Cursor'
+        has_next:
+          $ref: '#/components/schemas/Api.Field.ListCursor.HasNext'
     Auth.Field.DateTimeLastSeenAt:
       description: Дата и время последней активности сессии в часовом поясе пользователя (RFC3339 со смещением; по умолчанию UTC)
       type: string

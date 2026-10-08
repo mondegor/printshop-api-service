@@ -12,14 +12,14 @@ import (
 	"print-shop-back/internal/dictionaries/paperfacture/section/adm/entity"
 	"print-shop-back/internal/dictionaries/paperfacture/section/adm/repository"
 	"print-shop-back/internal/dictionaries/paperfacture/section/adm/usecase"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/adm"
 )
 
 func initPaperFactureController(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *adm.Parser,
 	responseSender mrserver.ResponseSender,
 	pageSizeMax int,
 ) (mrserver.HttpController, error) {
@@ -39,7 +39,7 @@ func initPaperFactureController(
 	useCase := usecase.NewPaperFacture(storage, eventEmitter)
 
 	controller := httpv1.NewPaperFacture(
-		requestExtendParser,
+		requestParser,
 		responseSender,
 		useCase,
 		entityMeta.MetaOrderBy(),

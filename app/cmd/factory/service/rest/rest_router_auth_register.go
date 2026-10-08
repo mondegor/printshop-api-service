@@ -25,6 +25,7 @@ const (
 	serviceUsersActivityStatTableName = "printshop_auth.users_activity_stat"
 	serviceUsersAuth2faTableName      = "printshop_auth.users_auth_2fa"
 	serviceUsersRealmsTableName       = "printshop_auth.users_realms"
+	serviceUsersSecurityLogTableName  = "printshop_auth.users_security_log"
 )
 
 // RegisterRestRouterAuthHandlers - регистрирует в указанном роутере обработчики секции AuthAPI.
@@ -57,17 +58,10 @@ func getAuthAPIControllers(opts app.Options) []initing.HttpModule {
 			opts.EventEmitter,
 			opts.PostgresConnManager,
 			opts.Locker,
-			// opts.RequestParsers.Parser,
-			authvalidate.NewParser( // TODO: объединить со стандартным Parser или сделать свой? Может там нужно меньше парсеров
-				opts.RequestParsers.Int64,
-				opts.RequestParsers.Uint64,
-				opts.RequestParsers.String,
-				opts.RequestParsers.UUID,
-				opts.RequestParsers.Validator,
-				opts.RequestParsers.ClientIP,
-				opts.RequestParsers.User,
-				opts.RequestParsers.Locale,
-				opts.RequestParsers.TimeZone,
+			authvalidate.NewParser(
+				opts.RequestParsers.BaseParser,
+				opts.RequestParsers.BaseContextParser,
+				opts.RequestParsers.ListCursor,
 			),
 			opts.ResponseSenders.Sender,
 			opts.ResponseSenders.FileSender,
@@ -93,6 +87,7 @@ func getAuthAPIControllers(opts app.Options) []initing.HttpModule {
 			serviceUsersActivityStatTableName,
 			serviceUsersAuth2faTableName,
 			serviceUsersRealmsTableName,
+			serviceUsersSecurityLogTableName,
 			opts.DebugFunc,
 		),
 	}

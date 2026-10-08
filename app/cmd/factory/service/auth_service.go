@@ -26,6 +26,7 @@ const (
 	// serviceUsersTableName              = "printshop_auth.users".
 	serviceUsersActivityLogTableName  = "printshop_auth.users_activity_log"
 	serviceUsersActivityStatTableName = "printshop_auth.users_activity_stat"
+	serviceUsersSecurityLogTableName  = "printshop_auth.users_security_log"
 	// serviceUsersAuth2faTableName       = "printshop_auth.users_auth_2fa".
 	// serviceUsersRealmsTableName        = "printshop_auth.users_realms".
 )
@@ -100,12 +101,15 @@ func InitAuthSchedulerService(opts app.Options) *schedule.TaskScheduler {
 		serviceSecureOperationTableName,
 		serviceSecureOperationLogTableName,
 		serviceUsersActivityLogTableName,
+		serviceUsersSecurityLogTableName,
 		serviceSessionsTableName,
 		serviceSessionsCleanupQueueTableName,
 		serviceSessionsExcessQueueTableName,
 		scheduler.WithCaptionPrefix("Auth/"),
 		scheduler.WithCleanLimit(int(opts.Cfg.TaskScheduleAuth.CleanRecordsLimit)),
-		scheduler.WithLogLifeTime(opts.Cfg.TaskScheduleAuth.LogsLifeTime),
+		scheduler.WithOperationLogLifeTime(opts.Cfg.TaskScheduleAuth.OperationLogLifeTime),
+		scheduler.WithActivityLogLifeTime(opts.Cfg.TaskScheduleAuth.ActivityLogLifeTime),
+		scheduler.WithSecurityLogLifeTime(opts.Cfg.TaskScheduleAuth.SecurityLogLifeTime),
 		scheduler.WithTaskCleanRecordsOpts(
 			task.WithCaptionPrefix("Auth/"),
 			task.WithStartup(false),

@@ -12,7 +12,7 @@ import (
 	"print-shop-back/internal/dictionaries/materialtype/section/adm/entity"
 	"print-shop-back/pkg/dictionaries/api"
 	"print-shop-back/pkg/transport/model"
-	"print-shop-back/pkg/transport/validate"
+	admvalidate "print-shop-back/pkg/transport/validate/adm"
 )
 
 const (
@@ -24,7 +24,7 @@ const (
 type (
 	// MaterialType - comment struct.
 	MaterialType struct {
-		parser       validate.RequestExtendParser
+		parser       admvalidate.RequestParser
 		sender       mrserver.ResponseSender
 		useCase      adm.MaterialTypeUseCase
 		listSorter   mrtype.ListSorter
@@ -34,7 +34,7 @@ type (
 
 // NewMaterialType - создаёт контроллер MaterialType.
 func NewMaterialType(
-	parser validate.RequestExtendParser,
+	parser admvalidate.RequestParser,
 	sender mrserver.ResponseSender,
 	useCase adm.MaterialTypeUseCase,
 	listSorter mrtype.ListSorter,

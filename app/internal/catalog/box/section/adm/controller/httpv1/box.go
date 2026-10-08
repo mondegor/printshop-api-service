@@ -12,7 +12,7 @@ import (
 	"print-shop-back/internal/catalog/box/section/adm/entity"
 	"print-shop-back/pkg/mrcalc/measure"
 	"print-shop-back/pkg/transport/model"
-	"print-shop-back/pkg/transport/validate"
+	admvalidate "print-shop-back/pkg/transport/validate/adm"
 )
 
 const (
@@ -24,7 +24,7 @@ const (
 type (
 	// Box - comment struct.
 	Box struct {
-		parser       validate.RequestExtendParser
+		parser       admvalidate.RequestParser
 		sender       mrserver.ResponseSender
 		useCase      adm.BoxUseCase
 		listSorter   mrtype.ListSorter
@@ -34,7 +34,7 @@ type (
 
 // NewBox - создаёт контроллер Box.
 func NewBox(
-	parser validate.RequestExtendParser,
+	parser admvalidate.RequestParser,
 	sender mrserver.ResponseSender,
 	useCase adm.BoxUseCase,
 	listSorter mrtype.ListSorter,

@@ -1,5 +1,6 @@
 -- --------------------------------------------------------------------------------------------------
 
+DROP TABLE printshop_auth.users_security_log;
 DROP TABLE printshop_auth.secure_operations_log;
 DROP TABLE printshop_auth.secure_operations;
 DROP TABLE printshop_auth.sessions_excess_queue;

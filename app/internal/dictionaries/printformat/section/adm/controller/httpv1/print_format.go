@@ -13,7 +13,7 @@ import (
 	"print-shop-back/pkg/dictionaries/api"
 	"print-shop-back/pkg/mrcalc/measure"
 	"print-shop-back/pkg/transport/model"
-	"print-shop-back/pkg/transport/validate"
+	admvalidate "print-shop-back/pkg/transport/validate/adm"
 )
 
 const (
@@ -25,7 +25,7 @@ const (
 type (
 	// PrintFormat - comment struct.
 	PrintFormat struct {
-		parser       validate.RequestExtendParser
+		parser       admvalidate.RequestParser
 		sender       mrserver.ResponseSender
 		useCase      adm.PrintFormatUseCase
 		listSorter   mrtype.ListSorter
@@ -35,7 +35,7 @@ type (
 
 // NewPrintFormat - создаёт контроллер PrintFormat.
 func NewPrintFormat(
-	parser validate.RequestExtendParser,
+	parser admvalidate.RequestParser,
 	sender mrserver.ResponseSender,
 	useCase adm.PrintFormatUseCase,
 	listSorter mrtype.ListSorter,

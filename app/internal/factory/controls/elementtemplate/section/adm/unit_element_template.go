@@ -12,7 +12,7 @@ import (
 	"print-shop-back/internal/controls/elementtemplate/section/adm/entity"
 	"print-shop-back/internal/controls/elementtemplate/section/adm/repository"
 	"print-shop-back/internal/controls/elementtemplate/section/adm/usecase"
-	"print-shop-back/internal/controls/elementtemplate/shared/validate"
+	"print-shop-back/internal/controls/elementtemplate/section/adm/validate"
 )
 
 func initElementTemplateController(

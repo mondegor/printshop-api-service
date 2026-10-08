@@ -12,14 +12,14 @@ import (
 	service2 "print-shop-back/internal/warehousing/actiongroup/usr/service"
 	"print-shop-back/internal/warehousing/actiongroup/usr/transport/httpv1"
 	"print-shop-back/internal/warehousing/actiongroup/usr/usecase"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/usr"
 )
 
 func initStockController(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *usr.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	// :TODO: временно, вынести на уровень выше
@@ -82,7 +82,7 @@ func initStockController(
 	)
 
 	controller := httpv1.NewStock(
-		requestExtendParser,
+		requestParser,
 		responseSender,
 		service,
 		usecase2,

@@ -8,12 +8,12 @@ import (
 	"print-shop-back/internal/provideraccounts/section/pub/controller/httpv1"
 	"print-shop-back/internal/provideraccounts/section/pub/repository"
 	"print-shop-back/internal/provideraccounts/section/pub/usecase"
-	"print-shop-back/internal/provideraccounts/shared/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 func initCompanyPageController(
 	dbConnManager mrstorage.DBConnManager,
-	requestModuleParser *validate.Parser,
+	requestModuleParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 	logoURLBuilder mrpath.Builder,
 ) (mrserver.HttpController, error) {

@@ -10,7 +10,7 @@ import (
 	"print-shop-back/internal/controls/submitform/module"
 	"print-shop-back/internal/controls/submitform/section/adm"
 	"print-shop-back/internal/controls/submitform/section/adm/entity"
-	"print-shop-back/internal/controls/submitform/shared/validate"
+	"print-shop-back/internal/controls/submitform/section/adm/validate"
 	"print-shop-back/pkg/controls/api"
 	"print-shop-back/pkg/transport/model"
 )

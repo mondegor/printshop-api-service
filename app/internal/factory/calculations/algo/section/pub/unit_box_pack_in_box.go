@@ -9,13 +9,13 @@ import (
 	"print-shop-back/internal/calculations/algo/section/pub/box/packinbox/usecase"
 	"print-shop-back/pkg/mrcalc/algo/box/packinbox"
 	"print-shop-back/pkg/mrcalc/algo/sheet/imposition"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 func initBoxPackInBoxController(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
-	requestParser *validate.Parser,
+	requestParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	impAlgo := imposition.New(logger)

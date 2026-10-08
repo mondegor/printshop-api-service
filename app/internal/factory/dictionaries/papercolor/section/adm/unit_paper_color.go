@@ -12,14 +12,14 @@ import (
 	"print-shop-back/internal/dictionaries/papercolor/section/adm/entity"
 	"print-shop-back/internal/dictionaries/papercolor/section/adm/repository"
 	"print-shop-back/internal/dictionaries/papercolor/section/adm/usecase"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/adm"
 )
 
 func initPaperColorController(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *adm.Parser,
 	responseSender mrserver.ResponseSender,
 	pageSizeMax int,
 ) (mrserver.HttpController, error) {
@@ -39,7 +39,7 @@ func initPaperColorController(
 	useCase := usecase.NewPaperColor(storage, eventEmitter)
 
 	controller := httpv1.NewPaperColor(
-		requestExtendParser,
+		requestParser,
 		responseSender,
 		useCase,
 		entityMeta.MetaOrderBy(),
