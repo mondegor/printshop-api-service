@@ -2,9 +2,11 @@ package integration
 
 import (
 	"context"
+	"net"
 	"net/http"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/mondegor/go-core/mrstorage"
 	"github.com/mondegor/go-core/util/xio"
@@ -48,6 +50,8 @@ func NewHandlerTester(t *testing.T) *HttpHandlerTester {
 		os.Stdout,
 	)
 	require.NoError(t, err)
+
+	skipIfS3Unavailable(t, cfg)
 
 	logger := log.NopLogger()
 	tracer := trace.NopTracer()
@@ -115,4 +119,16 @@ func (t *HttpHandlerTester) Clean() {
 
 	err := t.fpool.Close()
 	require.NoError(t.parentT, err)
+}
+
+// skipIfS3Unavailable - пропускает тест, если S3-хранилище недоступно (например, в CI).
+func skipIfS3Unavailable(t *testing.T, cfg config.Config) {
+	t.Helper()
+
+	conn, err := net.DialTimeout("tcp", net.JoinHostPort(cfg.S3Host, cfg.S3Port), time.Second)
+	if err != nil {
+		t.Skipf("S3 storage is unavailable, test skipped: %v", err)
+	}
+
+	_ = conn.Close()
 }
