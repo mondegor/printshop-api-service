@@ -66,6 +66,11 @@ linters:
     - wsl_v5 # Add or remove empty lines. [auto-fix]
 
   exclusions:
+    paths:
+      - ^img/
+      - ^migrations/
+      - ^roles/
+
     rules:
       - path: _test\.go|tests\/
         linters:
@@ -334,30 +339,18 @@ linters:
     staticcheck:
       checks: [ "all", "-ST1000", "-ST1003" ]
 
-issues:
-  include:
-    #- EXC0001 # [errcheck: 'Error return value of .((os\.)?std(out|err)\..*|.*Close|.*Flush|os\.Remove(All)?|.*print(f|ln)?|os\.(Un)?Setenv). is not checked'
-    #- EXC0002 # [golint] '(comment on exported (method|function|type|const)|should have( a package)? comment|comment should be of the form)'
-    #- EXC0003 # [golint] 'func name will be used as test\.Test.* by other packages, and that stutters; consider calling this'
-    #- EXC0004 # [govet] '(possible misuse of unsafe.Pointer|should have signature)'
-    #- EXC0005 # [staticcheck] 'SA4011'
-    #- EXC0006 # [gosec] 'G103: Use of unsafe calls should be audited'
-    #- EXC0007 # [gosec] 'G204: Subprocess launched with variable'
-    #- EXC0008 # [gosec] 'G104'
-    #- EXC0009 # [gosec] '(G301|G302|G307): Expect (directory permissions to be 0750|file permissions to be 0600) or less'
-    #- EXC0010 # [gosec] 'G304: Potential file inclusion via variable'
-    #- EXC0011 # [stylecheck] '(ST1000|ST1020|ST1021|ST1022)'
-    - EXC0012 # [revive] 'exported (.+) should have comment( \(or a comment on this block\))? or be unexported'
-    #- EXC0013 # [revive] 'package comment should be of the form "(.+)..."'
-    - EXC0014 # [revive] 'comment on exported (.+) should be of the form "(.+)..."'
-    #- EXC0015 # [revive] 'should have a package comment' (default true)
-
 formatters:
   enable:
     - gofmt
     - goimports
     - gci
     - gofumpt
+
+  exclusions:
+    paths:
+      - ^img/
+      - ^migrations/
+      - ^roles/
 
   settings:
     gofumpt:
@@ -377,11 +370,3 @@ formatters:
 run:
   concurrency: 4
   timeout: 5m
-  go: "1.25"
-  exclude-dirs:
-    - img
-    - migrations
-    - roles
-
-output:
-  sort-results: true

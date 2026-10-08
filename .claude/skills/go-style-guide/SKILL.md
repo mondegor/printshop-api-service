@@ -503,6 +503,19 @@ identifier names its own sentinels the same way.
   package parallelism, not top-level tests inside one package), and a suite that fails in a
   full-package run but passes alone (`go test -run TestXxxSuite ./pkg/`) is resource
   contention, not a regression — check that before hunting for a bug.
+- **Repository suites on `pgtest.Tester` test only the SQL of the repo's methods.** Prepare state
+  with fixtures (or plain constructors/struct literals), call the method, assert the result or
+  the rows. Domain-model behaviour (`ConfirmAction`, `ActivateResendCode`, …) and chains across
+  several repositories belong to service/usecase tests. Reading back through another method of
+  the **same** repo is fine; to check another table, query it directly, not via its repo.
+  Names are tied to the repo:
+  - `foo_postgres_test.go` ↔ `foo_postgres.go`; suite `FooPostgresTestSuite`, entry
+    `TestFooPostgresTestSuite`;
+  - test methods `Test_<Method>` and variants `Test_<Method>When<Cond>`, where `<Method>` is a
+    real method of the repo (`Test_RevokeRefreshWhenExpired`);
+  - fixtures in `testdata/<Entity>/<Method>/` (`<Entity>` = repo type without `Postgres`); a
+    variant with its own data gets `testdata/<Entity>/<Method>When<Cond>/`, a variant reusing the
+    base data loads the method's directory.
 - Table-driven with a local `type testCase struct`, named cases, `t.Run(tt.name, …)`:
   ```go
   func TestX_Method(t *testing.T) {

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Print Shop Back — a Go web service for calculating the cost and production time of print products. It is a **modular monolith** structured along DDD / clean-architecture lines. All Go code lives under `app/` (module path `print-shop-back`, Go 1.25).
+Print Shop Back — a Go web service for calculating the cost and production time of print products. It is a **modular monolith** structured along DDD / clean-architecture lines. All Go code lives under `app/` (module path `print-shop-back`, Go 1.26).
 
 The repository is operated through the external **Mrcmd** CLI (https://github.com/mondegor/mrcmd), which wraps Docker Compose, migrations, codegen, linting and tests. The root `Makefile` provides short aliases over the most common `mrcmd` calls.
 
