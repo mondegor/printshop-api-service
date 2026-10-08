@@ -7,12 +7,12 @@ import (
 	"print-shop-back/internal/catalog/paper/section/pub/controller/httpv1"
 	"print-shop-back/internal/catalog/paper/section/pub/repository"
 	"print-shop-back/internal/catalog/paper/section/pub/usecase"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 func initPaperController(
 	dbConnManager mrstorage.DBConnManager,
-	requestParser *validate.Parser,
+	requestParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	storage := repository.NewPaperPostgres(

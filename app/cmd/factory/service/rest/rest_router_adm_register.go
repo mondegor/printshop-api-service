@@ -9,8 +9,8 @@ import (
 	"github.com/mondegor/go-webcore/mrserver/mrresp"
 
 	"print-shop-back/internal/app"
-	controlselementtemplatevalidate "print-shop-back/internal/controls/elementtemplate/shared/validate"
-	controlssubmitformvalidate "print-shop-back/internal/controls/submitform/shared/validate"
+	controlselementtemplatevalidate "print-shop-back/internal/controls/elementtemplate/section/adm/validate"
+	controlssubmitformvalidate "print-shop-back/internal/controls/submitform/section/adm/validate"
 	catalogbox "print-shop-back/internal/factory/catalog/box/section/adm"
 	cataloglaminate "print-shop-back/internal/factory/catalog/laminate/section/adm"
 	catalogpaper "print-shop-back/internal/factory/catalog/paper/section/adm"
@@ -22,7 +22,7 @@ import (
 	dictionariespaperfacture "print-shop-back/internal/factory/dictionaries/paperfacture/section/adm"
 	dictionariesprintformat "print-shop-back/internal/factory/dictionaries/printformat/section/adm"
 	provideraccounts "print-shop-back/internal/factory/provideraccounts/section/adm"
-	provideraccountsvalidate "print-shop-back/internal/provideraccounts/shared/validate"
+	provideraccountsvalidate "print-shop-back/internal/provideraccounts/section/adm/validate"
 	pkgcontrolsvalidate "print-shop-back/pkg/controls/validate"
 	pkgprovideraccountsvalidate "print-shop-back/pkg/provideraccounts/validate"
 )
@@ -56,41 +56,41 @@ func getAdminAPIControllers(opts app.Options) []initing.HttpModule {
 			opts.Logger,
 			opts.EventEmitter,
 			opts.PostgresConnManager,
-			opts.RequestParsers.ExtendParser,
+			opts.RequestParsers.AdmParser,
 			opts.ResponseSenders.Sender,
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 		cataloglaminate.InitHttpModule(
 			opts.Logger,
 			opts.EventEmitter,
 			opts.PostgresConnManager,
-			opts.RequestParsers.ExtendParser,
+			opts.RequestParsers.AdmParser,
 			opts.ResponseSenders.Sender,
 			opts.DictionariesMaterialTypeAPI,
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 		catalogpaper.InitHttpModule(
 			opts.Logger,
 			opts.EventEmitter,
 			opts.PostgresConnManager,
-			opts.RequestParsers.ExtendParser,
+			opts.RequestParsers.AdmParser,
 			opts.ResponseSenders.Sender,
 			opts.DictionariesMaterialTypeAPI,
 			opts.DictionariesPaperColorAPI,
 			opts.DictionariesPaperFactureAPI,
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 		controlselementtemplate.InitHttpModule(
 			opts.Logger,
 			opts.EventEmitter,
 			opts.PostgresConnManager,
 			controlselementtemplatevalidate.NewParser(
-				opts.RequestParsers.ExtendParser,
+				opts.RequestParsers.AdmParser,
 				opts.RequestParsers.FileJson,
 				pkgcontrolsvalidate.NewDetailingParser(opts.Logger),
 			),
 			opts.ResponseSenders.FileSender,
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 		controlssubmitform.InitHttpModule(
 			opts.Logger,
@@ -98,7 +98,7 @@ func getAdminAPIControllers(opts app.Options) []initing.HttpModule {
 			opts.PostgresConnManager,
 			opts.Locker,
 			controlssubmitformvalidate.NewParser(
-				opts.RequestParsers.ExtendParser,
+				opts.RequestParsers.AdmParser,
 				opts.RequestParsers.FileJson,
 				pkgcontrolsvalidate.NewDetailingParser(opts.Logger),
 			),
@@ -108,52 +108,50 @@ func getAdminAPIControllers(opts app.Options) []initing.HttpModule {
 				opts.PostgresConnManager,
 				opts.Tracer,
 			),
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 		dictionariesmaterialtype.InitHttpModule(
 			opts.Logger,
 			opts.EventEmitter,
 			opts.PostgresConnManager,
-			opts.RequestParsers.ExtendParser,
+			opts.RequestParsers.AdmParser,
 			opts.ResponseSenders.Sender,
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 		dictionariespapercolor.InitHttpModule(
 			opts.Logger,
 			opts.EventEmitter,
 			opts.PostgresConnManager,
-			opts.RequestParsers.ExtendParser,
+			opts.RequestParsers.AdmParser,
 			opts.ResponseSenders.Sender,
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 		dictionariespaperfacture.InitHttpModule(
 			opts.Logger,
 			opts.EventEmitter,
 			opts.PostgresConnManager,
-			opts.RequestParsers.ExtendParser,
+			opts.RequestParsers.AdmParser,
 			opts.ResponseSenders.Sender,
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 		dictionariesprintformat.InitHttpModule(
 			opts.Logger,
 			opts.EventEmitter,
 			opts.PostgresConnManager,
-			opts.RequestParsers.ExtendParser,
+			opts.RequestParsers.AdmParser,
 			opts.ResponseSenders.Sender,
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 		provideraccounts.InitHttpModule(
 			opts.Logger,
 			opts.PostgresConnManager,
 			provideraccountsvalidate.NewParser(
-				opts.RequestParsers.ExtendParser,
-				opts.RequestParsers.User,
-				opts.RequestParsers.ImageLogo,
+				opts.RequestParsers.AdmParser,
 				pkgprovideraccountsvalidate.NewPublicStatusParser(opts.Logger),
 			),
 			opts.ResponseSenders.Sender,
 			opts.ImageURLBuilder,
-			int(opts.Cfg.ModuleSettings.General.PageSizeMax),
+			app.PageSizeMax,
 		),
 	}
 }

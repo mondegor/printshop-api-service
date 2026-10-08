@@ -9,13 +9,17 @@ import (
 	"github.com/mondegor/go-webcore/mrserver/mrchi"
 	"github.com/mondegor/go-webcore/mrserver/mrjson"
 	"github.com/mondegor/go-webcore/mrserver/request/parser"
+	webvalidate "github.com/mondegor/go-webcore/mrserver/request/validate"
 	"github.com/mondegor/go-webcore/mrview"
 	"github.com/mondegor/go-webcore/mrview/mrplayvalidator"
 
 	"print-shop-back/internal/adapter/log"
 	"print-shop-back/internal/app"
 	mrcalcvalidate "print-shop-back/pkg/mrcalc/validate"
-	validate2 "print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/adm"
+	"print-shop-back/pkg/transport/validate/prov"
+	"print-shop-back/pkg/transport/validate/pub"
+	"print-shop-back/pkg/transport/validate/usr"
 )
 
 const (
@@ -49,30 +53,31 @@ func InitRequestParsers(opts app.Options) (app.RequestParsers, error) {
 	}
 
 	parsers := app.RequestParsers{
-		// Bool:       parser.NewBool(),
-		// DateTime:   parser.NewDateTime(),
+		Bool:       parser.NewBool(opts.Logger),
+		DateTime:   parser.NewDateTime(opts.Logger),
+		Float64:    parser.NewFloat64(opts.Logger),
 		Int64:      parser.NewInt64(opts.Logger),
 		ItemStatus: parser.NewItemStatus(opts.Logger),
 		Uint64:     parser.NewUint64(pathFunc, opts.Logger),
 		ListCursor: parser.NewListCursor(
 			opts.Logger,
 			parser.ListCursorOptions{
-				LimitMax:     int(opts.Cfg.ModuleSettings.General.PageSizeMax),
-				LimitDefault: int(opts.Cfg.ModuleSettings.General.PageSizeDefault),
+				LimitMax:     app.PageSizeMax,
+				LimitDefault: app.PageSizeDefault,
 			},
 		),
 		ListPager: parser.NewListPager(
 			opts.Logger,
 			parser.ListPagerOptions{
-				PageSizeMax:     int(opts.Cfg.ModuleSettings.General.PageSizeMax),
-				PageSizeDefault: int(opts.Cfg.ModuleSettings.General.PageSizeDefault),
+				PageSizeMax:     app.PageSizeMax,
+				PageSizeDefault: app.PageSizeDefault,
 			},
 		),
 		ListSorter: parser.NewListSorter(opts.Logger, parser.ListSorterOptions{}),
 		String:     parser.NewString(pathFunc, opts.Logger),
 		UUID:       parser.NewUUID(pathFunc, opts.Logger),
 		Validator:  parser.NewValidator(mrjson.NewDecoder(), validator),
-		ClientIP:   parser.NewClientIP(opts.Logger),
+		Client:     parser.NewClient(opts.Logger, parser.ClientOptions{}),
 		User:       parser.NewUser(opts.Logger),
 		Locale:     parser.NewLocale(opts.LocalePool, opts.Logger, langURLParam),
 		TimeZone:   parser.NewTimeZone(opts.LocationList, opts.Logger, tzURLParam),
@@ -99,24 +104,35 @@ func InitRequestParsers(opts app.Options) (app.RequestParsers, error) {
 		),
 	}
 
-	parsers.Parser = validate2.NewParser(
+	parsers.BaseParser = webvalidate.NewParser(
+		parsers.Bool,
 		parsers.Int64,
 		parsers.Uint64,
+		parsers.Float64,
 		parsers.String,
+		parsers.DateTime,
 		parsers.UUID,
 		parsers.Validator,
-		parsers.ClientIP,
-		parsers.User,
-		parsers.Locale,
-		parsers.ListCursor,
 	)
 
-	parsers.ExtendParser = validate2.NewExtendParser(
-		parsers.Parser,
-		parsers.ItemStatus,
-		parsers.ListPager,
-		parsers.ListSorter,
+	parsers.BaseListParser = webvalidate.NewListParser(parsers.ListPager, parsers.ListSorter)
+
+	parsers.BaseContextParser = webvalidate.NewContextParser(
+		parsers.Client,
+		parsers.User,
+		parsers.Locale,
+		parsers.TimeZone,
 	)
+
+	parsers.AdmParser = adm.NewParser(
+		parsers.BaseParser,
+		parsers.BaseContextParser,
+		parsers.BaseListParser,
+		parsers.ItemStatus,
+	)
+	parsers.PubParser = pub.NewParser(parsers.BaseParser, parsers.BaseContextParser)
+	parsers.ProvParser = prov.NewParser(parsers.BaseParser, parsers.BaseContextParser)
+	parsers.UsrParser = usr.NewParser(parsers.BaseParser, parsers.BaseContextParser, parsers.ListCursor)
 
 	return parsers, nil
 }

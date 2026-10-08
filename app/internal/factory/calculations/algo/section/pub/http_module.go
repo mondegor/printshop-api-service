@@ -7,14 +7,14 @@ import (
 
 	"print-shop-back/internal/adapter/log"
 	"print-shop-back/internal/calculations/algo/module"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 // InitHttpModule - создаются все компоненты модуля и возвращаются к нему контролеры.
 func InitHttpModule(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
-	requestParser *validate.Parser,
+	requestParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 ) initing.HttpModule {
 	return initing.HttpModule{

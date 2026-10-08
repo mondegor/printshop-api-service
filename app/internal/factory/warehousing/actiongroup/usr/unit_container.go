@@ -12,14 +12,14 @@ import (
 	"print-shop-back/internal/warehousing/actiongroup/usr/service"
 	"print-shop-back/internal/warehousing/actiongroup/usr/transport/httpv1"
 	"print-shop-back/internal/warehousing/actiongroup/usr/usecase"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/usr"
 )
 
 func initContainerController(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *usr.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	storage := repository.NewContainerPostgres(
@@ -74,7 +74,7 @@ func initContainerController(
 	service1 := service.NewContainer(storage, eventEmitter)
 
 	controller := httpv1.NewContainer(
-		requestExtendParser,
+		requestParser,
 		responseSender,
 		service1,
 		useCase,

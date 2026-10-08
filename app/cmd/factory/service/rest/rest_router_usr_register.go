@@ -41,7 +41,7 @@ func getUserAPIControllers(opts app.Options) []initing.HttpModule {
 			opts.Logger,
 			opts.EventEmitter,
 			opts.PostgresConnManager,
-			opts.RequestParsers.ExtendParser,
+			opts.RequestParsers.UsrParser,
 			opts.ResponseSenders.Sender,
 		),
 	}

@@ -7,12 +7,12 @@ import (
 	"print-shop-back/internal/catalog/laminate/section/pub/controller/httpv1"
 	"print-shop-back/internal/catalog/laminate/section/pub/repository"
 	"print-shop-back/internal/catalog/laminate/section/pub/usecase"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 func initLaminateController(
 	dbConnManager mrstorage.DBConnManager,
-	requestParser *validate.Parser,
+	requestParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	storage := repository.NewLaminatePostgres(

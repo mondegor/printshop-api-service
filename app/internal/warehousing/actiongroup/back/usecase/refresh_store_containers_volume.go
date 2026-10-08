@@ -5,6 +5,7 @@ import (
 	"math"
 
 	"github.com/mondegor/go-core/errors"
+	"github.com/mondegor/go-core/mrstorage"
 	"github.com/mondegor/go-core/util/slices/ordered"
 
 	"print-shop-back/internal/adapter/log"
@@ -12,7 +13,6 @@ import (
 	"print-shop-back/internal/warehousing/actiongroup/back/util/locationstock"
 	"print-shop-back/internal/warehousing/enum/locationkind"
 	"print-shop-back/internal/warehousing/module"
-	"print-shop-back/internal/warehousing/xtype"
 )
 
 type (
@@ -62,7 +62,7 @@ func (uc *RefreshStoreContainersVolume) Execute(ctx context.Context, storeIDs []
 	stocks, hasNext, err := uc.storageStock.FetchByLocationIDs(
 		ctx,
 		storeIDs,
-		xtype.StockCursor{
+		mrstorage.IDCursor{
 			Limit: min(module.GroupContainersMax*len(storeIDs), math.MaxInt16),
 		},
 	)

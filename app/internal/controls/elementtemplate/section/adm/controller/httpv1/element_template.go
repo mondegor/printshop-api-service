@@ -14,7 +14,7 @@ import (
 	"print-shop-back/internal/controls/elementtemplate/module"
 	"print-shop-back/internal/controls/elementtemplate/section/adm"
 	"print-shop-back/internal/controls/elementtemplate/section/adm/entity"
-	"print-shop-back/internal/controls/elementtemplate/shared/validate"
+	"print-shop-back/internal/controls/elementtemplate/section/adm/validate"
 	"print-shop-back/pkg/controls/api"
 	"print-shop-back/pkg/transport/model"
 )

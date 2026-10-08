@@ -9,7 +9,7 @@ import (
 	"print-shop-back/internal/provideraccounts/section/prov/controller/httpv1"
 	"print-shop-back/internal/provideraccounts/section/prov/repository"
 	"print-shop-back/internal/provideraccounts/section/prov/usecase"
-	"print-shop-back/internal/provideraccounts/shared/validate"
+	"print-shop-back/internal/provideraccounts/section/prov/validate"
 )
 
 func initCompanyPageController(

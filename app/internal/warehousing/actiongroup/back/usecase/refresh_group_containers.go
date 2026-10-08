@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/mondegor/go-core/errors"
+	"github.com/mondegor/go-core/mrstorage"
 	"github.com/mondegor/go-core/util/slices/ordered"
 	"github.com/mondegor/go-core/util/xstrings"
 
@@ -11,7 +12,6 @@ import (
 	"print-shop-back/internal/warehousing/actiongroup/back/dto"
 	"print-shop-back/internal/warehousing/enum/locationkind"
 	"print-shop-back/internal/warehousing/module"
-	"print-shop-back/internal/warehousing/xtype"
 )
 
 type (
@@ -29,7 +29,7 @@ type (
 	}
 
 	stockStorage interface {
-		FetchByLocationIDs(ctx context.Context, locationIDs []uint64, stockCursor xtype.StockCursor) (rows []dto.LocationStock, hasNext bool, err error)
+		FetchByLocationIDs(ctx context.Context, locationIDs []uint64, stockCursor mrstorage.IDCursor) (rows []dto.LocationStock, hasNext bool, err error)
 	}
 )
 
@@ -69,7 +69,7 @@ func (uc *RefreshGroupContainers) executeGroup(ctx context.Context, groupID uint
 	stocks, hasNext, err := uc.storageStock.FetchByLocationIDs(
 		ctx,
 		[]uint64{groupID},
-		xtype.StockCursor{
+		mrstorage.IDCursor{
 			Limit: module.GroupContainersMax,
 		},
 	)

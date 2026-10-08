@@ -7,13 +7,13 @@ import (
 	"github.com/mondegor/go-webcore/mrserver"
 
 	"print-shop-back/internal/provideraccounts/module"
-	"print-shop-back/internal/provideraccounts/shared/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 // InitHttpModule - создаются все компоненты модуля и возвращаются к нему контролеры.
 func InitHttpModule(
 	dbConnManager mrstorage.DBConnManager,
-	requestModuleParser *validate.Parser,
+	requestModuleParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 	logoURLBuilder mrpath.Builder,
 ) initing.HttpModule {

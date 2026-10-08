@@ -11,7 +11,6 @@ import (
 	"github.com/mondegor/go-webcore/mrserver/mrresp"
 
 	"print-shop-back/internal/app"
-	controlssubmitformvalidate "print-shop-back/internal/controls/submitform/shared/validate"
 	calculationsalgo "print-shop-back/internal/factory/calculations/algo/section/pub"
 	calculationsquery "print-shop-back/internal/factory/calculations/queryhistory/section/pub"
 	catalogbox "print-shop-back/internal/factory/catalog/box/section/pub"
@@ -24,9 +23,6 @@ import (
 	dictionariesprintformat "print-shop-back/internal/factory/dictionaries/printformat/section/pub"
 	filestation "print-shop-back/internal/factory/filestation/section/pub"
 	provideraccount "print-shop-back/internal/factory/provideraccounts/section/pub"
-	provideraccountsvalidate "print-shop-back/internal/provideraccounts/shared/validate"
-	pkgcontrolsvalidate "print-shop-back/pkg/controls/validate"
-	pkgprovideraccountsvalidate "print-shop-back/pkg/provideraccounts/validate"
 )
 
 // RegisterRestRouterPubHandlers - регистрирует в указанном роутере обработчики секции PublicAPI.
@@ -56,56 +52,47 @@ func getPublicAPIControllers(opts app.Options) []initing.HttpModule {
 	return []initing.HttpModule{
 		catalogbox.InitHttpModule(
 			opts.PostgresConnManager,
-			opts.RequestParsers.Parser,
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 		cataloglaminate.InitHttpModule(
 			opts.PostgresConnManager,
-			opts.RequestParsers.Parser,
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 		catalogpaper.InitHttpModule(
 			opts.PostgresConnManager,
-			opts.RequestParsers.Parser,
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 		controlssubmitform.InitHttpModule(
 			opts.PostgresConnManager,
-			controlssubmitformvalidate.NewParser(
-				opts.RequestParsers.ExtendParser,
-				opts.RequestParsers.FileJson,
-				pkgcontrolsvalidate.NewDetailingParser(opts.Logger),
-			),
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 		dictionariesmaterialtype.InitHttpModule(
 			opts.PostgresConnManager,
-			opts.RequestParsers.Parser,
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 		dictionariespapercolor.InitHttpModule(
 			opts.PostgresConnManager,
-			opts.RequestParsers.Parser,
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 		dictionariespaperfacture.InitHttpModule(
 			opts.PostgresConnManager,
-			opts.RequestParsers.Parser,
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 		dictionariesprintformat.InitHttpModule(
 			opts.PostgresConnManager,
-			opts.RequestParsers.Parser,
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 		provideraccount.InitHttpModule(
 			opts.PostgresConnManager,
-			provideraccountsvalidate.NewParser(
-				opts.RequestParsers.ExtendParser,
-				opts.RequestParsers.User,
-				opts.RequestParsers.ImageLogo,
-				pkgprovideraccountsvalidate.NewPublicStatusParser(opts.Logger),
-			),
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 			opts.ImageURLBuilder,
 		),
@@ -134,13 +121,13 @@ func getPublicAPIControllers(opts app.Options) []initing.HttpModule {
 		calculationsquery.InitHttpModule(
 			opts.EventEmitter,
 			opts.PostgresConnManager,
-			opts.RequestParsers.ExtendParser,
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 		calculationsalgo.InitHttpModule(
 			opts.Logger,
 			opts.EventEmitter,
-			opts.RequestParsers.Parser,
+			opts.RequestParsers.PubParser,
 			opts.ResponseSenders.Sender,
 		),
 	}

@@ -12,7 +12,7 @@ import (
 	"print-shop-back/internal/dictionaries/papercolor/section/adm/entity"
 	"print-shop-back/pkg/dictionaries/api"
 	"print-shop-back/pkg/transport/model"
-	"print-shop-back/pkg/transport/validate"
+	admvalidate "print-shop-back/pkg/transport/validate/adm"
 )
 
 const (
@@ -24,7 +24,7 @@ const (
 type (
 	// PaperColor - comment struct.
 	PaperColor struct {
-		parser       validate.RequestExtendParser
+		parser       admvalidate.RequestParser
 		sender       mrserver.ResponseSender
 		useCase      adm.PaperColorUseCase
 		listSorter   mrtype.ListSorter
@@ -34,7 +34,7 @@ type (
 
 // NewPaperColor - создаёт контроллер PaperColor.
 func NewPaperColor(
-	parser validate.RequestExtendParser,
+	parser admvalidate.RequestParser,
 	sender mrserver.ResponseSender,
 	useCase adm.PaperColorUseCase,
 	listSorter mrtype.ListSorter,

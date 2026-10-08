@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/google/uuid"
@@ -38,11 +39,14 @@ type (
 	}
 )
 
-// CreateStoreCursorValue - comment func.
+// CreateStoreCursorValue - возвращает значение курсора "territory_id|store_code" последней записи
+// (пустое значение, если записей нет).
 func CreateStoreCursorValue(items []Store) string {
 	if len(items) == 0 {
 		return ""
 	}
 
-	return items[len(items)-1].Code
+	item := items[len(items)-1]
+
+	return strconv.FormatUint(item.TerritoryID, 10) + "|" + item.Code
 }

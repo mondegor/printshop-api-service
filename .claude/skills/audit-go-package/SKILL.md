@@ -51,7 +51,7 @@ One line per dimension; the concrete checks live in [checklist.md](checklist.md)
    (`git log --since=<date>` or `git diff <commit>..HEAD -- <pkg>`).
 2. List the package files and understand structure (`find <pkg> -name '*.go'`; read entry points,
    constructors, the main loops/goroutines). **Fix the scope here**: decide which adjacent layers
-   are in or out (composition-root/wiring, `_sample` migrations, generated mocks) and record it for
+   are in or out (composition-root/wiring, `migrations/` DDL, generated mocks) and record it for
    the `AUDIT.md` header. For a whole **module**, audit package-by-package with one `AUDIT.md` per
    package rather than one giant report.
 3. **Dispatch parallel subagents — one agent per dimension group** per the Agent-assignment table

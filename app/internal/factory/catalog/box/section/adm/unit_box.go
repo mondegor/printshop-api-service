@@ -12,14 +12,14 @@ import (
 	"print-shop-back/internal/catalog/box/section/adm/entity"
 	"print-shop-back/internal/catalog/box/section/adm/repository"
 	"print-shop-back/internal/catalog/box/section/adm/usecase"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/adm"
 )
 
 func initBoxController(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *adm.Parser,
 	responseSender mrserver.ResponseSender,
 	pageSizeMax int,
 ) (mrserver.HttpController, error) {
@@ -40,7 +40,7 @@ func initBoxController(
 	useCase := usecase.NewBox(storage, eventEmitter)
 
 	controller := httpv1.NewBox(
-		requestExtendParser,
+		requestParser,
 		responseSender,
 		useCase,
 		entityMeta.MetaOrderBy(),

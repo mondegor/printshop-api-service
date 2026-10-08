@@ -13,14 +13,14 @@ import (
 	"print-shop-back/internal/catalog/paper/section/adm/repository"
 	"print-shop-back/internal/catalog/paper/section/adm/usecase"
 	"print-shop-back/pkg/dictionaries/api"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/adm"
 )
 
 func initPaperController(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *adm.Parser,
 	responseSender mrserver.ResponseSender,
 	materialTypeAPI api.MaterialTypeAvailability,
 	paperColorAPI api.PaperColorAvailability,
@@ -50,7 +50,7 @@ func initPaperController(
 	)
 
 	controller := httpv1.NewPaper(
-		requestExtendParser,
+		requestParser,
 		responseSender,
 		useCase,
 		entityMeta.MetaOrderBy(),

@@ -273,10 +273,6 @@ jwt:
   #     public_key: "-----BEGIN PUBLIC KEY-----..."
 
 module_settings:
-  general:
-    page_size_max: 1000
-    page_size_default: 50
-
   provider_account:
     company_page_logo_provider: imageStorage # file_providers.image_storage_name
 
@@ -342,9 +338,11 @@ task_schedule_settings:
 task_schedule_auth:
   clean_records:
     period: 5m
-    timeout: 300s # 4 зацикленных воркера очистки подряд, у каждого предел длительности 30s
+    timeout: 300s # 6 зацикленных воркеров очистки подряд, у каждого предел длительности 30s
   clean_records_limit: 100
-  logs_life_time: 168h # 1 week
+  operation_log_life_time: 720h # 30 days
+  activity_log_life_time: 168h # 1 week
+  security_log_life_time: 8760h # 1 year
   user_stat_request_collector:
     ready_timeout: 5s
     flush_period: 1m

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/mondegor/go-core/errors"
+	"github.com/mondegor/go-core/mrstorage"
 	"github.com/mondegor/go-webcore/mrserver"
 
 	"print-shop-back/internal/warehousing/actiongroup/usr"
@@ -12,9 +13,8 @@ import (
 	"print-shop-back/internal/warehousing/actiongroup/usr/entity"
 	"print-shop-back/internal/warehousing/actiongroup/usr/transport/model"
 	"print-shop-back/internal/warehousing/module"
-	"print-shop-back/internal/warehousing/xtype"
 	pkgmodel "print-shop-back/pkg/transport/model"
-	"print-shop-back/pkg/transport/validate"
+	usrvalidate "print-shop-back/pkg/transport/validate/usr"
 )
 
 const (
@@ -27,7 +27,7 @@ const (
 type (
 	// Stock - comment struct.
 	Stock struct {
-		parser               validate.RequestExtendParser
+		parser               usrvalidate.RequestParser
 		sender               mrserver.ResponseSender
 		serviceStock         usr.StockService
 		useCaseMoveStock     moveStockUseCase
@@ -50,7 +50,7 @@ type (
 
 // NewStock - создаёт контроллер Stock.
 func NewStock(
-	parser validate.RequestExtendParser,
+	parser usrvalidate.RequestParser,
 	sender mrserver.ResponseSender,
 	serviceStock usr.StockService,
 	useCaseMoveStock moveStockUseCase,
@@ -102,7 +102,7 @@ func (ht *Stock) listParams(r *http.Request) dto.StockParams {
 			SearchContainers: ht.parser.FilterUint64List(r, module.ParamNameFilterSearchStockContainerIDs),
 			SearchLocations:  ht.parser.FilterUint64List(r, module.ParamNameFilterSearchStockLocationIDs),
 		},
-		Cursor: xtype.NewStockCursor(ht.parser.CursorParams(r)),
+		Cursor: mrstorage.NewIDCursor(ht.parser.CursorParams(r)),
 	}
 }
 

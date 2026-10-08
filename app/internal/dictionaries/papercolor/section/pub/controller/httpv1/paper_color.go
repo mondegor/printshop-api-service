@@ -7,7 +7,7 @@ import (
 
 	"print-shop-back/internal/dictionaries/papercolor/section/pub"
 	"print-shop-back/internal/dictionaries/papercolor/section/pub/entity"
-	"print-shop-back/pkg/transport/validate"
+	pubvalidate "print-shop-back/pkg/transport/validate/pub"
 )
 
 const (
@@ -17,14 +17,14 @@ const (
 type (
 	// PaperColor - comment struct.
 	PaperColor struct {
-		parser  validate.RequestParser
+		parser  pubvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase pub.PaperColorUseCase
 	}
 )
 
 // NewPaperColor - создаёт контроллер PaperColor.
-func NewPaperColor(parser validate.RequestParser, sender mrserver.ResponseSender, useCase pub.PaperColorUseCase) *PaperColor {
+func NewPaperColor(parser pubvalidate.RequestParser, sender mrserver.ResponseSender, useCase pub.PaperColorUseCase) *PaperColor {
 	return &PaperColor{
 		parser:  parser,
 		sender:  sender,

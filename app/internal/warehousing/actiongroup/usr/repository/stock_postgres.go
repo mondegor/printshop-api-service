@@ -29,7 +29,8 @@ func NewStockPostgres(client mrstorage.DBConnManager) *StockPostgres {
 	}
 }
 
-// FetchByCondition - comment method.
+// FetchByCondition - возвращает остатки аккаунта по фильтру по возрастанию stock_id, начиная за позицией
+// params.Cursor (не более params.Cursor.Limit), и признак наличия записей за ней.
 //
 // cs.container_id IN(1000000000000000005):
 // -- отображение местоположения указанных контейнеров (территории редко меняются, они загружаются отдельно)
@@ -41,12 +42,9 @@ func NewStockPostgres(client mrstorage.DBConnManager) *StockPostgres {
 func (re *StockPostgres) FetchByCondition(ctx context.Context, params dto.StockParams) (rows []entity.Stock, hasNext bool, err error) {
 	condition := re.sqlBuilder.BuildFunc(
 		func(c mrstorage.SQLConditionHelper) mrstorage.SQLPartFunc {
-			var condsMax [4]mrstorage.SQLPartFunc // 4 - max conditions
-
-			conds := append(condsMax[:0], c.Equal("account_id", params.AccountID))
-
-			if params.Cursor.StockID > 0 {
-				conds = append(conds, c.Greater("stock_id", params.Cursor.StockID))
+			conds := []mrstorage.SQLPartFunc{
+				c.Equal("account_id", params.AccountID),
+				c.Greater("stock_id", params.Cursor.AfterID()),
 			}
 
 			if len(params.Filter.SearchLocations) > 0 {
@@ -92,8 +90,9 @@ func (re *StockPostgres) FetchByCondition(ctx context.Context, params dto.StockP
 	defer cursor.Close()
 
 	for cursor.Next() {
+		// лишняя строка сверх limit лишь сообщает, что за текущей страницей есть записи
 		if len(rows) == params.Cursor.Limit {
-			hasNext = cursor.Next()
+			hasNext = true
 
 			break
 		}

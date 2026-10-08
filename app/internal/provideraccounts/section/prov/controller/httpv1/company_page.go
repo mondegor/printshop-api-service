@@ -9,7 +9,7 @@ import (
 	"print-shop-back/internal/provideraccounts/module"
 	"print-shop-back/internal/provideraccounts/section/prov"
 	"print-shop-back/internal/provideraccounts/section/prov/entity"
-	"print-shop-back/pkg/transport/validate"
+	provvalidate "print-shop-back/pkg/transport/validate/prov"
 )
 
 const (
@@ -20,14 +20,14 @@ const (
 type (
 	// CompanyPage - comment struct.
 	CompanyPage struct {
-		parser  validate.RequestParser
+		parser  provvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase prov.CompanyPageUseCase
 	}
 )
 
 // NewCompanyPage - создаёт контроллер CompanyPage.
-func NewCompanyPage(parser validate.RequestParser, sender mrserver.ResponseSender, useCase prov.CompanyPageUseCase) *CompanyPage {
+func NewCompanyPage(parser provvalidate.RequestParser, sender mrserver.ResponseSender, useCase prov.CompanyPageUseCase) *CompanyPage {
 	return &CompanyPage{
 		parser:  parser,
 		sender:  sender,

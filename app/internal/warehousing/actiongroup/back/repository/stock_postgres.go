@@ -8,7 +8,6 @@ import (
 
 	"print-shop-back/internal/warehousing/actiongroup/back/dto"
 	"print-shop-back/internal/warehousing/module"
-	"print-shop-back/internal/warehousing/xtype"
 )
 
 type (
@@ -25,11 +24,12 @@ func NewStockPostgres(client mrstorage.DBConnManager) *StockPostgres {
 	}
 }
 
-// FetchByLocationIDs - comment method.
+// FetchByLocationIDs - возвращает остатки указанных мест хранения по возрастанию stock_id, начиная
+// за позицией stockCursor (не более stockCursor.Limit), и признак наличия записей за ней.
 func (re *StockPostgres) FetchByLocationIDs(
 	ctx context.Context,
 	locationIDs []uint64,
-	stockCursor xtype.StockCursor,
+	stockCursor mrstorage.IDCursor,
 ) (rows []dto.LocationStock, hasNext bool, err error) {
 	sql := `
 		SELECT
@@ -48,7 +48,7 @@ func (re *StockPostgres) FetchByLocationIDs(
 	cursor, err := re.client.Conn(ctx).Query(
 		ctx,
 		sql,
-		stockCursor.StockID,
+		stockCursor.AfterID(),
 		locationIDs,
 	)
 	if err != nil {
@@ -58,8 +58,9 @@ func (re *StockPostgres) FetchByLocationIDs(
 	defer cursor.Close()
 
 	for cursor.Next() {
+		// лишняя строка сверх limit лишь сообщает, что за текущей страницей есть записи
 		if len(rows) == stockCursor.Limit {
-			hasNext = cursor.Next()
+			hasNext = true
 
 			break
 		}

@@ -149,6 +149,29 @@ by `.golangci.yaml` (`golangci-lint` runs strict — `make lint` must pass befor
       ` + mrstorage.NonZeroLimit(limit) + `
       FOR UPDATE SKIP LOCKED ...`
   ```
+- **Keyset (cursor) pagination: the seek predicate is unconditional and index-friendly.**
+  "First page" is encoded in the cursor constructor as a boundary value of the key, never in
+  SQL as `$n = 0 OR id < $n`: with such an `OR` a generic plan can't use the predicate as an
+  index condition, it becomes a filter and page k reads ~`k·limit` rows like `OFFSET`. The
+  boundary is `0`/`''` for ascending order and the key type's maximum for descending order.
+  For a positive integer `bigint` (PostgreSQL `int8`) key use `mrstorage.IDCursor` (`mrstorage.NewIDCursor(params)`,
+  `params` — `mrtype.CursorParams` from the request parser) and take the bound from the method
+  matching the `ORDER BY` — `AfterID()` for `id > $n` (ASC), `BeforeID()` for `id < $n` (DESC);
+  its zero value means the first page in both directions. A string/composite key with no usable
+  boundary gets its predicate appended conditionally via the SQL builder
+  (`if cursor.Code != "" { conds = append(…) }`) — two SQL texts, each with its own plan.
+  Custom cursor constructors normalize the page size with `mrstorage.PageLimit(params.Limit)`.
+  The repository fetches `Limit+1` rows: the extra one only signals `hasNext`.
+  ```go
+  sql := `
+      ... WHERE
+          user_id = $1 AND record_id < $2
+      ORDER BY
+          record_id DESC
+      ` + mrstorage.NonZeroLimit(cursor.Limit+1) + `;`
+
+  rows, err := conn.Query(ctx, sql, userID, cursor.BeforeID())
+  ```
 - **Avoid maps in config/input DTOs — use a slice of structs with an explicit key field.**
   Replace `KindLimits map[string]uint32` with a slice whose element carries the key:
   ```go
@@ -394,6 +417,26 @@ identifier names its own sentinels the same way.
       use(v)
   }
   ```
+- **Check a sentinel you swallow or branch on in a nested `if` inside `if err != nil`**, not in
+  one compound condition. The outer `if` says "the call failed", the inner one says which failure
+  is not a failure for this caller, and the comment explaining why goes right above it:
+  ```go
+  // good
+  if err := storage.DeleteByIDs(ctx, ids); err != nil {
+      // nothing to delete: the records were already removed elsewhere
+      if errors.Is(err, errors.ErrEventStorageRecordsNotAffected) {
+          return nil
+      }
+
+      return err
+  }
+
+  // avoid — the compound condition reads heavy and hides the exception
+  if err := storage.DeleteByIDs(ctx, ids); err != nil &&
+      !errors.Is(err, errors.ErrEventStorageRecordsNotAffected) {
+      return err
+  }
+  ```
 - Prefer `make(...)` to init maps/slices (`enforce-map-style`, `enforce-slice-style`).
   Preallocate slices with a capacity hint when length is known (`prealloc`):
   `make([]string, 0, len(x)*2)`.
@@ -450,8 +493,8 @@ identifier names its own sentinels the same way.
   interface parameter structurally — the unexported type name is never written in the test.
 - `t.Parallel()` at the top of every test and subtest (`tparallel`). Test helpers call
   `t.Helper()` (`thelper`).
-- **Exception: integration suites on `PostgresTester` never call `t.Parallel()`.**
-  `infra.NewPostgresTester` starts a *fresh* container per suite, so N parallel suites in
+- **Exception: integration suites on `pgtest.Tester` never call `t.Parallel()`.**
+  `pgtest.NewTester` starts a *fresh* container per suite, so N parallel suites in
   one package means N live Postgres instances — enough of them and the containers stop
   coming up (`wait until ready … context deadline exceeded`), which reads exactly like a
   broken migration. Drop `t.Parallel()` and say why in a comment above the entry point, so
@@ -460,6 +503,19 @@ identifier names its own sentinels the same way.
   package parallelism, not top-level tests inside one package), and a suite that fails in a
   full-package run but passes alone (`go test -run TestXxxSuite ./pkg/`) is resource
   contention, not a regression — check that before hunting for a bug.
+- **Repository suites on `pgtest.Tester` test only the SQL of the repo's methods.** Prepare state
+  with fixtures (or plain constructors/struct literals), call the method, assert the result or
+  the rows. Domain-model behaviour (`ConfirmAction`, `ActivateResendCode`, …) and chains across
+  several repositories belong to service/usecase tests. Reading back through another method of
+  the **same** repo is fine; to check another table, query it directly, not via its repo.
+  Names are tied to the repo:
+  - `foo_postgres_test.go` ↔ `foo_postgres.go`; suite `FooPostgresTestSuite`, entry
+    `TestFooPostgresTestSuite`;
+  - test methods `Test_<Method>` and variants `Test_<Method>When<Cond>`, where `<Method>` is a
+    real method of the repo (`Test_RevokeRefreshWhenExpired`);
+  - fixtures in `testdata/<Entity>/<Method>/` (`<Entity>` = repo type without `Postgres`); a
+    variant with its own data gets `testdata/<Entity>/<Method>When<Cond>/`, a variant reusing the
+    base data loads the method's directory.
 - Table-driven with a local `type testCase struct`, named cases, `t.Run(tt.name, …)`:
   ```go
   func TestX_Method(t *testing.T) {

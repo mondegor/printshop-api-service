@@ -7,7 +7,7 @@ import (
 
 	"print-shop-back/internal/catalog/paper/section/pub"
 	"print-shop-back/internal/catalog/paper/section/pub/entity"
-	"print-shop-back/pkg/transport/validate"
+	pubvalidate "print-shop-back/pkg/transport/validate/pub"
 )
 
 const (
@@ -21,14 +21,14 @@ const (
 type (
 	// Paper - comment struct.
 	Paper struct {
-		parser  validate.RequestParser
+		parser  pubvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase pub.PaperUseCase
 	}
 )
 
 // NewPaper - создаёт контроллер Paper.
-func NewPaper(parser validate.RequestParser, sender mrserver.ResponseSender, useCase pub.PaperUseCase) *Paper {
+func NewPaper(parser pubvalidate.RequestParser, sender mrserver.ResponseSender, useCase pub.PaperUseCase) *Paper {
 	return &Paper{
 		parser:  parser,
 		sender:  sender,

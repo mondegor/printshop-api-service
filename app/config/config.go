@@ -141,11 +141,6 @@ type (
 
 		// Module settings - настройки модулей системы
 		ModuleSettings struct {
-			General struct {
-				PageSizeMax     uint16 `yaml:"page_size_max"`
-				PageSizeDefault uint16 `yaml:"page_size_default"`
-			} `yaml:"general"`
-
 			ProviderAccount struct {
 				CompanyPageLogoProvider string `yaml:"company_page_logo_provider"` // FileProviders.ImageStorageName
 			} `yaml:"provider_account"`

@@ -2,8 +2,7 @@ package dto
 
 import (
 	"github.com/google/uuid"
-
-	"print-shop-back/internal/warehousing/xtype"
+	"github.com/mondegor/go-core/mrstorage"
 )
 
 type (
@@ -39,7 +38,7 @@ type (
 	StockParams struct {
 		AccountID uuid.UUID
 		Filter    StockListFilter
-		Cursor    xtype.StockCursor
+		Cursor    mrstorage.IDCursor
 	}
 
 	// StockListFilter - comment struct.

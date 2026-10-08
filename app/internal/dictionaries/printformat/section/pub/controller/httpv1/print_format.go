@@ -7,7 +7,7 @@ import (
 
 	"print-shop-back/internal/dictionaries/printformat/section/pub"
 	"print-shop-back/internal/dictionaries/printformat/section/pub/entity"
-	"print-shop-back/pkg/transport/validate"
+	pubvalidate "print-shop-back/pkg/transport/validate/pub"
 )
 
 const (
@@ -17,14 +17,14 @@ const (
 type (
 	// PrintFormat - comment struct.
 	PrintFormat struct {
-		parser  validate.RequestParser
+		parser  pubvalidate.RequestParser
 		sender  mrserver.ResponseSender
 		useCase pub.PrintFormatUseCase
 	}
 )
 
 // NewPrintFormat - создаёт контроллер PrintFormat.
-func NewPrintFormat(parser validate.RequestParser, sender mrserver.ResponseSender, useCase pub.PrintFormatUseCase) *PrintFormat {
+func NewPrintFormat(parser pubvalidate.RequestParser, sender mrserver.ResponseSender, useCase pub.PrintFormatUseCase) *PrintFormat {
 	return &PrintFormat{
 		parser:  parser,
 		sender:  sender,

@@ -11,8 +11,7 @@ import (
 
 	"print-shop-back/internal/app"
 	provideraccounts "print-shop-back/internal/factory/provideraccounts/section/prov"
-	provideraccountsvalidate "print-shop-back/internal/provideraccounts/shared/validate"
-	pkgprovideraccountsvalidate "print-shop-back/pkg/provideraccounts/validate"
+	provideraccountsvalidate "print-shop-back/internal/provideraccounts/section/prov/validate"
 )
 
 // RegisterRestRouterProvHandlers - регистрирует в указанном роутере обработчики секции ProvidersAPI.
@@ -46,10 +45,8 @@ func getProviderAPIControllers(opts app.Options) []initing.HttpModule {
 			opts.PostgresConnManager,
 			opts.Locker,
 			provideraccountsvalidate.NewParser(
-				opts.RequestParsers.ExtendParser,
-				opts.RequestParsers.User,
+				opts.RequestParsers.ProvParser,
 				opts.RequestParsers.ImageLogo,
-				pkgprovideraccountsvalidate.NewPublicStatusParser(opts.Logger),
 			),
 			opts.ResponseSenders.Sender,
 			func() (mrstorage.FileProviderAPI, error) {

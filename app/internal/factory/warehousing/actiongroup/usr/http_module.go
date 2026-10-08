@@ -8,7 +8,7 @@ import (
 
 	"print-shop-back/internal/adapter/log"
 	"print-shop-back/internal/warehousing/module"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/usr"
 )
 
 // InitHttpModule - создаются все компоненты модуля и возвращаются к нему контролеры.
@@ -16,7 +16,7 @@ func InitHttpModule(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
 	dbConnManager mrstorage.DBConnManager,
-	requestExtendParser *validate.ExtendParser,
+	requestParser *usr.Parser,
 	responseSender mrserver.ResponseSender,
 ) initing.HttpModule {
 	return initing.HttpModule{
@@ -29,7 +29,7 @@ func InitHttpModule(
 						logger,
 						eventEmitter,
 						dbConnManager,
-						requestExtendParser,
+						requestParser,
 						responseSender,
 					)
 				},
@@ -40,7 +40,7 @@ func InitHttpModule(
 						logger,
 						eventEmitter,
 						dbConnManager,
-						requestExtendParser,
+						requestParser,
 						responseSender,
 					)
 				},
@@ -49,7 +49,7 @@ func InitHttpModule(
 				Create: func() (mrserver.HttpController, error) {
 					return initStoreController(
 						dbConnManager,
-						requestExtendParser,
+						requestParser,
 						responseSender,
 					)
 				},

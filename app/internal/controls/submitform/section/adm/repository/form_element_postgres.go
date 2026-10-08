@@ -46,9 +46,12 @@ func NewFormElementPostgres(client mrstorage.DBConnManager, sqlBuilder mrstorage
 	}
 }
 
-// NewCondition - comment method.
+// NewCondition - возвращает условие списка сортировки: неудалённые элементы указанной формы.
 func (re *FormElementPostgres) NewCondition(formID uuid.UUID) mrstorage.SQLPartFunc {
-	return re.sqlConditionHelper.Equal("form_id", formID)
+	return re.sqlConditionHelper.JoinAnd(
+		re.sqlConditionHelper.Equal("form_id", formID),
+		re.sqlConditionHelper.Expr("deleted_at IS NULL"),
+	)
 }
 
 // Fetch - comment method.

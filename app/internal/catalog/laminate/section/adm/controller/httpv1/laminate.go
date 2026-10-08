@@ -13,7 +13,7 @@ import (
 	"print-shop-back/pkg/dictionaries/api"
 	"print-shop-back/pkg/mrcalc/measure"
 	"print-shop-back/pkg/transport/model"
-	"print-shop-back/pkg/transport/validate"
+	admvalidate "print-shop-back/pkg/transport/validate/adm"
 )
 
 const (
@@ -25,7 +25,7 @@ const (
 type (
 	// Laminate - comment struct.
 	Laminate struct {
-		parser       validate.RequestExtendParser
+		parser       admvalidate.RequestParser
 		sender       mrserver.ResponseSender
 		useCase      adm.LaminateUseCase
 		listSorter   mrtype.ListSorter
@@ -34,7 +34,7 @@ type (
 )
 
 // NewLaminate - создаёт контроллер Laminate.
-func NewLaminate(parser validate.RequestExtendParser, sender mrserver.ResponseSender, useCase adm.LaminateUseCase, listSorter mrtype.ListSorter) *Laminate {
+func NewLaminate(parser admvalidate.RequestParser, sender mrserver.ResponseSender, useCase adm.LaminateUseCase, listSorter mrtype.ListSorter) *Laminate {
 	return &Laminate{
 		parser:     parser,
 		sender:     sender,

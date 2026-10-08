@@ -7,12 +7,12 @@ import (
 	"print-shop-back/internal/calculations/algo/section/pub/sheet/packinstack/controller/httpv1"
 	"print-shop-back/internal/calculations/algo/section/pub/sheet/packinstack/usecase"
 	"print-shop-back/pkg/mrcalc/algo/sheet/packinstack"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 func initSheetPackInStackController(
 	eventEmitter mrevent.Emitter,
-	requestParser *validate.Parser,
+	requestParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	packInStackAlgoSheet := packinstack.New()

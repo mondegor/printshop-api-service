@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/mondegor/go-storage/mrtests/infra"
+	"github.com/mondegor/go-storage/mrtests/pgtest"
 	"github.com/stretchr/testify/suite"
 
 	"print-shop-back/internal/catalog/box/section/pub/entity"
@@ -16,7 +16,7 @@ type BoxPostgresTestSuite struct {
 	suite.Suite
 
 	ctx  context.Context
-	pgt  *infra.PostgresTester
+	pgt  *pgtest.Tester
 	repo *repository.BoxPostgres
 }
 
@@ -26,22 +26,18 @@ func TestBoxPostgresTestSuite(t *testing.T) {
 
 func (ts *BoxPostgresTestSuite) SetupSuite() {
 	ts.ctx = context.Background()
-	ts.pgt = infra.NewPostgresTester(ts.T(), tests.DBSchemas(), tests.ExcludedDBTables())
-	ts.pgt.ApplyMigrations(tests.AppMigrationsDir())
+	ts.pgt = pgtest.NewTester(ts.T(), tests.DBSchemas(), tests.ExcludedDBTables())
+	ts.pgt.ApplyMigrations(ts.T(), tests.AppMigrationsDir())
 
 	ts.repo = repository.NewBoxPostgres(ts.pgt.ConnManager())
 }
 
-func (ts *BoxPostgresTestSuite) TearDownSuite() {
-	ts.pgt.Destroy(ts.ctx)
-}
-
 func (ts *BoxPostgresTestSuite) SetupTest() {
-	ts.pgt.TruncateTables(ts.ctx)
+	ts.pgt.TruncateTables(ts.T(), ts.ctx)
 }
 
 func (ts *BoxPostgresTestSuite) Test_Fetch() {
-	ts.pgt.ApplyFixtures("testdata/Fetch")
+	ts.pgt.ApplyFixtures(ts.T(), "testdata/Fetch")
 
 	expected := []entity.Box{
 		{

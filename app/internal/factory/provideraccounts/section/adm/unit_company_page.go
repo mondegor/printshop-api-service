@@ -12,7 +12,7 @@ import (
 	"print-shop-back/internal/provideraccounts/section/adm/entity"
 	"print-shop-back/internal/provideraccounts/section/adm/repository"
 	"print-shop-back/internal/provideraccounts/section/adm/usecase"
-	"print-shop-back/internal/provideraccounts/shared/validate"
+	"print-shop-back/internal/provideraccounts/section/adm/validate"
 )
 
 func initCompanyPageController(

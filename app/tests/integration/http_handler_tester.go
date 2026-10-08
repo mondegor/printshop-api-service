@@ -2,15 +2,18 @@ package integration
 
 import (
 	"context"
+	"net"
 	"net/http"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/mondegor/go-core/mrstorage"
 	"github.com/mondegor/go-core/util/xio"
 	"github.com/mondegor/go-core/wire/mrlog"
 	"github.com/mondegor/go-core/wire/mrtrace"
-	"github.com/mondegor/go-storage/mrtests/infra"
+	"github.com/mondegor/go-storage/mrtests/pgtest"
+	"github.com/mondegor/go-storage/mrtests/redistest"
 	"github.com/mondegor/go-webcore/mrtests/helpers"
 	"github.com/stretchr/testify/require"
 
@@ -30,8 +33,6 @@ type (
 		ctx     context.Context
 		opts    app.Options
 		router  http.Handler
-		pgt     *infra.PostgresTester
-		rds     *infra.RedisTester
 		fpool   *mrstorage.FileProviderPool
 	}
 )
@@ -50,15 +51,17 @@ func NewHandlerTester(t *testing.T) *HttpHandlerTester {
 	)
 	require.NoError(t, err)
 
+	skipIfS3Unavailable(t, cfg)
+
 	logger := log.NopLogger()
 	tracer := trace.NopTracer()
 	traceManager, err := mrtrace.InitTraceContextManager(mrlog.DefaultProcessIDs(), logger)
 	require.NoError(t, err)
 
-	pgt := infra.NewPostgresTester(t, tests.DBSchemas(), tests.ExcludedDBTables())
-	pgt.ApplyMigrations(tests.AppMigrationsDir())
+	pgt := pgtest.NewTester(t, tests.DBSchemas(), tests.ExcludedDBTables())
+	pgt.ApplyMigrations(t, tests.AppMigrationsDir())
 
-	rds := infra.NewRedisTester(t)
+	rds := redistest.NewTester(t)
 
 	fpool, err := factory.InitFileProviderPool(logger, tracer, cfg)
 	require.NoError(t, err)
@@ -85,8 +88,6 @@ func NewHandlerTester(t *testing.T) *HttpHandlerTester {
 		ctx:     ctx,
 		opts:    opts,
 		router:  router,
-		pgt:     pgt,
-		rds:     rds,
 		fpool:   fpool,
 	}
 }
@@ -111,12 +112,23 @@ func (t *HttpHandlerTester) ExecRequest(r *helpers.HttpRequest, structResponse a
 	return r.Exec(t.router, structResponse)
 }
 
-// Clean - очищает ресурсы после завершения тестирования обработчика.
+// Clean - очищает ресурсы приложения после завершения тестирования обработчика
+// (контейнеры Postgres и Redis освобождаются через t.Cleanup теста-владельца).
 func (t *HttpHandlerTester) Clean() {
 	t.opts.OpenedResources.Close()
-	t.pgt.Destroy(t.ctx)
-	t.rds.Destroy(t.ctx)
 
 	err := t.fpool.Close()
 	require.NoError(t.parentT, err)
+}
+
+// skipIfS3Unavailable - пропускает тест, если S3-хранилище недоступно (например, в CI).
+func skipIfS3Unavailable(t *testing.T, cfg config.Config) {
+	t.Helper()
+
+	conn, err := net.DialTimeout("tcp", net.JoinHostPort(cfg.S3Host, cfg.S3Port), time.Second)
+	if err != nil {
+		t.Skipf("S3 storage is unavailable, test skipped: %v", err)
+	}
+
+	_ = conn.Close()
 }

@@ -8,13 +8,13 @@ import (
 	"print-shop-back/internal/calculations/algo/section/pub/sheet/imposition/controller/httpv1"
 	"print-shop-back/internal/calculations/algo/section/pub/sheet/imposition/usecase"
 	"print-shop-back/pkg/mrcalc/algo/sheet/imposition"
-	"print-shop-back/pkg/transport/validate"
+	"print-shop-back/pkg/transport/validate/pub"
 )
 
 func initSheetImpositionController(
 	logger log.Logger,
 	eventEmitter mrevent.Emitter,
-	requestParser *validate.Parser,
+	requestParser *pub.Parser,
 	responseSender mrserver.ResponseSender,
 ) (mrserver.HttpController, error) {
 	algoComponent := imposition.New(logger)
