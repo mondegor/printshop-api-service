@@ -12,8 +12,6 @@ generate:
 
 lint:
 	mrcmd go-dev fmt
-	mrcmd go-dev fmti
-	mrcmd go-dev fmti2
 	mrcmd go-dev lint
 
 test:

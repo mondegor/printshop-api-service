@@ -2,8 +2,6 @@ description: DTO - список мест хранения
 type: object
 required:
   - stores
-  - cursor
-  - has_next
 properties:
   stores:
     description: Список мест хранения ограниченный фильтром и limit
@@ -12,5 +10,3 @@ properties:
       $ref: "./Warehousing.Stores.Response.Model.Store.yaml"
   cursor:
     $ref: "../../../_shared/components/fields/Api.Field.ListCursor.Cursor.yaml"
-  has_next:
-    $ref: "../../../_shared/components/fields/Api.Field.ListCursor.HasNext.yaml"

@@ -45,13 +45,25 @@ paths:
   /v1/warehousing/containers:
     get:
       summary: Метод получения списка контейнеров
-      description: Метод предназначен для получения списка всех контейнеров текущего аккаунта, сохраненных в БД
+      description: |-
+        Метод предназначен для получения списка всех контейнеров текущего аккаунта, сохраненных в БД
+
+        ### Пагинация
+        Первая страница запрашивается без `cursor`. Следующая — с `cursor` из предыдущего ответа,
+        пока он присутствует в ответе. Некорректные `cursor` и `limit` не приводят к ошибке:
+        - некорректный `cursor` — возвращается первая страница;
+        - `limit` равен 0 — используется размер по умолчанию, `limit` больше максимума — максимум;
+          `cursor` при этом учитывается;
+        - неразбираемый `limit` (не число, отрицательное) — первая страница размера по умолчанию,
+          `cursor` при этом не учитывается.
       operationId: getContainerList
       tags:
         - Warehousing.Container
       parameters:
         - $ref: '#/components/parameters/Warehousing.Containers.Request.Query.Filter.SearchCode'
         - $ref: '#/components/parameters/Warehousing.Containers.Request.Query.Filter.SearchTags'
+        - $ref: '#/components/parameters/Api.Request.Query.ListCursor.Cursor'
+        - $ref: '#/components/parameters/Api.Request.Query.ListCursor.Limit'
       responses:
         '200':
           description: Получен список контейнеров
@@ -151,7 +163,17 @@ paths:
   /v1/warehousing/stocks:
     get:
       summary: Метод получения списка остатков контейнеров
-      description: Метод предназначен для получения списка всех остатков контейнеров на местах хранения текущего аккаунта, сохраненных в БД
+      description: |-
+        Метод предназначен для получения списка всех остатков контейнеров на местах хранения текущего аккаунта, сохраненных в БД
+
+        ### Пагинация
+        Первая страница запрашивается без `cursor`. Следующая — с `cursor` из предыдущего ответа,
+        пока он присутствует в ответе. Некорректные `cursor` и `limit` не приводят к ошибке:
+        - некорректный `cursor` — возвращается первая страница;
+        - `limit` равен 0 — используется размер по умолчанию, `limit` больше максимума — максимум;
+          `cursor` при этом учитывается;
+        - неразбираемый `limit` (не число, отрицательное) — первая страница размера по умолчанию,
+          `cursor` при этом не учитывается.
       operationId: getStockList
       tags:
         - Warehousing.Stock
@@ -256,7 +278,17 @@ paths:
   /v1/warehousing/stores:
     get:
       summary: Метод получения списка мест хранения
-      description: Метод предназначен для получения списка всех мест хранения текущего аккаунта, сохраненных в БД
+      description: |-
+        Метод предназначен для получения списка всех мест хранения текущего аккаунта, сохраненных в БД
+
+        ### Пагинация
+        Первая страница запрашивается без `cursor`. Следующая — с `cursor` из предыдущего ответа,
+        пока он присутствует в ответе. Некорректные `cursor` и `limit` не приводят к ошибке:
+        - некорректный `cursor` — возвращается первая страница;
+        - `limit` равен 0 — используется размер по умолчанию, `limit` больше максимума — максимум;
+          `cursor` при этом учитывается;
+        - неразбираемый `limit` (не число, отрицательное) — первая страница размера по умолчанию,
+          `cursor` при этом не учитывается.
       operationId: getStoreList
       tags:
         - Warehousing.Store
@@ -304,22 +336,6 @@ components:
         type: string
         maxLength: 256
       example: КУРТКИ,ОТВЁРТКИ
-    Warehousing.Request.Query.Filter.ContainerIDs:
-      description: Список идентификаторов контейнеров через ","
-      name: container_ids
-      in: query
-      required: false
-      schema:
-        type: string
-      example: 1,2,3
-    Warehousing.Request.Query.Filter.LocationIDs:
-      description: Список мест хранения / групповых контейнеров через ","
-      name: location_ids
-      in: query
-      required: false
-      schema:
-        type: string
-      example: 1,2,3
     Api.Request.Query.ListCursor.Cursor:
       description: Текущая позиция в списке записей
       name: cursor
@@ -336,11 +352,27 @@ components:
       required: false
       schema:
         type: integer
-        format: int64
+        format: int32
         minimum: 1
         maximum: 1000
         default: 50
       example: 70
+    Warehousing.Request.Query.Filter.ContainerIDs:
+      description: Список идентификаторов контейнеров через ","
+      name: container_ids
+      in: query
+      required: false
+      schema:
+        type: string
+      example: 1,2,3
+    Warehousing.Request.Query.Filter.LocationIDs:
+      description: Список мест хранения / групповых контейнеров через ","
+      name: location_ids
+      in: query
+      required: false
+      schema:
+        type: string
+      example: 1,2,3
     Warehousing.Stores.Request.Query.Filter.SearchCode:
       description: Код или первая часть кода места хранения
       name: query
@@ -371,6 +403,18 @@ components:
       format: int32
       minimum: 1
       example: 5
+    Warehousing.Enum.LocationKind:
+      description: |-
+        Возможные типы хранения элементов:
+        - STORE - склад;
+        - GROUP - группа;
+        - CONTAINER - контейнер;
+      type: string
+      enum:
+        - STORE
+        - GROUP
+        - CONTAINER
+      example: CONTAINER
     Warehousing.Field.ContainerCode:
       description: Группирующий код контейнера (модуль - Warehousing)
       type: string
@@ -419,11 +463,22 @@ components:
     Warehousing.Containers.Response.Model.Container:
       description: DTO - контейнер
       type: object
+      required:
+        - id
+        - tag_version
+        - code
+        - marker
+        - volume
+        - tags
+        - created_at
+        - updated_at
       properties:
         id:
           $ref: '#/components/schemas/Warehousing.Field.ContainerID'
         tag_version:
           $ref: '#/components/schemas/Api.Field.TagVersion'
+        kind:
+          $ref: '#/components/schemas/Warehousing.Enum.LocationKind'
         code:
           $ref: '#/components/schemas/Warehousing.Field.ContainerCode'
         marker:
@@ -438,7 +493,7 @@ components:
             maxLength: 32
             example: ШУРУПЫ
         images:
-          description: Изображения контейнераr
+          description: Изображения контейнера
           type: array
           items:
             type: string
@@ -449,17 +504,15 @@ components:
         updated_at:
           $ref: '#/components/schemas/Api.Field.DateTimeUpdatedAt'
     Api.Field.ListCursor.Cursor:
-      description: Следующая позиция в списке записей
+      description: Позиция следующей страницы; отсутствует, если следующей страницы нет
       type: string
       maxLength: 256
       example: Y3Vyc29yLTQwMjc5
-    Api.Field.ListCursor.HasNext:
-      description: Признак наличия записей в следующей позиции
-      type: boolean
-      example: true
     Warehousing.Containers.Response.Model.ContainerList:
       description: DTO - список контейнеров
       type: object
+      required:
+        - containers
       properties:
         containers:
           description: Список контейнеров ограниченный фильтром и limit
@@ -468,8 +521,6 @@ components:
             $ref: '#/components/schemas/Warehousing.Containers.Response.Model.Container'
         cursor:
           $ref: '#/components/schemas/Api.Field.ListCursor.Cursor'
-        has_next:
-          $ref: '#/components/schemas/Api.Field.ListCursor.HasNext'
     Api.Response.Model.ErrorDetails:
       description: DTO следующих ошибок - 401, 403, 404, 5XX. RFC 9457 (Problem Details for HTTP APIs)
       type: object
@@ -553,6 +604,11 @@ components:
     Warehousing.Containers.Response.Model.SuccessCreatedContainer:
       description: DTO результата создания контейнера
       type: object
+      required:
+        - container_id
+        - code
+        - marker
+        - stock_id
       properties:
         container_id:
           $ref: '#/components/schemas/Warehousing.Field.ContainerID'
@@ -653,6 +709,13 @@ components:
     Warehousing.Stocks.Response.Model.Stock:
       description: DTO - остатки контейнера
       type: object
+      required:
+        - id
+        - container_id
+        - location_id
+        - quantity
+        - volume
+        - created_at
       properties:
         id:
           $ref: '#/components/schemas/Warehousing.Field.StockID'
@@ -669,6 +732,8 @@ components:
     Warehousing.Stocks.Response.Model.StockList:
       description: DTO - список остатков контейнеров
       type: object
+      required:
+        - stocks
       properties:
         stocks:
           description: Список остатков контейнеров ограниченный фильтром и limit
@@ -677,8 +742,6 @@ components:
             $ref: '#/components/schemas/Warehousing.Stocks.Response.Model.Stock'
         cursor:
           $ref: '#/components/schemas/Api.Field.ListCursor.Cursor'
-        has_next:
-          $ref: '#/components/schemas/Api.Field.ListCursor.HasNext'
     Warehousing.Containers.Request.Model.AddMoreStock:
       description: DTO - прибавления остатков контейнеру
       type: object
@@ -783,6 +846,18 @@ components:
     Warehousing.Stores.Response.Model.Store:
       description: DTO - место хранения
       type: object
+      required:
+        - id
+        - tag_version
+        - territory_id
+        - kind
+        - code
+        - volume
+        - status
+        - containers_volume
+        - fullness
+        - created_at
+        - updated_at
       properties:
         id:
           $ref: '#/components/schemas/Warehousing.Field.StoreID'
@@ -812,6 +887,8 @@ components:
     Warehousing.Stores.Response.Model.StoreList:
       description: DTO - список мест хранения
       type: object
+      required:
+        - stores
       properties:
         stores:
           description: Список мест хранения ограниченный фильтром и limit
@@ -820,8 +897,6 @@ components:
             $ref: '#/components/schemas/Warehousing.Stores.Response.Model.Store'
         cursor:
           $ref: '#/components/schemas/Api.Field.ListCursor.Cursor'
-        has_next:
-          $ref: '#/components/schemas/Api.Field.ListCursor.HasNext'
   responses:
     Api.ResponseJson.Error401:
       description: Пользователь не был аутентифицирован

@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 
 	"print-shop-back/internal/adapter/log"
@@ -17,11 +16,6 @@ import (
 
 func TestImposition_CalcWithAllowRotation(t *testing.T) {
 	t.Parallel()
-
-	ctrl := gomock.NewController(t)
-	t.Cleanup(func() {
-		ctrl.Finish()
-	})
 
 	tests := []struct {
 		name     string

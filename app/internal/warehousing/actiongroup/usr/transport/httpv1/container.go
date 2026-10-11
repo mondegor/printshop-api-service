@@ -26,7 +26,7 @@ const (
 )
 
 type (
-	// Container - comment struct.
+	// Container - HTTP-контроллер контейнеров.
 	Container struct {
 		parser                 usrvalidate.RequestParser
 		sender                 mrserver.ResponseSender
@@ -66,22 +66,23 @@ func (ht *Container) Handlers() []mrserver.HttpHandler {
 	}
 }
 
-// GetList - comment method.
+// GetList - возвращает страницу списка контейнеров текущего аккаунта.
 func (ht *Container) GetList(w http.ResponseWriter, r *http.Request) error {
 	items, hasNext, err := ht.serviceContainer.GetList(r.Context(), ht.listParams(r))
 	if err != nil {
 		return err
 	}
 
-	return ht.sender.Send(
-		w,
-		http.StatusOK,
-		model.ContainerListResponse{
-			Items:   items,
-			Cursor:  entity.CreateContainerCursorValue(items),
-			HasNext: hasNext,
-		},
-	)
+	response := model.ContainerListResponse{
+		Items: items,
+	}
+
+	// курсор отдаётся только при наличии следующей страницы
+	if hasNext {
+		response.Cursor = entity.CreateContainerCursorValue(items)
+	}
+
+	return ht.sender.Send(w, http.StatusOK, response)
 }
 
 func (ht *Container) listParams(r *http.Request) dto.ContainerParams {
@@ -95,7 +96,7 @@ func (ht *Container) listParams(r *http.Request) dto.ContainerParams {
 	}
 }
 
-// CreateContainer - comment method.
+// CreateContainer - создаёт контейнер.
 func (ht *Container) CreateContainer(w http.ResponseWriter, r *http.Request) error {
 	req := model.CreateContainerRequest{}
 
@@ -131,7 +132,7 @@ func (ht *Container) CreateContainer(w http.ResponseWriter, r *http.Request) err
 	)
 }
 
-// CreateGroup - comment method.
+// CreateGroup - создаёт группу контейнеров.
 func (ht *Container) CreateGroup(w http.ResponseWriter, r *http.Request) error {
 	req := model.CreateContainerGroupRequest{}
 
@@ -165,7 +166,7 @@ func (ht *Container) CreateGroup(w http.ResponseWriter, r *http.Request) error {
 	)
 }
 
-// SaveTags - comment method.
+// SaveTags - обновляет теги контейнера.
 func (ht *Container) SaveTags(w http.ResponseWriter, r *http.Request) error {
 	req := model.SaveContainerTagsRequest{}
 
@@ -195,12 +196,12 @@ func (ht *Container) SaveTags(w http.ResponseWriter, r *http.Request) error {
 	)
 }
 
-// AddImages - comment method.
+// AddImages - добавляет изображения контейнера (не реализован).
 func (ht *Container) AddImages(_ http.ResponseWriter, _ *http.Request) error {
 	return nil
 }
 
-// DeleteImages - comment method.
+// DeleteImages - удаляет изображения контейнера (не реализован).
 func (ht *Container) DeleteImages(_ http.ResponseWriter, _ *http.Request) error {
 	return nil
 }

@@ -13,7 +13,7 @@ import (
 )
 
 type (
-	// MoveStockContainer - comment struct.
+	// MoveStockContainer - перемещение остатков контейнера на другое место хранения.
 	MoveStockContainer struct {
 		storageStock            usr.StockStorage
 		serviceStore            usr.StoreService
@@ -41,7 +41,8 @@ func NewMoveStockContainer(
 	}
 }
 
-// Execute - comment method.
+// Execute - перемещает указанное количество контейнеров остатка (0 - все) на новое место хранения
+// и возвращает ID остатка на новом месте.
 func (uc *MoveStockContainer) Execute(ctx context.Context, item dto.MoveStockContainer) (movedStockID uint64, err error) {
 	if item.AccountID == uuid.Nil {
 		return 0, errors.ErrInternalIncorrectInputData.WithDetails("accountId is empty")
@@ -86,14 +87,10 @@ func (uc *MoveStockContainer) Execute(ctx context.Context, item dto.MoveStockCon
 	}
 
 	newStock := stock
+	newStock.ID = 0
 	newStock.LocationID = item.LocationID
+	newStock.ContainerQuantity = item.Quantity
 	stock.ContainerQuantity -= item.Quantity
-
-	// если перенос частичный
-	if item.Quantity != stock.ContainerQuantity {
-		newStock.ID = 0
-		newStock.ContainerQuantity = item.Quantity
-	}
 
 	// TODO: транзакция
 
@@ -111,6 +108,8 @@ func (uc *MoveStockContainer) Execute(ctx context.Context, item dto.MoveStockCon
 		}
 	}
 
+	// TODO: событие отправляется до пересчёта локаций (в AddMoreStockContainer - после),
+	// поэтому при ошибке пересчёта оно уже ушло; выбрать единый порядок.
 	uc.eventEmitter.Emit(ctx, "Move", "accountId", item.AccountID, "stockId", stock.ID, "newStockId", newStock.ID)
 
 	// TODO: через событие сделать

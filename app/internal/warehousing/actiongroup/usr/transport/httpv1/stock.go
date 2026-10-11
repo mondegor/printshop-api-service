@@ -25,7 +25,7 @@ const (
 )
 
 type (
-	// Stock - comment struct.
+	// Stock - HTTP-контроллер остатков контейнеров.
 	Stock struct {
 		parser               usrvalidate.RequestParser
 		sender               mrserver.ResponseSender
@@ -77,22 +77,23 @@ func (ht *Stock) Handlers() []mrserver.HttpHandler {
 	}
 }
 
-// GetList - comment method.
+// GetList - возвращает страницу списка остатков контейнеров текущего аккаунта.
 func (ht *Stock) GetList(w http.ResponseWriter, r *http.Request) error {
 	items, hasNext, err := ht.serviceStock.GetList(r.Context(), ht.listParams(r))
 	if err != nil {
 		return err
 	}
 
-	return ht.sender.Send(
-		w,
-		http.StatusOK,
-		model.StockListResponse{
-			Items:   items,
-			Cursor:  entity.CreateStockCursorValue(items),
-			HasNext: hasNext,
-		},
-	)
+	response := model.StockListResponse{
+		Items: items,
+	}
+
+	// курсор отдаётся только при наличии следующей страницы
+	if hasNext {
+		response.Cursor = entity.CreateStockCursorValue(items)
+	}
+
+	return ht.sender.Send(w, http.StatusOK, response)
 }
 
 func (ht *Stock) listParams(r *http.Request) dto.StockParams {
@@ -106,7 +107,7 @@ func (ht *Stock) listParams(r *http.Request) dto.StockParams {
 	}
 }
 
-// AddMore - comment method.
+// AddMore - прибавляет остатки контейнеру на месте хранения.
 func (ht *Stock) AddMore(w http.ResponseWriter, r *http.Request) error {
 	req := model.AddMoreStockRequest{}
 
@@ -135,7 +136,7 @@ func (ht *Stock) AddMore(w http.ResponseWriter, r *http.Request) error {
 	)
 }
 
-// Move - comment method.
+// Move - перемещает остатки контейнера на другое место хранения.
 func (ht *Stock) Move(w http.ResponseWriter, r *http.Request) error {
 	req := model.MoveStockRequest{}
 
@@ -164,7 +165,7 @@ func (ht *Stock) Move(w http.ResponseWriter, r *http.Request) error {
 	)
 }
 
-// Transfer - comment method.
+// Transfer - списывает остатки.
 func (ht *Stock) Transfer(w http.ResponseWriter, r *http.Request) error {
 	req := model.TransferStockRequest{}
 
