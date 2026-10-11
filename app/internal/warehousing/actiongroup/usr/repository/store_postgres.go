@@ -151,7 +151,7 @@ func (re *StorePostgres) FetchOne(ctx context.Context, accountID uuid.UUID, rowI
 		FROM
 			` + module.DBTableNameStores + `
 		WHERE
-			store_id = $1 AND account_id = $2 deleted_at IS NULL
+			store_id = $1 AND account_id = $2 AND deleted_at IS NULL
 		FETCH FIRST 1 ROW ONLY;`
 
 	err = re.client.Conn(ctx).QueryRow(

@@ -1,4 +1,4 @@
-description: Следующая позиция в списке записей
+description: Позиция следующей страницы; отсутствует, если следующей страницы нет
 type: string
 maxLength: 256
 example: "Y3Vyc29yLTQwMjc5"

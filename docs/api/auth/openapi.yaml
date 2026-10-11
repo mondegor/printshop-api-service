@@ -1706,10 +1706,12 @@ paths:
 
         ### Пагинация
         Первая страница запрашивается без `cursor`. Следующая — с `cursor` из предыдущего ответа,
-        пока `has_next` равен `true`. Некорректные `cursor` и `limit` не приводят к ошибке:
-        при некорректном `cursor` возвращается первая страница; при некорректном `limit` (в том
-        числе больше максимума) — первая страница размера по умолчанию, `cursor` при этом
-        не учитывается.
+        пока он присутствует в ответе. Некорректные `cursor` и `limit` не приводят к ошибке:
+        - некорректный `cursor` — возвращается первая страница;
+        - `limit` равен 0 — используется размер по умолчанию, `limit` больше максимума — максимум;
+          `cursor` при этом учитывается;
+        - неразбираемый `limit` (не число, отрицательное, вне допустимого диапазона) — первая
+          страница размера по умолчанию, `cursor` при этом не учитывается.
 
         ### Причины ответа `403`
         - общие причины отказа — см. «Аутентификация и доступ» в описании API;
@@ -1935,7 +1937,7 @@ components:
       required: false
       schema:
         type: integer
-        format: int64
+        format: int32
         minimum: 1
         maximum: 100
         default: 10
@@ -2811,7 +2813,9 @@ components:
         - PHONE_CHANGED - смена телефона (`old_value`, `new_value` - прежний и новый номер, прежний
           отсутствует, если номера не было);
         - SESSIONS_CLOSED - пользователь закрыл сессии из списка открытых сессий;
-        - TOKEN_REUSE_DETECTED - повторно предъявлен уже использованный токен обновления открытой сессии, сессия закрывается;
+        - TOKEN_REUSE_DETECTED - повторно предъявлен уже использованный токен обновления открытой сессии, сессия закрывается
+          (`ip`, `app_name`, `device_name`, `location` - запроса, в котором предъявлен уже использованный токен,
+          а не закрываемой сессии);
       type: string
       enum:
         - SIGNED_IN
@@ -2848,7 +2852,7 @@ components:
           type: string
           example: 95.165.1.1
         location:
-          description: Местоположение (только если было вычислено)
+          description: Местоположение (только если было вычислено); произвольная строка, от языка запроса не зависит
           type: string
           example: Moscow, Russia
         app_name:
@@ -2886,21 +2890,15 @@ components:
           format: date-time
           example: '2020-01-01T15:00:00+03:00'
     Api.Field.ListCursor.Cursor:
-      description: Следующая позиция в списке записей
+      description: Позиция следующей страницы; отсутствует, если следующей страницы нет
       type: string
       maxLength: 256
       example: Y3Vyc29yLTQwMjc5
-    Api.Field.ListCursor.HasNext:
-      description: Признак наличия записей в следующей позиции
-      type: boolean
-      example: true
     Auth.Security.Response.Model.SecurityLog:
       description: Страница журнала безопасности пользователя, от свежих событий к старым
       type: object
       required:
         - items
-        - cursor
-        - has_next
       properties:
         items:
           description: События журнала, не более limit
@@ -2909,8 +2907,6 @@ components:
             $ref: '#/components/schemas/Auth.Security.Response.Model.SecurityLogItem'
         cursor:
           $ref: '#/components/schemas/Api.Field.ListCursor.Cursor'
-        has_next:
-          $ref: '#/components/schemas/Api.Field.ListCursor.HasNext'
     Auth.Field.DateTimeLastSeenAt:
       description: Дата и время последней активности сессии в часовом поясе пользователя (RFC3339 со смещением; по умолчанию UTC)
       type: string

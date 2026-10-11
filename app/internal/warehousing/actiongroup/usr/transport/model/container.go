@@ -6,7 +6,7 @@ import (
 )
 
 type (
-	// CreateContainerRequest - comment struct.
+	// CreateContainerRequest - запрос на создание контейнера.
 	CreateContainerRequest struct {
 		Code             string       `json:"code,omitempty"`
 		Volume           xtype.Volume `json:"volume,omitempty"`
@@ -16,28 +16,27 @@ type (
 		ExemplarQuantity int          `json:"exemplar_quantity,omitempty"`
 	}
 
-	// CreateContainerGroupRequest - comment struct.
+	// CreateContainerGroupRequest - запрос на создание группы контейнеров.
 	CreateContainerGroupRequest struct {
 		Code       string       `json:"code,omitempty"`
 		Volume     xtype.Volume `json:"volume"`
 		LocationID uint64       `json:"location_id"`
 	}
 
-	// SaveContainerTagsRequest - comment struct.
+	// SaveContainerTagsRequest - запрос на обновление тегов контейнера.
 	SaveContainerTagsRequest struct {
 		ContainerID uint64   `json:"container_id"`
 		TagVersion  uint32   `json:"tag_version" validate:"required,gte=1"`
 		Tags        []string `json:"tags"`
 	}
 
-	// ContainerListResponse - comment struct.
+	// ContainerListResponse - страница списка контейнеров.
 	ContainerListResponse struct {
-		Items   []entity.Container `json:"items"`
-		Cursor  string             `json:"cursor"`
-		HasNext bool               `json:"has_next"`
+		Items  []entity.Container `json:"containers"`
+		Cursor string             `json:"cursor,omitempty"`
 	}
 
-	// SuccessCreatedContainerResponse - comment struct.
+	// SuccessCreatedContainerResponse - результат создания контейнера или группы контейнеров.
 	SuccessCreatedContainerResponse struct {
 		ContainerID uint64 `json:"container_id"`
 		Code        string `json:"code"`

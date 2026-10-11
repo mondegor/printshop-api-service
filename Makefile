@@ -18,9 +18,10 @@ generate:
 
 lint:
 	mrcmd go fmt
-	mrcmd go fmti
-	mrcmd go fmti2
 	mrcmd go lint
+
+lint-verify:
+	mrcmd go lint-verify
 
 test:
 	mrcmd go test
@@ -47,4 +48,4 @@ app-logs:
 app-stop:
 	mrcmd stop
 
-.PHONY: build deps deps-upgrade migrate generate lint test test-report plantuml app-conf app-start app-state app-logs app-stop
+.PHONY: build deps deps-upgrade migrate generate lint lint-verify test test-report plantuml app-conf app-start app-state app-logs app-stop

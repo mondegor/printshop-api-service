@@ -2,8 +2,6 @@ description: DTO - список контейнеров
 type: object
 required:
   - containers
-  - cursor
-  - has_next
 properties:
   containers:
     description: Список контейнеров ограниченный фильтром и limit
@@ -12,5 +10,3 @@ properties:
       $ref: "./Warehousing.Containers.Response.Model.Container.yaml"
   cursor:
     $ref: "../../../_shared/components/fields/Api.Field.ListCursor.Cursor.yaml"
-  has_next:
-    $ref: "../../../_shared/components/fields/Api.Field.ListCursor.HasNext.yaml"

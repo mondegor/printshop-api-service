@@ -19,7 +19,7 @@ const (
 )
 
 type (
-	// Store - comment struct.
+	// Store - HTTP-контроллер мест хранения.
 	Store struct {
 		parser       usrvalidate.RequestParser
 		sender       mrserver.ResponseSender
@@ -47,22 +47,23 @@ func (ht *Store) Handlers() []mrserver.HttpHandler {
 	}
 }
 
-// GetList - comment method.
+// GetList - возвращает страницу списка мест хранения текущего аккаунта.
 func (ht *Store) GetList(w http.ResponseWriter, r *http.Request) error {
 	items, hasNext, err := ht.serviceStore.GetList(r.Context(), ht.listParams(r))
 	if err != nil {
 		return err
 	}
 
-	return ht.sender.Send(
-		w,
-		http.StatusOK,
-		model.StoreListResponse{
-			Items:   items,
-			Cursor:  entity.CreateStoreCursorValue(items),
-			HasNext: hasNext,
-		},
-	)
+	response := model.StoreListResponse{
+		Items: items,
+	}
+
+	// курсор отдаётся только при наличии следующей страницы
+	if hasNext {
+		response.Cursor = entity.CreateStoreCursorValue(items)
+	}
+
+	return ht.sender.Send(w, http.StatusOK, response)
 }
 
 func (ht *Store) listParams(r *http.Request) dto.StoreParams {

@@ -161,7 +161,10 @@ by `.golangci.yaml` (`golangci-lint` runs strict — `make lint` must pass befor
   boundary gets its predicate appended conditionally via the SQL builder
   (`if cursor.Code != "" { conds = append(…) }`) — two SQL texts, each with its own plan.
   Custom cursor constructors normalize the page size with `mrstorage.PageLimit(params.Limit)`.
-  The repository fetches `Limit+1` rows: the extra one only signals `hasNext`.
+  The repository fetches `Limit+1` rows: the extra one only signals `hasNext`. `hasNext` stays
+  internal: the HTTP response has no `has_next` field, its `cursor` (`json:"cursor,omitempty"`,
+  not `required` in the contract) is set only when `hasNext` is true, and its absence means the
+  end of the list.
   ```go
   sql := `
       ... WHERE
@@ -466,7 +469,9 @@ identifier names its own sentinels the same way.
   the shared fixtures (mocks, controller, system-under-test) on the suite struct and build
   them in `SetupTest` (or `SetupSubTest`), so each test method starts from a clean,
   consistently-initialized state instead of duplicating setup. Run it via a single
-  `func TestXxxSuite(t *testing.T) { suite.Run(t, new(XxxSuite)) }` entry point. Keep using
+  `func TestXxxSuite(t *testing.T) { suite.Run(t, new(XxxSuite)) }` entry point (this
+  `XxxSuite` name is for unit suites on mocks; repository suites on `pgtest.Tester` use the
+  `PostgresTestSuite` suffix, see below). Keep using
   `gomock` for the mocks themselves. For simple tests without shared setup, prefer the
   plain table-driven form below.
 - For mocks use **only** `go.uber.org/mock/gomock`. Generate mocks with `mockgen`
@@ -501,18 +506,19 @@ identifier names its own sentinels the same way.
   nobody re-adds it to match the unit tests next door. `paralleltest` is not enabled, so
   nothing forces the call back in. Two corollaries: `-p 1` does **not** help (it bounds
   package parallelism, not top-level tests inside one package), and a suite that fails in a
-  full-package run but passes alone (`go test -run TestXxxSuite ./pkg/`) is resource
+  full-package run but passes alone (`go test -run TestFooPostgresTestSuite ./pkg/`) is resource
   contention, not a regression — check that before hunting for a bug.
 - **Repository suites on `pgtest.Tester` test only the SQL of the repo's methods.** Prepare state
   with fixtures (or plain constructors/struct literals), call the method, assert the result or
-  the rows. Domain-model behaviour (`ConfirmAction`, `ActivateResendCode`, …) and chains across
+  the rows. Domain-model behaviour (`Item.Activate`, `Item.Archive`, …) and chains across
   several repositories belong to service/usecase tests. Reading back through another method of
   the **same** repo is fine; to check another table, query it directly, not via its repo.
   Names are tied to the repo:
   - `foo_postgres_test.go` ↔ `foo_postgres.go`; suite `FooPostgresTestSuite`, entry
-    `TestFooPostgresTestSuite`;
+    `TestFooPostgresTestSuite` (the `TestSuite` suffix, not `Suite`, sets Postgres
+    integration suites apart from unit suites on mocks);
   - test methods `Test_<Method>` and variants `Test_<Method>When<Cond>`, where `<Method>` is a
-    real method of the repo (`Test_RevokeRefreshWhenExpired`);
+    real method of the repo (`Test_FetchOneWhenDeleted`);
   - fixtures in `testdata/<Entity>/<Method>/` (`<Entity>` = repo type without `Postgres`); a
     variant with its own data gets `testdata/<Entity>/<Method>When<Cond>/`, a variant reusing the
     base data loads the method's directory.

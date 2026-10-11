@@ -5,10 +5,9 @@ import (
 )
 
 type (
-	// StoreListResponse - comment struct.
+	// StoreListResponse - страница списка мест хранения.
 	StoreListResponse struct {
-		Items   []entity.Store `json:"stores"`
-		Cursor  string         `json:"cursor"`
-		HasNext bool           `json:"has_next"`
+		Items  []entity.Store `json:"stores"`
+		Cursor string         `json:"cursor,omitempty"`
 	}
 )
